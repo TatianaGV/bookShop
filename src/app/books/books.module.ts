@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { BooksMainPageComponent } from './component/books-main-page/books-main-page.component';
 
 
-
 @NgModule({
-  declarations: [BooksMainPageComponent],
+  declarations: [
+    BooksMainPageComponent,
+  ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+  ],
 })
 export class BooksModule { }
