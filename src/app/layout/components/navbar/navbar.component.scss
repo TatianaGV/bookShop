@@ -1,11 +1,16 @@
 .navbar {
+  position: fixed;
+  top: 0;
   display: flex;
   flex: 1;
   align-items: center;
-  margin: 24px 40px;
+  height: 68px;
+  width: 100%;
+  padding: 0 24px;
+  background-color: #84F9A4;
 
   .logo {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 800;
     color: black;
     display: inline-block;
@@ -19,7 +24,8 @@
 
     .menu-books,
     .menu-authors {
-      color: lightseagreen;
+      font-size: 18px;
+      color: black;
       display: inline-block;
       cursor: pointer;
       margin-right: 24px;
@@ -28,7 +34,8 @@
   }
 
   .menu-log {
-    color: lightseagreen;
+    font-size: 18px;
+    color: black;
     display: inline-block;
     cursor: pointer;
     margin-right: 24px;
