@@ -1,0 +1,43 @@
+.landing {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .picture {
+    width: 500px;
+    height: 500px;
+  }
+
+  .info {
+
+    .banner {
+      display: inline-block;
+      line-height: 72px;
+      font-size: 64px;
+      font-weight: bold;
+      margin-bottom: 24px;
+    }
+
+    .info-books {
+      display: inline-block;
+      line-height: 32px;
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 48px;
+    }
+
+    .find-book {
+      cursor: pointer;
+      border: none;
+      background-color: #Ff5678;
+      color: #fdf7f6;
+      min-height: 48px;
+      min-width: 120px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 24px;
+      text-align: center;
+    }
+  }
+}

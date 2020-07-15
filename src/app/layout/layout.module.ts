@@ -7,6 +7,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { FooterComponent } from './components/footer/footer.component';
 
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
@@ -18,6 +21,8 @@ import { FooterComponent } from './components/footer/footer.component';
   imports: [
     CommonModule,
     RouterModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   exports: [
     LayoutComponent,

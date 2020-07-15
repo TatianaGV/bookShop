@@ -5,7 +5,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AuthorsListComponent } from './components/authors-list/authors-list.component';
 import { AuthorsRoutingModule } from './authors-routing.module';
-import { FilterPanelComponent } from './components/filter-panel/filter-panel.component';
+import { AuthorsPanelsComponent } from './components/authors-panels/authors-panels.component';
 
 import { MatIconModule } from '@angular/material/icon';
 
@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
     AuthorsListComponent,
-    FilterPanelComponent,
+    AuthorsPanelsComponent,
   ],
   imports: [
     CommonModule,

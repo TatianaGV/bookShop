@@ -1,0 +1,41 @@
+<div class="panel">
+  <div class="filter-panel">
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="panelOpenState"
+                           (opened)="panelOpenState = true"
+                           (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Books
+          </mat-panel-title>
+          <mat-panel-description>
+            Filter by books
+            <mat-icon>library_books</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>I'm visible because I am open</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <div class="data-panel">
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="panelTwoOpenState"
+                           (opened)="panelTwoOpenState = true"
+                           (closed)="panelTwoOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Info
+          </mat-panel-title>
+          <mat-panel-description>
+            Info about books
+            <mat-icon>addchart</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>I'm visible because I am open</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
+
+
