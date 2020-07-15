@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LayoutComponent } from './layout/layout.component';
+import { LayoutComponent } from './layout/components/layout/layout.component';
 import { MainPageComponent } from './layout/components/main-page/main-page.component';
-import { AuthorsMainPageComponent } from './authors/component/authors-main-page/authors-main-page.component';
-import { BooksMainPageComponent } from './books/component/books-main-page/books-main-page.component';
 
 
 const routes: Routes = [
@@ -14,11 +12,17 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/', pathMatch: 'full' },
       { path: '', component: MainPageComponent },
-      { path: 'authors', component: AuthorsMainPageComponent },
-      { path: 'books', component: BooksMainPageComponent },
+      {
+        path: 'authors',
+        loadChildren: () => import('./authors/authors.module')
+          .then((m) => m.AuthorsModule),
+      },
+      { path: 'books',
+        loadChildren: () => import('./books/books.module')
+          .then((m) => m.BooksModule),
+      },
     ],
   },
-
 ];
 
 @NgModule({
