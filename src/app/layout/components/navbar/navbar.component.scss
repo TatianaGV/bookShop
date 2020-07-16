@@ -24,12 +24,17 @@
 
     .menu-books,
     .menu-authors {
-      font-size: 18px;
-      color: black;
+      font-size: 14px;
+      color: #9a9a9a;
+      font-weight: 700;
       display: inline-block;
       cursor: pointer;
       margin-right: 24px;
       text-decoration: none;
+
+      &:hover {
+        color: black;
+      }
     }
   }
 
@@ -42,4 +47,3 @@
     text-decoration: none;
   }
 }
-

@@ -1,6 +1,7 @@
 import { NgModule, LOCALE_ID, DEFAULT_CURRENCY_CODE } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
+import { HttpClientModule } from '@angular/common/http';
 
 registerLocaleData(localeRu);
 
@@ -8,6 +9,7 @@ registerLocaleData(localeRu);
   declarations: [],
   imports: [
     CommonModule,
+    HttpClientModule,
   ],
   providers: [
     {

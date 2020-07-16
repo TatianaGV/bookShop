@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { IDataBooks } from '../../../core/interfaces/books-interface';
+import { IDataBooks } from '../../../core/interfaces/books.interface';
 
 const DATA_BOOKS: IDataBooks[] = [
   { id: 1,
