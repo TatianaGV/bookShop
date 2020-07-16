@@ -8,12 +8,14 @@ import { AuthorsRoutingModule } from './authors-routing.module';
 import { AuthorsPanelsComponent } from './components/authors-panels/authors-panels.component';
 
 import { MatIconModule } from '@angular/material/icon';
+import { AuthorsTableComponent } from './components/authors-table/authors-table.component';
 
 
 @NgModule({
   declarations: [
     AuthorsListComponent,
     AuthorsPanelsComponent,
+    AuthorsTableComponent,
   ],
   imports: [
     CommonModule,
