@@ -10,6 +10,7 @@ import { BooksPanelsComponent } from './components/books-panels/books-panels.com
 import { BooksTableComponent } from './components/books-table/books-table.component';
 
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { MatTableModule } from '@angular/material/table';
     MatExpansionModule,
     MatIconModule,
     MatTableModule,
+    MatPaginatorModule,
   ],
 })
 export class BooksModule { }

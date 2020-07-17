@@ -25,8 +25,8 @@ export class AuthorsTableComponent implements OnInit {
   public getAllAuthors(): void {
     this._authorsService
       .getAllAuthors()
-      .subscribe((items: IAuthorsResponse) => {
-        this.dataSource = items.authors;
+      .subscribe((response: IAuthorsResponse) => {
+        this.dataSource = response.authors;
       });
   }
 
