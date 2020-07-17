@@ -9,6 +9,7 @@ import { AuthorsListComponent } from './components/authors-list/authors-list.com
 import { AuthorsRoutingModule } from './authors-routing.module';
 import { AuthorsPanelsComponent } from './components/authors-panels/authors-panels.component';
 import { AuthorsTableComponent } from './components/authors-table/authors-table.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { AuthorsTableComponent } from './components/authors-table/authors-table.
     MatExpansionModule,
     MatIconModule,
     MatTableModule,
+    MatPaginatorModule,
   ],
 })
 export class AuthorsModule { }
