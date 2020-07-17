@@ -9,14 +9,9 @@ import { AuthorsDataServices } from '../../../core/data/authors.data';
 })
 export class AuthorsListComponent implements OnInit {
 
-  constructor(private _authorsServices: AuthorsDataServices) { }
+  constructor() {}
 
   public ngOnInit(): void {
-    const data = this._authorsServices
-      .getAllAuthors()
-      .subscribe((resp) => {
-        console.log(resp);
-      });
   }
 
 }

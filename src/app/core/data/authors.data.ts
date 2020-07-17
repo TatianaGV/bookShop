@@ -1,27 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { map } from 'rxjs/operators';
-import { IDataAuthors } from '../interfaces/authors.interface';
+import { Meta } from '@angular/platform-browser';
+
 import { Observable } from 'rxjs';
+
+import { environment } from '../../../environments/environment';
+import { IDataAuthors } from '../interfaces/authors.interface';
+
+
+export interface IAuthorsResponse {
+  authors: IDataAuthors[];
+  meta: Meta;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthorsDataServices {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(
+    private _http: HttpClient,
+  ) {}
 
-  public getAllAuthors(): Observable<IDataAuthors[]> {
-    return this.http
-      .get(`${environment.apiUrl}/authors`)
-      .pipe(map((resp: any) => {
-        return {
-          ...resp,
-        };
-      }),
-      );
+  public getAllAuthors(): Observable<IAuthorsResponse> {
+    return this._http
+      .get<IAuthorsResponse>(`${environment.apiUrl}/authors`);
   }
 
 }

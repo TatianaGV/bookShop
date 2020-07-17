@@ -1,10 +1,13 @@
 export interface IDataBooks {
   id: number;
   description: string;
-  authorId: number;
+  author_id: number;
   title: string;
   price: number;
-  genres: string;
-  writingDate: string;
-  releaseDate: string;
+  genres: [{
+    id: number;
+    name: string;
+  }];
+  writing_date: string;
+  release_date: string;
 }
