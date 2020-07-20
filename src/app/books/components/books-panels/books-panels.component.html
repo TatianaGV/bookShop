@@ -28,12 +28,13 @@
             Info
           </mat-panel-title>
           <mat-panel-description>
-            Info about books
-            <a href="#" [routerLink]="['/books', 'create']" class="link-create">
+            <span class="info">Info about books</span>
+            <button mat-icon-button [routerLink]="['/books', 'create']">
               <mat-icon>addchart</mat-icon>
-            </a>
+            </button>
           </mat-panel-description>
         </mat-expansion-panel-header>
+
           <app-books-table></app-books-table>
       </mat-expansion-panel>
     </mat-accordion>

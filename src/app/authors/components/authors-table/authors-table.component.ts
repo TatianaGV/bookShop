@@ -19,6 +19,7 @@ export class AuthorsTableComponent implements OnInit {
     'id',
     'firstName',
     'lastName',
+    'menu',
   ];
 
   public dataSource: IDataAuthors[] = [];

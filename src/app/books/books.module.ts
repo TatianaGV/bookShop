@@ -15,6 +15,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { BooksFilterComponent } from './components/books-filter/books-filter.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BooksCreatePageComponent } from './components/books-create-page/books-create-page.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import { BooksCreatePageComponent } from './components/books-create-page/books-c
     MatPaginatorModule,
     MatChipsModule,
     ReactiveFormsModule,
+    MatButtonModule,
+    MatMenuModule,
   ],
 })
 export class BooksModule { }

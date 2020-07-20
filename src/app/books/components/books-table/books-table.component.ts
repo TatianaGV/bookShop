@@ -25,6 +25,7 @@ export class BooksTableComponent implements OnInit {
     'genres',
     'writingDate',
     'releaseDate',
+    'menu',
   ];
 
   public dataSource: IDataBooks[] = [];

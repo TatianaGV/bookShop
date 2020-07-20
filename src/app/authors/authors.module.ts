@@ -12,6 +12,8 @@ import { AuthorsTableComponent } from './components/authors-table/authors-table.
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AuthorsFilterComponent } from './components/authors-filter/authors-filter.component';
 import { AuthorsCreatePageComponent } from './components/authors-create-page/authors-create-page.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -29,6 +31,8 @@ import { AuthorsCreatePageComponent } from './components/authors-create-page/aut
     MatIconModule,
     MatTableModule,
     MatPaginatorModule,
+    MatButtonModule,
+    MatMenuModule,
   ],
 })
 export class AuthorsModule { }
