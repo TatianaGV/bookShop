@@ -10,6 +10,7 @@ import { AuthorsRoutingModule } from './authors-routing.module';
 import { AuthorsPanelsComponent } from './components/authors-panels/authors-panels.component';
 import { AuthorsTableComponent } from './components/authors-table/authors-table.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { AuthorsFilterComponent } from './components/authors-filter/authors-filter.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     AuthorsListComponent,
     AuthorsPanelsComponent,
     AuthorsTableComponent,
+    AuthorsFilterComponent,
   ],
   imports: [
     CommonModule,

@@ -13,7 +13,7 @@
             <mat-icon>library_books</mat-icon>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <p>I'm visible because I am open</p>
+        <app-books-filter></app-books-filter>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
@@ -29,7 +29,9 @@
           </mat-panel-title>
           <mat-panel-description>
             Info about books
-            <mat-icon>addchart</mat-icon>
+            <a href="#" [routerLink]="['/books', 'create']" class="link-create">
+              <mat-icon>addchart</mat-icon>
+            </a>
           </mat-panel-description>
         </mat-expansion-panel-header>
           <app-books-table></app-books-table>

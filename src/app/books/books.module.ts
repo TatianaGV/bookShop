@@ -12,6 +12,9 @@ import { BooksTableComponent } from './components/books-table/books-table.compon
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
+import { BooksFilterComponent } from './components/books-filter/books-filter.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BooksCreateItemComponent } from './components/books-create-item/books-create-item.component';
 
 
 @NgModule({
@@ -19,6 +22,8 @@ import { MatChipsModule } from '@angular/material/chips';
     BooksListComponent,
     BooksPanelsComponent,
     BooksTableComponent,
+    BooksFilterComponent,
+    BooksCreateItemComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +33,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatTableModule,
     MatPaginatorModule,
     MatChipsModule,
+    ReactiveFormsModule,
   ],
 })
 export class BooksModule { }
