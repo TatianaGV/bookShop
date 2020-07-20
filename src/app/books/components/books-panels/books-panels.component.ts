@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class BooksPanelsComponent implements OnInit {
 
   public panelOpenState = true;
-  public panelTwoOpenState = false;
+  public panelTwoOpenState = true;
 
   constructor() { }
 

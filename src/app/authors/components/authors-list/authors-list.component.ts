@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthorsDataServices } from '../../../core/data/authors.data';
 
 @Component({
   selector: 'app-authors-main-page',

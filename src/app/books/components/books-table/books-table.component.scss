@@ -2,7 +2,28 @@ table {
   width: 100%;
 }
 
-.mat-column-description {
+.mat-row {
   padding: 10px 10px;
-  width: 40%;
+}
+
+.mat-column-id, .mat-column-authorId {
+  width: 50px;
+  padding-right: 10px;
+}
+
+.mat-column-price, .mat-column-writingDate, .mat-column-releaseDate {
+  width: 150px;
+  padding-right: 10px;
+}
+
+.mat-column-genres {
+  padding: 10px 10px;
+}
+
+.mat-column-title {
+  padding-right: 10px;
+}
+
+.mat-column-description {
+  padding: 10px;
 }

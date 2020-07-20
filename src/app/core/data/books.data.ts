@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Meta } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { IDataBooks } from '../interfaces/books.interface';
+import { IMetaData } from '../interfaces/meta.interface';
 
-export interface IBooksResponce {
+export interface IBooksResponse {
   books: IDataBooks[];
-  meta: Meta;
+  meta: IMetaData;
 }
 
 @Injectable({
@@ -21,9 +21,14 @@ export class BooksDataServices {
     private _http: HttpClient,
   ) {}
 
-  public getAllBooks(): Observable<IBooksResponce> {
+  public getAllBooks(
+    params: { page: number; limit: number },
+    ): Observable<IBooksResponse> {
     return this._http
-      .get<IBooksResponce>(`${environment.apiUrl}/books`);
+      .get<IBooksResponse>(
+        `${environment.apiUrl}/books`,
+        { params: <any>params },
+      );
   }
 
 }

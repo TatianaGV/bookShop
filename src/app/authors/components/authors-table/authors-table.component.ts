@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { IDataAuthors } from '../../../core/interfaces/authors.interface';
 import { AuthorsDataServices, IAuthorsResponse } from '../../../core/data/authors.data';
+import { IMetaData } from '../../../core/interfaces/meta.interface';
+import { PageEvent } from '@angular/material/paginator';
 
 
 @Component({
@@ -11,8 +13,13 @@ import { AuthorsDataServices, IAuthorsResponse } from '../../../core/data/author
 })
 export class AuthorsTableComponent implements OnInit {
 
-  public displayedColumns: string[] =
-    ['id', 'firstName', 'lastName'];
+  public meta: IMetaData;
+
+  public displayedColumns: string[] = [
+    'id',
+    'firstName',
+    'lastName',
+  ];
 
   public dataSource: IDataAuthors[] = [];
 
@@ -24,10 +31,17 @@ export class AuthorsTableComponent implements OnInit {
 
   public getAllAuthors(): void {
     this._authorsService
-      .getAllAuthors()
+      .getAllAuthors(this.meta)
       .subscribe((response: IAuthorsResponse) => {
+        this.meta = response.meta;
         this.dataSource = response.authors;
       });
+  }
+
+  public changeStateInPaginator(event: PageEvent): void {
+    this.meta.page = event.pageIndex + 1;
+    this.meta.limit = event.pageSize;
+    this.getAllAuthors();
   }
 
 }

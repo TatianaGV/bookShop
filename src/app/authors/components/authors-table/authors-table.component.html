@@ -19,8 +19,9 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<mat-paginator [length]="50"
-               [pageSize]="10"
+<mat-paginator (page)="changeStateInPaginator($event)"
+               [length]="meta?.records"
+               [pageSize]="meta?.limit"
                [pageSizeOptions]="[5, 10, 15]">
 </mat-paginator>
 

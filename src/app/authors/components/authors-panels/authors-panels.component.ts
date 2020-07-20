@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class AuthorsPanelsComponent implements OnInit {
 
   public panelOpenState = true;
-  public panelTwoOpenState = false;
+  public panelTwoOpenState = true;
 
   constructor() { }
 

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { IDataBooks } from '../../../core/interfaces/books.interface';
-import { BooksDataServices, IBooksResponce } from '../../../core/data/books.data';
+import { BooksDataServices, IBooksResponse } from '../../../core/data/books.data';
+import { IMetaData } from '../../../core/interfaces/meta.interface';
+import { PageEvent } from '@angular/material/paginator';
 
 
 @Component({
@@ -12,8 +14,18 @@ import { BooksDataServices, IBooksResponce } from '../../../core/data/books.data
 
 export class BooksTableComponent implements OnInit {
 
-  public displayedColumns: string[] =
-    ['id', 'description', 'authorId', 'title', 'price', 'genres', 'writingDate', 'releaseDate'];
+  public meta: IMetaData;
+
+  public displayedColumns: string[] = [
+    'id',
+    'description',
+    'authorId',
+    'title',
+    'price',
+    'genres',
+    'writingDate',
+    'releaseDate',
+  ];
 
   public dataSource: IDataBooks[] = [];
 
@@ -25,9 +37,17 @@ export class BooksTableComponent implements OnInit {
 
   public getAllBooks(): void {
     this._booksService
-      .getAllBooks()
-      .subscribe((response: IBooksResponce) => {
+      .getAllBooks(this.meta)
+      .subscribe((response: IBooksResponse) => {
+        this.meta = response.meta;
         this.dataSource = response.books;
       });
   }
+
+  public changeStateInPaginator(event: PageEvent): void {
+    this.meta.page = event.pageIndex + 1;
+    this.meta.limit = event.pageSize;
+    this.getAllBooks();
+  }
+
 }

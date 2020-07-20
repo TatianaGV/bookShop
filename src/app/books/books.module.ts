@@ -11,6 +11,7 @@ import { BooksTableComponent } from './components/books-table/books-table.compon
 
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatIconModule,
     MatTableModule,
     MatPaginatorModule,
+    MatChipsModule,
   ],
 })
 export class BooksModule { }
