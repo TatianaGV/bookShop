@@ -14,7 +14,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
 import { BooksFilterComponent } from './components/books-filter/books-filter.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BooksCreateItemComponent } from './components/books-create-item/books-create-item.component';
+import { BooksCreatePageComponent } from './components/books-create-page/books-create-page.component';
 
 
 @NgModule({
@@ -23,7 +23,7 @@ import { BooksCreateItemComponent } from './components/books-create-item/books-c
     BooksPanelsComponent,
     BooksTableComponent,
     BooksFilterComponent,
-    BooksCreateItemComponent,
+    BooksCreatePageComponent,
   ],
   imports: [
     CommonModule,

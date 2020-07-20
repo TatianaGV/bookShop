@@ -29,7 +29,9 @@
           </mat-panel-title>
           <mat-panel-description>
             Info about authors
-            <mat-icon>addchart</mat-icon>
+            <a href="#" [routerLink]="['/authors', 'create']" class="link-create">
+              <mat-icon>addchart</mat-icon>
+            </a>
           </mat-panel-description>
         </mat-expansion-panel-header>
         <app-authors-table></app-authors-table>

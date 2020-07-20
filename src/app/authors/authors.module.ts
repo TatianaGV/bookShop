@@ -11,6 +11,7 @@ import { AuthorsPanelsComponent } from './components/authors-panels/authors-pane
 import { AuthorsTableComponent } from './components/authors-table/authors-table.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AuthorsFilterComponent } from './components/authors-filter/authors-filter.component';
+import { AuthorsCreatePageComponent } from './components/authors-create-page/authors-create-page.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { AuthorsFilterComponent } from './components/authors-filter/authors-filt
     AuthorsPanelsComponent,
     AuthorsTableComponent,
     AuthorsFilterComponent,
+    AuthorsCreatePageComponent,
   ],
   imports: [
     CommonModule,

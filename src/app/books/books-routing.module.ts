@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { BooksListComponent } from './components/books-list/books-list.component';
-import { BooksCreateItemComponent } from './components/books-create-item/books-create-item.component';
+import { BooksCreatePageComponent } from './components/books-create-page/books-create-page.component';
 import { BooksPanelsComponent } from './components/books-panels/books-panels.component';
 
 
@@ -18,7 +18,7 @@ const routes: Routes = [
         path: '', component: BooksPanelsComponent,
       },
       {
-        path: 'create', component: BooksCreateItemComponent,
+        path: 'create', component: BooksCreatePageComponent,
       },
     ],
   },
