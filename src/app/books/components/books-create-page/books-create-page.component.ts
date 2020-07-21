@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AuthorsDataServices, IAuthorsResponse } from '../../../core/data/authors.data';
@@ -7,10 +7,13 @@ import { IMetaData } from '../../../core/interfaces/meta.interface';
 import { GenresDataServices, IGenresResponse } from '../../../core/data/genres.data';
 import { IDataGenres } from '../../../core/interfaces/genres.interface';
 
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+
 export interface IBookCreation {
   title?: string;
   author?: IDataAuthors;
-  genres?: IDataGenres;
+  genres?: IDataGenres[];
   description?: string;
   price?: number;
   writingDate?: string;
@@ -24,18 +27,29 @@ export interface IBookCreation {
 })
 export class BooksCreatePageComponent implements OnInit {
 
+  public separatorKeysCodes: number[] = [ENTER, COMMA];
+  public booksForm: FormGroup;
+
   public allAuthors: IDataAuthors[] = [];
   public allGenres: IDataGenres[] = [];
 
-  public meta: IMetaData = {};
+  public selectableGenres: IDataGenres[] = [];
 
-  public booksForm: FormGroup;
+  public meta: IMetaData = {};
   public formData: IBookCreation = {};
+
+  @ViewChild('genresInput')
+  public genresInput: ElementRef<HTMLInputElement>;
+
+  @ViewChild('auto')
+  public matAutocomplete: MatAutocomplete;
+
 
   constructor(
     private _authorService: AuthorsDataServices,
     private _genresService: GenresDataServices,
-    ) { }
+    ) {
+  }
 
   public ngOnInit(): void {
     this._initForm();
@@ -43,29 +57,23 @@ export class BooksCreatePageComponent implements OnInit {
     this.getAllGenres();
   }
 
-  public submit(): void {
-    if (this.booksForm.invalid) {
-      console.log('invalid form');
-
-      return;
+  public remove(fruit: IDataGenres): void {
+    const index = this.selectableGenres.indexOf(fruit);
+    if (index >= 0) {
+      this.selectableGenres.splice(index, 1);
     }
-    this.formData = {
-      title: this.booksForm.value.title,
-      description: this.booksForm.value.description,
-      price: this.booksForm.value.price,
-      author: this.booksForm.value.author,
-      genres: this.booksForm.value.genres,
-      writingDate: this.booksForm.value.writingDate,
-      releaseDate: this.booksForm.value.releaseDate,
-    };
-    console.log(this.formData);
+  }
+
+  public selected(event: MatAutocompleteSelectedEvent): void {
+    this.selectableGenres.push(event.option.value);
+    this.genresInput.nativeElement.value = '';
   }
 
   public getAllAuthors(): void {
     this._authorService
       .getAllAuthors(this.meta)
-      .subscribe((responce: IAuthorsResponse) => {
-        this.allAuthors = responce.authors;
+      .subscribe((response: IAuthorsResponse) => {
+        this.allAuthors = response.authors;
       });
   }
 
@@ -75,9 +83,24 @@ export class BooksCreatePageComponent implements OnInit {
     };
     this._genresService
       .getAllGenres(this.meta)
-      .subscribe((responce: IGenresResponse) => {
-        this.allGenres = responce.genres;
+      .subscribe((response: IGenresResponse) => {
+        this.allGenres = response.genres;
       });
+  }
+
+  public submit(): void {
+    if (this.booksForm.invalid) {
+      return;
+    }
+    this.formData = {
+      title: this.booksForm.value.title,
+      description: this.booksForm.value.description,
+      price: this.booksForm.value.price,
+      author: this.booksForm.value.author,
+      genres: this.selectableGenres,
+      writingDate: this.booksForm.value.writingDate,
+      releaseDate: this.booksForm.value.releaseDate,
+    };
   }
 
   private _initForm(): void {
@@ -98,6 +121,5 @@ export class BooksCreatePageComponent implements OnInit {
       ]),
     });
   }
-
 
 }

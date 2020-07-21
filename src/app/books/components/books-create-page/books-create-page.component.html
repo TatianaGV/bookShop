@@ -17,16 +17,31 @@
         </mat-select>
       </mat-form-field>
       <br>
-      <mat-form-field appearance="fill">
-        <mat-label>Genres</mat-label>
-        <mat-select formControlName="genres">
-          <span >
-            <mat-option *ngFor="let genre of allGenres"
-                        [value]="genre.name">
-              {{ genre.name }}
-            </mat-option>
-          </span>
-        </mat-select>
+      <mat-form-field class="example-chip-list">
+        <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip
+            *ngFor="let genre of selectableGenres"
+            [selectable]="true"
+            [removable]="true"
+            (removed)="remove(genre)">
+            {{ genre.name }}
+            <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder="Genres"
+            #genresInput
+            formControlName="genres"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete"
+                          (optionSelected)="selected($event)">
+          <mat-option *ngFor="let genre of allGenres"
+                      [value]="genre">
+            {{ genre.name }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
       <br>
       <mat-form-field appearance="fill">
@@ -66,5 +81,6 @@
     </form>
   </mat-card-content>
 </mat-card>
-
-
+<pre>
+  {{formData | json}}
+</pre>
