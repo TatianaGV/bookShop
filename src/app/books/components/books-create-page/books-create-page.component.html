@@ -1,1 +1,66 @@
-<p>books-create-item works!</p>
+<mat-card>
+  <mat-card-content>
+    <h2 class="title"> Сreate new item </h2>
+    <form class="page-creator" [formGroup]="booksForm" (ngSubmit)="submit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input type="text" name="title-books" matInput required>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Author</mat-label>
+        <mat-select required>
+          <span *ngFor="let author of allAuthors">
+            <mat-option value="option">{{ author.first_name }} {{ author.last_name }}</mat-option>
+          </span>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Genres</mat-label>
+        <mat-select required>
+          <span *ngFor="let genre of allGenres">
+            <mat-option value="option">{{ genre.name }}</mat-option>
+          </span>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput required></textarea>
+      </mat-form-field>
+      <br>
+      <div class="price-container">
+        <mat-form-field appearance="fill">
+          <mat-label>Price</mat-label>
+          <input type="number" name="price-book" matInput required>
+        </mat-form-field>
+      </div>
+      <br>
+      <div class="date-container">
+        <mat-form-field appearance="fill">
+          <mat-label>Writing Date</mat-label>
+          <input name="date" matInput [matDatepicker]="picker" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Release Date</mat-label>
+          <input name="date" matInput [matDatepicker]="picker1" required>
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <br>
+      <div class="form-btn">
+        <button
+          class="submit-btn"
+          type="submit"
+        >Save</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+

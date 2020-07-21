@@ -22,7 +22,7 @@ export class BooksDataServices {
   ) {}
 
   public getAllBooks(
-    params: { page: number; limit: number },
+    params: IMetaData,
     ): Observable<IBooksResponse> {
     return this._http
       .get<IBooksResponse>(
