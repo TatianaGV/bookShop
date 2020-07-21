@@ -4,50 +4,54 @@
     <form class="page-creator" [formGroup]="booksForm" (ngSubmit)="submit()">
       <mat-form-field appearance="fill">
         <mat-label>Title</mat-label>
-        <input type="text" name="title-books" matInput required>
+        <input type="text" name="title-books" matInput formControlName="title">
       </mat-form-field>
       <br>
       <mat-form-field appearance="fill">
         <mat-label>Author</mat-label>
-        <mat-select required>
-          <span *ngFor="let author of allAuthors">
-            <mat-option value="option">{{ author.first_name }} {{ author.last_name }}</mat-option>
-          </span>
+        <mat-select formControlName="author">
+          <mat-option *ngFor="let author of allAuthors"
+                      [value]="author">
+            {{ author.first_name }} {{ author.last_name }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
       <br>
       <mat-form-field appearance="fill">
         <mat-label>Genres</mat-label>
-        <mat-select required>
-          <span *ngFor="let genre of allGenres">
-            <mat-option value="option">{{ genre.name }}</mat-option>
+        <mat-select formControlName="genres">
+          <span >
+            <mat-option *ngFor="let genre of allGenres"
+                        [value]="genre.name">
+              {{ genre.name }}
+            </mat-option>
           </span>
         </mat-select>
       </mat-form-field>
       <br>
       <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
-        <textarea matInput required></textarea>
+        <textarea matInput formControlName="description"></textarea>
       </mat-form-field>
       <br>
       <div class="price-container">
         <mat-form-field appearance="fill">
           <mat-label>Price</mat-label>
-          <input type="number" name="price-book" matInput required>
+          <input type="number" name="price-book" matInput formControlName="price">
         </mat-form-field>
       </div>
       <br>
       <div class="date-container">
         <mat-form-field appearance="fill">
           <mat-label>Writing Date</mat-label>
-          <input name="date" matInput [matDatepicker]="picker" required>
+          <input name="date" matInput [matDatepicker]="picker" formControlName="writingDate">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <br>
         <mat-form-field appearance="fill">
           <mat-label>Release Date</mat-label>
-          <input name="date" matInput [matDatepicker]="picker1" required>
+          <input name="date" matInput [matDatepicker]="picker1" formControlName="releaseDate">
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>

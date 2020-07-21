@@ -7,6 +7,15 @@ import { IMetaData } from '../../../core/interfaces/meta.interface';
 import { GenresDataServices, IGenresResponse } from '../../../core/data/genres.data';
 import { IDataGenres } from '../../../core/interfaces/genres.interface';
 
+export interface IBookCreation {
+  title?: string;
+  author?: IDataAuthors;
+  genres?: IDataGenres;
+  description?: string;
+  price?: number;
+  writingDate?: string;
+  releaseDate?: string;
+}
 
 @Component({
   selector: 'app-books-create-item',
@@ -21,6 +30,7 @@ export class BooksCreatePageComponent implements OnInit {
   public meta: IMetaData = {};
 
   public booksForm: FormGroup;
+  public formData: IBookCreation = {};
 
   constructor(
     private _authorService: AuthorsDataServices,
@@ -34,7 +44,21 @@ export class BooksCreatePageComponent implements OnInit {
   }
 
   public submit(): void {
+    if (this.booksForm.invalid) {
+      console.log('invalid form');
 
+      return;
+    }
+    this.formData = {
+      title: this.booksForm.value.title,
+      description: this.booksForm.value.description,
+      price: this.booksForm.value.price,
+      author: this.booksForm.value.author,
+      genres: this.booksForm.value.genres,
+      writingDate: this.booksForm.value.writingDate,
+      releaseDate: this.booksForm.value.releaseDate,
+    };
+    console.log(this.formData);
   }
 
   public getAllAuthors(): void {
@@ -59,25 +83,18 @@ export class BooksCreatePageComponent implements OnInit {
   private _initForm(): void {
     this.booksForm = new FormGroup({
       title: new FormControl(null, [
-        Validators.required,
       ]),
       author: new FormControl(null, [
-        Validators.required,
       ]),
       genres: new FormControl(null, [
-        Validators.required,
       ]),
       description: new FormControl(null, [
-        Validators.required,
       ]),
       price: new FormControl(null, [
-        Validators.required,
       ]),
-      writeDate: new FormControl(null, [
-        Validators.required,
+      writingDate: new FormControl(null, [
       ]),
-      releasDate: new FormControl(null, [
-        Validators.required,
+      releaseDate: new FormControl(null, [
       ]),
     });
   }
