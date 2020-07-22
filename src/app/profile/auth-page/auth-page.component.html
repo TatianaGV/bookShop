@@ -1,1 +1,49 @@
-<p>page works!</p>
+<div class="page">
+<div class="pic-container">
+  <img src="assets/pic/1.svg" alt="no pic" class="pic-auth">
+</div>
+
+<mat-card>
+  <mat-card-content>
+    <h2 class="title"> Log in </h2>
+    <form class="page-auth" [formGroup]="authPageForm" (ngSubmit)="submit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Login</mat-label>
+        <input type="text"
+               name="login"
+               matInput
+               formControlName="login"
+               required>
+        <mat-error *ngIf="authPageForm.get('login').errors?.required">
+          Input the login
+        </mat-error>
+        <mat-error *ngIf="authPageForm.get('login').errors?.minlength">
+          The login name is too small
+        </mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input type="password"
+               name="password"
+               matInput
+               formControlName="password"
+               required>
+        <mat-error *ngIf="authPageForm.get('password').errors?.required">
+          Input the password
+        </mat-error>
+        <mat-error *ngIf="authPageForm.get('password').errors?.minlength">
+          The password is too small
+        </mat-error>
+      </mat-form-field>
+      <br>
+      <button
+        class="submit"
+        type="submit"
+      >Log in</button>
+    </form>
+    <br>
+    <a class="restore-pwd"> Forgot the password? </a>
+  </mat-card-content>
+</mat-card>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { IDataAuthors } from '../../../core/interfaces/authors.interface';
 
 @Component({
@@ -33,8 +33,12 @@ export class AuthorsCreatePageComponent implements OnInit {
   private _initForm(): void {
     this.authorForm = new FormGroup({
       firstName: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
       ]),
       lastName: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
       ]),
     });
   }

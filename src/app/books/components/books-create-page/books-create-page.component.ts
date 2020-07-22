@@ -11,16 +11,8 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { IBookCreation } from '../../../core/interfaces/book-form.interface';
 
-export interface IBookCreation {
-  title?: string;
-  author?: IDataAuthors;
-  genres?: IDataGenres[];
-  description?: string;
-  price?: number;
-  writingDate?: string;
-  releaseDate?: string;
-}
 
 @Component({
   selector: 'app-books-create-item',
@@ -30,6 +22,7 @@ export interface IBookCreation {
 export class BooksCreatePageComponent implements OnInit {
 
   public separatorKeysCodes: number[] = [ENTER, COMMA];
+  public priceValidator = '^\\d+(?:[.,]\\d{1,2})*$';
   public booksForm: FormGroup;
   public authorControl = new FormControl();
 
@@ -93,6 +86,13 @@ export class BooksCreatePageComponent implements OnInit {
     return `${value.first_name} ${value.last_name}`;
   }
 
+  public checkDate(): boolean {
+    const writingDate = this.booksForm.value.writingDate;
+    const releaseDate = this.booksForm.value.releaseDate;
+
+    return writingDate < releaseDate;
+  }
+
   public getAllAuthors(): void {
     this._authorService
       .getAllAuthors(this.meta)
@@ -114,34 +114,50 @@ export class BooksCreatePageComponent implements OnInit {
 
   public submit(): void {
     if (this.booksForm.invalid) {
+      console.log('invalid');
       return;
     }
-    this.bookFormData = {
-      title: this.booksForm.value.title,
-      description: this.booksForm.value.description,
-      price: this.booksForm.value.price,
-      author: this.booksForm.value.author,
-      genres: this.selectableGenres,
-      writingDate: this.booksForm.value.writingDate,
-      releaseDate: this.booksForm.value.releaseDate,
-    };
+    if (this.checkDate()) {
+      this.bookFormData = {
+        title: this.booksForm.value.title,
+        description: this.booksForm.value.description,
+        price: this.booksForm.value.price,
+        author: this.booksForm.value.author,
+        genres: this.selectableGenres,
+        writingDate: this.booksForm.value.writingDate,
+        releaseDate: this.booksForm.value.releaseDate,
+      };
+    } else {
+      alert('Date of release can not be early than writing date');
+    }
   }
 
   private _initForm(): void {
     this.booksForm = new FormGroup({
       title: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
       ]),
       author: new FormControl(null, [
+        Validators.required,
       ]),
       genres: new FormControl(null, [
+        Validators.required,
       ]),
       description: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(1000),
       ]),
       price: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(this.priceValidator),
       ]),
       writingDate: new FormControl(null, [
+        Validators.required,
       ]),
       releaseDate: new FormControl(null, [
+        Validators.required,
       ]),
     });
   }

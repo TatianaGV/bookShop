@@ -5,6 +5,10 @@ import { AuthPageComponent } from './auth-page/auth-page.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -15,6 +19,11 @@ import { MatDialogModule } from '@angular/material/dialog';
     ProfileRoutingModule,
     MatIconModule,
     MatDialogModule,
+    MatCardModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatInputModule,
   ],
 })
 export class ProfileModule { }
