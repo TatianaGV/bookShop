@@ -9,6 +9,8 @@ import { IDataGenres } from '../../../core/interfaces/genres.interface';
 
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 export interface IBookCreation {
   title?: string;
@@ -29,6 +31,9 @@ export class BooksCreatePageComponent implements OnInit {
 
   public separatorKeysCodes: number[] = [ENTER, COMMA];
   public booksForm: FormGroup;
+  public authorControl = new FormControl();
+
+  public filteredOptions$: Observable<IDataAuthors[]>;
 
   public allAuthors: IDataAuthors[] = [];
   public allGenres: IDataGenres[] = [];
@@ -36,13 +41,16 @@ export class BooksCreatePageComponent implements OnInit {
   public selectableGenres: IDataGenres[] = [];
 
   public meta: IMetaData = {};
-  public formData: IBookCreation = {};
+  public bookFormData: IBookCreation = {};
 
   @ViewChild('genresInput')
   public genresInput: ElementRef<HTMLInputElement>;
 
-  @ViewChild('auto')
-  public matAutocomplete: MatAutocomplete;
+  @ViewChild('autoGenres')
+  public matAutocompleteGenres: MatAutocomplete;
+
+  @ViewChild('autoAuthors')
+  public matAutocompleteAuthors: MatAutocomplete;
 
 
   constructor(
@@ -55,6 +63,12 @@ export class BooksCreatePageComponent implements OnInit {
     this._initForm();
     this.getAllAuthors();
     this.getAllGenres();
+    this.filteredOptions$ = this.authorControl.valueChanges
+      .pipe(
+        startWith(null),
+        map((value: IDataAuthors | null) =>
+          value ? this._filter(value.first_name) : this.allAuthors.slice()),
+      );
   }
 
   public remove(fruit: IDataGenres): void {
@@ -65,8 +79,18 @@ export class BooksCreatePageComponent implements OnInit {
   }
 
   public selected(event: MatAutocompleteSelectedEvent): void {
-    this.selectableGenres.push(event.option.value);
+    if (this.selectableGenres.indexOf(event.option.value) === -1) {
+      this.selectableGenres.push(event.option.value);
+    }
     this.genresInput.nativeElement.value = '';
+  }
+
+  public displayValue(value?: IDataAuthors): string {
+    if (!value) {
+      return '';
+    }
+
+    return `${value.first_name} ${value.last_name}`;
   }
 
   public getAllAuthors(): void {
@@ -92,7 +116,7 @@ export class BooksCreatePageComponent implements OnInit {
     if (this.booksForm.invalid) {
       return;
     }
-    this.formData = {
+    this.bookFormData = {
       title: this.booksForm.value.title,
       description: this.booksForm.value.description,
       price: this.booksForm.value.price,
@@ -120,6 +144,15 @@ export class BooksCreatePageComponent implements OnInit {
       releaseDate: new FormControl(null, [
       ]),
     });
+  }
+
+  private _filter(value: string): IDataAuthors[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allAuthors
+      .filter((author) => author.first_name
+        .toLowerCase()
+        .indexOf(filterValue) === 0);
   }
 
 }

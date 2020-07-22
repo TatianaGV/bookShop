@@ -4,17 +4,26 @@
     <form class="page-creator" [formGroup]="booksForm" (ngSubmit)="submit()">
       <mat-form-field appearance="fill">
         <mat-label>Title</mat-label>
-        <input type="text" name="title-books" matInput formControlName="title">
+        <input type="text"
+               name="title-books"
+               matInput
+               formControlName="title">
       </mat-form-field>
       <br>
       <mat-form-field appearance="fill">
         <mat-label>Author</mat-label>
-        <mat-select formControlName="author">
+        <input type="text"
+               name="author"
+               matInput
+               formControlName="author"
+               [formControl]="authorControl"
+               [matAutocomplete]="autoAuthors">
+        <mat-autocomplete #autoAuthors="matAutocomplete" [displayWith]="displayValue">
           <mat-option *ngFor="let author of allAuthors"
                       [value]="author">
-            {{ author.first_name }} {{ author.last_name }}
+            {{author.first_name}} {{author.last_name}}
           </mat-option>
-        </mat-select>
+        </mat-autocomplete>
       </mat-form-field>
       <br>
       <mat-form-field class="example-chip-list">
@@ -30,12 +39,11 @@
           <input
             placeholder="Genres"
             #genresInput
-            formControlName="genres"
-            [matAutocomplete]="auto"
+            [matAutocomplete]="autoGenres"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
         </mat-chip-list>
-        <mat-autocomplete #auto="matAutocomplete"
+        <mat-autocomplete #autoGenres="matAutocomplete"
                           (optionSelected)="selected($event)">
           <mat-option *ngFor="let genre of allGenres"
                       [value]="genre">
@@ -82,5 +90,5 @@
   </mat-card-content>
 </mat-card>
 <pre>
-  {{formData | json}}
+  {{bookFormData | json}}
 </pre>

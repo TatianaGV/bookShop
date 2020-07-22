@@ -14,6 +14,10 @@ import { AuthorsFilterComponent } from './components/authors-filter/authors-filt
 import { AuthorsCreatePageComponent } from './components/authors-create-page/authors-create-page.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatCardModule } from '@angular/material/card';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -33,6 +37,11 @@ import { MatMenuModule } from '@angular/material/menu';
     MatPaginatorModule,
     MatButtonModule,
     MatMenuModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
 })
 export class AuthorsModule { }
