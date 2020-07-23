@@ -32,4 +32,10 @@ export class AuthorsDataServices {
       );
   }
 
+  public saveItemAuthor(item: IDataAuthors): Observable<IDataAuthors> {
+    return this._http
+      .post<IDataAuthors>(
+        `${environment.apiUrl}/authors`, item);
+  }
+
 }

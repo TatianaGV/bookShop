@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { IDataAuthors } from '../../../core/interfaces/authors.interface';
+import { AuthorsDataServices } from '../../../core/data/authors.data';
 
 @Component({
   selector: 'app-authors-create-page',
@@ -11,9 +12,9 @@ export class AuthorsCreatePageComponent implements OnInit {
 
   public authorForm: FormGroup;
 
-  public author: IDataAuthors;
-
-  constructor() { }
+  constructor(
+    private _authorService: AuthorsDataServices,
+  ) { }
 
   public ngOnInit(): void {
     this._initForm();
@@ -23,11 +24,20 @@ export class AuthorsCreatePageComponent implements OnInit {
     if (this.authorForm.invalid) {
       return;
     }
-    this.author = {
-      id: 3,
+    const author = {
+      id: null,
       first_name: this.authorForm.value.firstName,
       last_name: this.authorForm.value.lastName,
     };
+    this.saveItemAuthor(author);
+  }
+
+  public saveItemAuthor(item : IDataAuthors): void {
+    this._authorService
+      .saveItemAuthor(item)
+      .subscribe((response) => {
+        console.log(response);
+      });
   }
 
   private _initForm(): void {

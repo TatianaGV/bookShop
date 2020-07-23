@@ -12,6 +12,8 @@ import { IDataGenres } from '../../../core/interfaces/genres.interface';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { IBookCreation } from '../../../core/interfaces/book-form.interface';
+import { IDataBooks } from '../../../core/interfaces/books.interface';
+import { BooksDataServices } from '../../../core/data/books.data';
 
 
 @Component({
@@ -48,6 +50,7 @@ export class BooksCreatePageComponent implements OnInit {
   constructor(
     private _authorService: AuthorsDataServices,
     private _genresService: GenresDataServices,
+    private _booksService: BooksDataServices,
     ) {
   }
 
@@ -108,6 +111,14 @@ export class BooksCreatePageComponent implements OnInit {
       });
   }
 
+  public saveItemBook(item: IDataBooks): void {
+    this._booksService
+      .saveItemBook(item)
+      .subscribe((response) => {
+        console.log(response);
+      });
+  }
+
   public submit(): void {
     if (this.booksForm.invalid) {
       return;
@@ -122,6 +133,8 @@ export class BooksCreatePageComponent implements OnInit {
         writingDate: this.booksForm.value.writingDate,
         releaseDate: this.booksForm.value.releaseDate,
       };
+      const item = this._prepareObjBeforeSave(this.bookFormData);
+      this.saveItemBook(item);
     } else {
       alert('Date of release can not be early than writing date');
     }
@@ -167,6 +180,21 @@ export class BooksCreatePageComponent implements OnInit {
     } else {
       return [value];
     }
+  }
+
+  private _prepareObjBeforeSave(item: IBookCreation): IDataBooks {
+    const data: IDataBooks = {
+      id: null,
+      description: item.description,
+      title: item.title,
+      author_id: item.author.id,
+      price: item.price,
+      genres: item.genres,
+      writing_date: item.writingDate,
+      release_date: item.releaseDate,
+    };
+
+    return data;
   }
 
 }
