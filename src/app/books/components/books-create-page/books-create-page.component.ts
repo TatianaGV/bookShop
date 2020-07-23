@@ -10,7 +10,7 @@ import { IDataGenres } from '../../../core/interfaces/genres.interface';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, tap, delay } from 'rxjs/operators';
 import { IBookCreation } from '../../../core/interfaces/book-form.interface';
 
 
@@ -56,11 +56,11 @@ export class BooksCreatePageComponent implements OnInit {
     this._initForm();
     this.getAllAuthors();
     this.getAllGenres();
-    this.filteredOptions$ = this.authorControl.valueChanges
+    this.filteredOptions$ = this.booksForm.get('author').valueChanges
       .pipe(
-        startWith(null),
-        map((value: IDataAuthors | null) =>
-          value ? this._filter(value.first_name) : this.allAuthors.slice()),
+        startWith(''),
+        map((value: string | null) =>
+          value ? this._filter(value) : this.allAuthors.slice()),
       );
   }
 
@@ -74,6 +74,7 @@ export class BooksCreatePageComponent implements OnInit {
   public selected(event: MatAutocompleteSelectedEvent): void {
     if (this.selectableGenres.indexOf(event.option.value) === -1) {
       this.selectableGenres.push(event.option.value);
+      this.booksForm.get('genres').setValue(this.selectableGenres);
     }
     this.genresInput.nativeElement.value = '';
   }
@@ -114,7 +115,6 @@ export class BooksCreatePageComponent implements OnInit {
 
   public submit(): void {
     if (this.booksForm.invalid) {
-      console.log('invalid');
       return;
     }
     if (this.checkDate()) {
@@ -168,7 +168,8 @@ export class BooksCreatePageComponent implements OnInit {
     return this.allAuthors
       .filter((author) => author.first_name
         .toLowerCase()
-        .indexOf(filterValue) === 0);
+        .includes(filterValue),
+      );
   }
 
 }

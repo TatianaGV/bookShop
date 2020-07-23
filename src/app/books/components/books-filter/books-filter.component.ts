@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { IDataGenres } from '../../../core/interfaces/genres.interface';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { IGenresResponse, GenresDataServices } from '../../../core/data/genres.data';
+import { IMetaData } from '../../../core/interfaces/meta.interface';
 
 @Component({
   selector: 'app-books-filter',
@@ -8,26 +13,72 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class BooksFilterComponent implements OnInit {
 
+  public separatorKeysCodes: number[] = [ENTER, COMMA];
+  public priceValidator = '^\\d+(?:[.,]\\d{1,2})*$';
+  public allGenres: IDataGenres[] = [];
+  public selectableGenres: IDataGenres[] = [];
+  public meta: IMetaData = {};
+
   public booksForm: FormGroup;
 
-  constructor() { }
+  @ViewChild('genresInput')
+  public genresInput: ElementRef<HTMLInputElement>;
+
+  constructor(
+    private _genresService: GenresDataServices,
+  ) { }
 
   public ngOnInit(): void {
-    this.booksForm = new FormGroup({
-      title: new FormControl(null, [
-      ]),
-      genres: new FormControl(null, [
-      ]),
-      author: new FormControl(null, [
-      ]),
-      price: new FormControl(null, [
-      ]),
-      writeData: new FormControl(null, [
-      ]),
-    });
+    this._initForm();
+    this.getAllGenres();
   }
 
   public submit(): void {
+  }
+
+  public selected(event: MatAutocompleteSelectedEvent): void {
+    if (this.selectableGenres.indexOf(event.option.value) === -1) {
+      this.selectableGenres.push(event.option.value);
+    }
+    this.genresInput.nativeElement.value = '';
+  }
+
+  public remove(fruit: IDataGenres): void {
+    const index = this.selectableGenres.indexOf(fruit);
+    if (index >= 0) {
+      this.selectableGenres.splice(index, 1);
+    }
+  }
+
+  public getAllGenres(): void {
+    this.meta = {
+      limit: 100,
+    };
+    this._genresService
+      .getAllGenres(this.meta)
+      .subscribe((response: IGenresResponse) => {
+        this.allGenres = response.genres;
+      });
+  }
+
+  private _initForm(): void {
+    this.booksForm = new FormGroup({
+      title: new FormControl(null, [
+        Validators.minLength(3),
+      ]),
+      genres: new FormControl(null, [
+      ]),
+      priceFrom: new FormControl(null, [
+        Validators.pattern(this.priceValidator),
+      ]),
+      priceTo: new FormControl(null, [
+        Validators.pattern(this.priceValidator),
+      ]),
+      writingDate: new FormControl(null, [
+      ]),
+      releaseDate: new FormControl(null, [
+      ]),
+    });
   }
 
 }

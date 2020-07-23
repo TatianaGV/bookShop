@@ -1,3 +1,99 @@
-<form class="filter-panel" [formGroup]="booksForm" (ngSubmit)="submit()">
-
+<form class="books-filter-panel" [formGroup]="booksForm" (ngSubmit)="submit()">
+  <div class="title-genres">
+    <mat-form-field appearance="standard">
+      <mat-label>Title</mat-label>
+      <input type="text"
+             id="title"
+             name="title-books"
+             matInput
+             formControlName="title">
+      <mat-error *ngIf="booksForm.get('title').errors?.minlength">
+        The title is too small
+      </mat-error>
+    </mat-form-field>
+    <div class="genres-field">
+      <mat-form-field class="fill">
+        <mat-label>Genres</mat-label>
+        <mat-chip-list #chipList aria-label="Genres selection">
+          <mat-chip
+            *ngFor="let genre of selectableGenres"
+            [selectable]="true"
+            [removable]="true"
+            (removed)="remove(genre)">
+            {{ genre.name }}
+            <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+          </mat-chip>
+          <input
+            matInput
+            formControlName="genres"
+            #genresInput
+            [matAutocomplete]="autoGenres"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+        </mat-chip-list>
+        <mat-autocomplete #autoGenres="matAutocomplete"
+                          (optionSelected)="selected($event)">
+          <mat-option *ngFor="let genre of allGenres"
+                      [value]="genre">
+            {{ genre.name }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="booksForm.get('genres').errors?.required">
+          Select genres
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="price-container">
+    <mat-form-field appearance="standard">
+      <mat-label>Price from</mat-label>
+      <input
+        type="number"
+        name="price-book"
+        matInput
+        formControlName="priceFrom">
+      <mat-error *ngIf="booksForm.get('priceFrom').errors?.pattern">
+        Incorrect price
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Price to</mat-label>
+      <input
+        type="number"
+        name="price-book"
+        matInput
+        formControlName="priceTo">
+      <mat-error *ngIf="booksForm.get('priceTo').errors?.pattern">
+        Incorrect price
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="date-container">
+    <mat-form-field appearance="standard">
+      <mat-label>Writing Date</mat-label>
+      <input
+        name="date"
+        matInput
+        [matDatepicker]="picker"
+        formControlName="writingDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Release Date</mat-label>
+      <input
+        name="date"
+        matInput
+        [matDatepicker]="picker1"
+        formControlName="releaseDate">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="form-btn">
+    <button
+      class="submit"
+      type="submit"
+    >Save</button>
+  </div>
 </form>

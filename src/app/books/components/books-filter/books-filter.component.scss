@@ -1,0 +1,34 @@
+.books-filter-panel {
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+  padding-left: 24px;
+
+  .title-genres {
+    width: 30%;
+
+    .mat-form-field {
+      width: 90%;
+    }
+
+    .genres-field {
+      margin-top: 10px;
+    }
+  }
+
+  .price-container {
+    width: 20%;
+
+    .mat-form-field {
+      width: 90%;
+    }
+  }
+
+  .date-container {
+    width: 20%;
+
+    .mat-form-field {
+      width: 90%;
+    }
+  }
+}

@@ -1,1 +1,33 @@
-<p>authors-filter works!</p>
+<div class="filter-author-page">
+  <form class="author-filter" [formGroup]="filterForm" (ngSubmit)="submit()">
+    <div class="field"><mat-form-field appearance="standard">
+      <mat-label>First Name</mat-label>
+      <input type="text"
+             name="first_name"
+             matInput
+             formControlName="firstName">
+      <mat-error *ngIf="filterForm.get('firstName').errors?.minlength">
+        The first name is too small
+      </mat-error>
+    </mat-form-field>
+      <br>
+      <mat-form-field appearance="standard">
+        <mat-label>Last Name</mat-label>
+        <input type="text"
+               name="last_name"
+               matInput
+               formControlName="lastName">
+        <mat-error *ngIf="filterForm.get('lastName').errors?.minlength">
+          The last name is too small
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <br>
+    <div class="form-btn">
+      <button
+        class="submit"
+        type="submit"
+      >Search</button>
+    </div>
+  </form>
+</div>
