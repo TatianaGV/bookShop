@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-content>
-    <h2 class="title"> Сreate new item </h2>
+    <h2 class="title">Сreate new item</h2>
     <form class="page-creator" [formGroup]="booksForm" (ngSubmit)="submit()">
       <mat-form-field appearance="fill">
         <mat-label>Title</mat-label>
@@ -38,8 +38,9 @@
         </mat-error>
       </mat-form-field>
       <br>
-      <mat-form-field class="example-chip-list">
-        <mat-chip-list #chipList aria-label="Fruit selection">
+      <mat-form-field class="fill">
+        <mat-label>Genres</mat-label>
+        <mat-chip-list #chipList aria-label="Genres selection">
           <mat-chip
             *ngFor="let genre of selectableGenres"
             [selectable]="true"
@@ -49,7 +50,6 @@
             <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
           </mat-chip>
           <input
-            placeholder="Genres"
             matInput
             formControlName="genres"
             required
