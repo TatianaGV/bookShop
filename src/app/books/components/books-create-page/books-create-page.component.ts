@@ -162,14 +162,16 @@ export class BooksCreatePageComponent implements OnInit {
     });
   }
 
-  private _filter(value: string): IDataAuthors[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allAuthors
-      .filter((author) => author.first_name
-        .toLowerCase()
-        .includes(filterValue),
-      );
+  private _filter(value: string | IDataAuthors): IDataAuthors[] {
+    if (typeof value === 'string') {
+      return this.allAuthors
+        .filter((author) => author.first_name
+          .toLowerCase()
+          .includes(value.toLowerCase()),
+        );
+    } else {
+      return [value];
+    }
   }
 
 }
