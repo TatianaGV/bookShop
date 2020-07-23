@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { AuthorsDataServices, IAuthorsResponse } from '../../../core/data/authors.data';
 import { IDataAuthors } from '../../../core/interfaces/authors.interface';
@@ -7,10 +9,8 @@ import { IMetaData } from '../../../core/interfaces/meta.interface';
 import { GenresDataServices, IGenresResponse } from '../../../core/data/genres.data';
 import { IDataGenres } from '../../../core/interfaces/genres.interface';
 
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
-import { map, startWith, tap, delay } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { IBookCreation } from '../../../core/interfaces/book-form.interface';
 
 
@@ -24,7 +24,6 @@ export class BooksCreatePageComponent implements OnInit {
   public separatorKeysCodes: number[] = [ENTER, COMMA];
   public priceValidator = '^\\d+(?:[.,]\\d{1,2})*$';
   public booksForm: FormGroup;
-  public authorControl = new FormControl();
 
   public filteredOptions$: Observable<IDataAuthors[]>;
 
@@ -80,11 +79,7 @@ export class BooksCreatePageComponent implements OnInit {
   }
 
   public displayValue(value?: IDataAuthors): string {
-    if (!value) {
-      return '';
-    }
-
-    return `${value.first_name} ${value.last_name}`;
+    return !value ? '' : `${value.first_name} ${value.last_name}`;
   }
 
   public checkDate(): boolean {
