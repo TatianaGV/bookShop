@@ -16,6 +16,9 @@
         <mat-error *ngIf="booksForm.get('title').errors?.minlength">
             The title is too small
         </mat-error>
+        <mat-error *ngIf="booksForm.get('title').errors?.maxlength">
+          The title is too big
+        </mat-error>
       </mat-form-field>
       <br>
       <ng-container *ngIf="allAuthors.length">
@@ -35,6 +38,9 @@
           </mat-autocomplete>
           <mat-error *ngIf="booksForm.get('author').errors?.required">
             Select the author
+          </mat-error>
+          <mat-error *ngIf="booksForm.get('author').errors?.maxlength">
+            The author is too big
           </mat-error>
         </mat-form-field>
       </ng-container>
@@ -72,6 +78,8 @@
       <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
         <textarea
+          class="description"
+          rows="7"
           matInput
           formControlName="description"
           required>
@@ -94,6 +102,7 @@
             type="number"
             name="price-book"
             matInput
+            #priceInput
             formControlName="price"
             required>
           <mat-error *ngIf="booksForm.get('price').errors?.required">

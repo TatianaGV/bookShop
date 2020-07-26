@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
@@ -32,10 +32,12 @@ export class AuthorsDataServices {
       );
   }
 
-  public saveItemAuthor(item: IDataAuthors): Observable<IDataAuthors> {
+  public createAuthor(
+    author: IDataAuthors,
+  ): Observable<IDataAuthors> {
     return this._http
       .post<IDataAuthors>(
-        `${environment.apiUrl}/authors`, item);
+        `${environment.apiUrl}/authors`, author);
   }
 
 }

@@ -24,6 +24,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDividerModule } from '@angular/material/divider';
+import { BooksEditPageComponent } from './components/books-edit-page/books-edit-page.component';
+import { BooksFormComponent } from './components/books-form/books-form.component';
 
 
 @NgModule({
@@ -33,6 +36,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     BooksTableComponent,
     BooksFilterComponent,
     BooksCreatePageComponent,
+    BooksEditPageComponent,
+    BooksFormComponent,
   ],
   imports: [
     CommonModule,
@@ -53,6 +58,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatDatepickerModule,
     MatNativeDateModule,
     MatAutocompleteModule,
+    MatDividerModule,
   ],
 })
 export class BooksModule { }

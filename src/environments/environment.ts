@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://gulyakina.kubesh.ru/api',
+  apiUrl: '/api',
 };
 
 /*

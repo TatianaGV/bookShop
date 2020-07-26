@@ -21,6 +21,12 @@
           <mat-error *ngIf="authorForm.get('firstName').errors?.minlength">
             The first name is too small
           </mat-error>
+          <mat-error *ngIf="authorForm.get('firstName').errors?.maxlength">
+            The first name is too big
+          </mat-error>
+          <mat-error *ngIf="authorForm.get('firstName').errors?.pattern">
+            The first name is incorrect
+          </mat-error>
         </mat-form-field>
         <br>
         <mat-form-field appearance="fill">
@@ -35,6 +41,12 @@
           </mat-error>
           <mat-error *ngIf="authorForm.get('lastName').errors?.minlength">
             The last name is too small
+          </mat-error>
+          <mat-error *ngIf="authorForm.get('lastName').errors?.maxlength">
+            The last name is too big
+          </mat-error>
+          <mat-error *ngIf="authorForm.get('lastName').errors?.pattern">
+            The last name is incorrect
           </mat-error>
         </mat-form-field>
         <br>

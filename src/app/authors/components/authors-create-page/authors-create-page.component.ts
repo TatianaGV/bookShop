@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+
 import { IDataAuthors } from '../../../core/interfaces/authors.interface';
-import { AuthorsDataServices } from '../../../core/data/authors.data';
+import { AuthorsServices } from '../../../core/services/authors.service';
 
 @Component({
   selector: 'app-authors-create-page',
@@ -12,8 +13,10 @@ export class AuthorsCreatePageComponent implements OnInit {
 
   public authorForm: FormGroup;
 
+  private _regExName = '^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$';
+
   constructor(
-    private _authorService: AuthorsDataServices,
+    private _authorService: AuthorsServices,
   ) { }
 
   public ngOnInit(): void {
@@ -29,26 +32,27 @@ export class AuthorsCreatePageComponent implements OnInit {
       first_name: this.authorForm.value.firstName,
       last_name: this.authorForm.value.lastName,
     };
-    this.saveItemAuthor(author);
+    this.createAuthor(author);
   }
 
-  public saveItemAuthor(item : IDataAuthors): void {
+  public createAuthor(author : IDataAuthors): void {
     this._authorService
-      .saveItemAuthor(item)
-      .subscribe((response) => {
-        console.log(response);
-      });
+      .createAuthor(author);
   }
 
   private _initForm(): void {
     this.authorForm = new FormGroup({
       firstName: new FormControl(null, [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(2),
+        Validators.maxLength(256),
+        Validators.pattern(this._regExName),
       ]),
       lastName: new FormControl(null, [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(2),
+        Validators.maxLength(256),
+        Validators.pattern(this._regExName),
       ]),
     });
   }

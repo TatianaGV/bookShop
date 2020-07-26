@@ -2,9 +2,6 @@
   "/api": {
     "target": "http://gulyakina.kubesh.ru",
     "secure": false,
-    "pathRewrite": {
-      "^/api": ""
-    },
     "changeOrigin": true
   }
 }

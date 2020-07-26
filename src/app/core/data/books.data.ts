@@ -31,10 +31,10 @@ export class BooksDataServices {
       );
   }
 
-  public saveItemBook(item: IDataBooks): Observable<IDataBooks> {
+  public createBook(book: IDataBooks): Observable<IDataBooks> {
     return this._http
       .post<IDataBooks>(
-        `${environment.apiUrl}/books`, item);
+        `${environment.apiUrl}/authors/${book.id}/books`, book);
   }
 
 }

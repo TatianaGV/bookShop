@@ -1,19 +1,19 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
+
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
 
-import { AuthorsDataServices, IAuthorsResponse } from '../../../core/data/authors.data';
-import { IDataAuthors } from '../../../core/interfaces/authors.interface';
-import { IMetaData } from '../../../core/interfaces/meta.interface';
-import { GenresDataServices, IGenresResponse } from '../../../core/data/genres.data';
-import { IDataGenres } from '../../../core/interfaces/genres.interface';
-
-import { Observable } from 'rxjs';
+import { Observable, fromEvent } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+
+import { IDataAuthors } from '../../../core/interfaces/authors.interface';
+import { IDataGenres } from '../../../core/interfaces/genres.interface';
 import { IBookCreation } from '../../../core/interfaces/book-form.interface';
 import { IDataBooks } from '../../../core/interfaces/books.interface';
-import { BooksDataServices } from '../../../core/data/books.data';
+import { BooksServices } from '../../../core/services/books.service';
+import { AuthorsServices } from '../../../core/services/authors.service';
+import { GenresServices } from '../../../core/services/genres.service';
 
 
 @Component({
@@ -28,17 +28,15 @@ export class BooksCreatePageComponent implements OnInit {
   public booksForm: FormGroup;
 
   public filteredOptions$: Observable<IDataAuthors[]>;
-
-  public allAuthors: IDataAuthors[] = [];
-  public allGenres: IDataGenres[] = [];
-
   public selectableGenres: IDataGenres[] = [];
 
-  public meta: IMetaData = {};
   public bookFormData: IBookCreation = {};
 
   @ViewChild('genresInput')
   public genresInput: ElementRef<HTMLInputElement>;
+
+  @ViewChild('priceInput', { static: true })
+  public priceInput: ElementRef<HTMLInputElement>;
 
   @ViewChild('autoGenres')
   public matAutocompleteGenres: MatAutocomplete;
@@ -46,24 +44,39 @@ export class BooksCreatePageComponent implements OnInit {
   @ViewChild('autoAuthors')
   public matAutocompleteAuthors: MatAutocomplete;
 
-
   constructor(
-    private _authorService: AuthorsDataServices,
-    private _genresService: GenresDataServices,
-    private _booksService: BooksDataServices,
+    private _authorService: AuthorsServices,
+    private _genresService: GenresServices,
+    private _booksService: BooksServices,
     ) {
   }
 
   public ngOnInit(): void {
     this._initForm();
-    this.getAllAuthors();
-    this.getAllGenres();
     this.filteredOptions$ = this.booksForm.get('author').valueChanges
       .pipe(
         startWith(''),
         map((value: string | null) =>
           value ? this._filter(value) : this.allAuthors.slice()),
       );
+    fromEvent(this.priceInput.nativeElement, 'keydown')
+      .pipe()
+      .subscribe((e: KeyboardEvent) => {
+        console.log(e.code);
+        if (e.code === 'KeyE' || e.code === 'Minus') {
+          e.preventDefault();
+        }
+      });
+  }
+
+  public get allAuthors(): IDataAuthors[] {
+    return this._authorService
+      .allAuthors;
+  }
+
+  public get allGenres(): IDataGenres[] {
+    return this._genresService
+      .allGenres;
   }
 
   public remove(fruit: IDataGenres): void {
@@ -92,31 +105,9 @@ export class BooksCreatePageComponent implements OnInit {
     return writingDate < releaseDate;
   }
 
-  public getAllAuthors(): void {
-    this._authorService
-      .getAllAuthors(this.meta)
-      .subscribe((response: IAuthorsResponse) => {
-        this.allAuthors = response.authors;
-      });
-  }
-
-  public getAllGenres(): void {
-    this.meta = {
-      limit: 100,
-    };
-    this._genresService
-      .getAllGenres(this.meta)
-      .subscribe((response: IGenresResponse) => {
-        this.allGenres = response.genres;
-      });
-  }
-
-  public saveItemBook(item: IDataBooks): void {
+  public createBook(item: IDataBooks): void {
     this._booksService
-      .saveItemBook(item)
-      .subscribe((response) => {
-        console.log(response);
-      });
+      .createBook(item);
   }
 
   public submit(): void {
@@ -129,12 +120,12 @@ export class BooksCreatePageComponent implements OnInit {
         description: this.booksForm.value.description,
         price: this.booksForm.value.price,
         author: this.booksForm.value.author,
-        genres: this.selectableGenres,
+        genres: this.booksForm.value.genres,
         writingDate: this.booksForm.value.writingDate,
         releaseDate: this.booksForm.value.releaseDate,
       };
-      const item = this._prepareObjBeforeSave(this.bookFormData);
-      this.saveItemBook(item);
+      const book = this._prepareObjBeforeCreate(this.bookFormData);
+      this.createBook(book);
     } else {
       alert('Date of release can not be early than writing date');
     }
@@ -145,9 +136,11 @@ export class BooksCreatePageComponent implements OnInit {
       title: new FormControl(null, [
         Validators.required,
         Validators.minLength(3),
+        Validators.maxLength(256),
       ]),
       author: new FormControl(null, [
         Validators.required,
+        Validators.maxLength(256),
       ]),
       genres: new FormControl(null, [
         Validators.required,
@@ -182,19 +175,17 @@ export class BooksCreatePageComponent implements OnInit {
     }
   }
 
-  private _prepareObjBeforeSave(item: IBookCreation): IDataBooks {
-    const data: IDataBooks = {
+  private _prepareObjBeforeCreate(book: IBookCreation): IDataBooks {
+    return {
       id: null,
-      description: item.description,
-      title: item.title,
-      author_id: item.author.id,
-      price: item.price,
-      genres: item.genres,
-      writing_date: item.writingDate,
-      release_date: item.releaseDate,
+      description: book.description,
+      title: book.title,
+      author_id: book.author.id,
+      price: book.price,
+      genres: book.genres,
+      writing_date: book.writingDate,
+      release_date: book.releaseDate,
     };
-
-    return data;
   }
 
 }

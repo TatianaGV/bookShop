@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component } from '@angular/core';
+
+import { PageEvent } from '@angular/material/paginator';
 
 import { IDataAuthors } from '../../../core/interfaces/authors.interface';
-import { AuthorsDataServices, IAuthorsResponse } from '../../../core/data/authors.data';
 import { IMetaData } from '../../../core/interfaces/meta.interface';
-import { PageEvent } from '@angular/material/paginator';
+import { AuthorsServices } from '../../../core/services/authors.service';
 
 
 @Component({
@@ -11,9 +12,7 @@ import { PageEvent } from '@angular/material/paginator';
   templateUrl: './authors-table.component.html',
   styleUrls: ['./authors-table.component.scss'],
 })
-export class AuthorsTableComponent implements OnInit {
-
-  public meta: IMetaData;
+export class AuthorsTableComponent {
 
   public displayedColumns: string[] = [
     'id',
@@ -22,27 +21,24 @@ export class AuthorsTableComponent implements OnInit {
     'menu',
   ];
 
-  public dataSource: IDataAuthors[] = [];
+  constructor(
+    private _authorsService: AuthorsServices,
+  ) { }
 
-  constructor(private _authorsService: AuthorsDataServices) { }
-
-  public ngOnInit(): void {
-    this.getAllAuthors();
+  public get allAuthors(): IDataAuthors[] {
+    return this._authorsService.allAuthors;
   }
 
-  public getAllAuthors(): void {
-    this._authorsService
-      .getAllAuthors(this.meta)
-      .subscribe((response: IAuthorsResponse) => {
-        this.meta = response.meta;
-        this.dataSource = response.authors;
-      });
+  public get metaData(): IMetaData {
+    return this._authorsService.meta;
   }
 
   public changeStateInPaginator(event: PageEvent): void {
-    this.meta.page = event.pageIndex + 1;
-    this.meta.limit = event.pageSize;
-    this.getAllAuthors();
+    const meta: IMetaData = {
+      page: event.pageIndex + 1,
+      limit: event.pageSize,
+    };
+    this._authorsService.getAllAuthors(meta);
   }
 
 }
