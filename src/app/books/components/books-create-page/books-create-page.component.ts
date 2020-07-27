@@ -40,6 +40,7 @@ export class BooksCreatePageComponent implements OnInit {
   }
 
   public submit(): void {
+    this.booksForm.markAllAsTouched();
     if (this.booksForm.invalid) {
       return;
     }

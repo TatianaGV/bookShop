@@ -143,6 +143,8 @@ export class BooksFormComponent implements OnInit {
     this.booksForm.addControl('releaseDate', new FormControl(null, [
       Validators.required,
     ]));
+
+    this.booksForm.updateValueAndValidity();
   }
 
   private _filter(value: string | IDataAuthor): IDataAuthor[] {

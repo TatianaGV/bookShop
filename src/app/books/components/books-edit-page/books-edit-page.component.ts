@@ -12,7 +12,7 @@ import { IDataBookComplete } from '../../../core/interfaces/books.interface';
 })
 export class BooksEditPageComponent implements OnInit {
 
-  public booksForm: FormGroup = new FormGroup({});
+  public booksForm: FormGroup;
 
   constructor(
     private _booksService: BooksServices,
@@ -20,6 +20,7 @@ export class BooksEditPageComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
+    this.booksForm = new FormGroup({});
     const id = this._route.snapshot.paramMap.get('id');
     this._booksService
       .getBookById(+id);
