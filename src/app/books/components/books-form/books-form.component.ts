@@ -12,7 +12,7 @@ import { IDataGenres } from '../../../core/interfaces/genres.interface';
 import { AuthorsServices } from '../../../core/services/authors.service';
 import { GenresServices } from '../../../core/services/genres.service';
 import { BooksServices } from '../../../core/services/books.service';
-import { IDataBook, IDataBookComplete } from '../../../core/interfaces/books.interface';
+import { IDataBookComplete } from '../../../core/interfaces/books.interface';
 
 @Component({
   selector: 'app-books-form',
@@ -110,35 +110,39 @@ export class BooksFormComponent implements OnInit {
   }
 
   private _initForm(): void {
-    this.booksForm = new FormGroup({
-      title: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(256),
-      ]),
-      author: new FormControl(null, [
-        Validators.required,
-        Validators.maxLength(256),
-      ]),
-      genres: new FormControl(null, [
-        Validators.required,
-      ]),
-      description: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(1000),
-      ]),
-      price: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(this.priceValidator),
-      ]),
-      writingDate: new FormControl(null, [
-        Validators.required,
-      ]),
-      releaseDate: new FormControl(null, [
-        Validators.required,
-      ]),
-    });
+    this.booksForm.addControl('title', new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(256),
+    ]));
+
+    this.booksForm.addControl('genres', new FormControl(null, [
+      Validators.required,
+    ]));
+
+    this.booksForm.addControl('price', new FormControl(null, [
+      Validators.required,
+      Validators.pattern(this.priceValidator),
+    ]));
+
+    this.booksForm.addControl('author', new FormControl(null, [
+      Validators.required,
+      Validators.maxLength(256),
+    ]));
+
+    this.booksForm.addControl('description', new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(1000),
+    ]));
+
+    this.booksForm.addControl('writingDate', new FormControl(null, [
+      Validators.required,
+    ]));
+
+    this.booksForm.addControl('releaseDate', new FormControl(null, [
+      Validators.required,
+    ]));
   }
 
   private _filter(value: string | IDataAuthor): IDataAuthor[] {

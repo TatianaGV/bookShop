@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <h2 class="title">Сreate new book</h2>
-    <app-books-form [booksForm]="booksForm">
+    <app-books-form *ngIf="booksForm" [booksForm]="booksForm">
     </app-books-form>
     <div class="form-btn-save">
       <button

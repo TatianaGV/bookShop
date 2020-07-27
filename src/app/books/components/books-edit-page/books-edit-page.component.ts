@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 import { BooksServices } from '../../../core/services/books.service';
 import { ActivatedRoute } from '@angular/router';
-import { IDataBook } from '../../../core/interfaces/books.interface';
+import { IDataBookComplete } from '../../../core/interfaces/books.interface';
 
 @Component({
   selector: 'app-books-edit-page',
@@ -12,7 +12,7 @@ import { IDataBook } from '../../../core/interfaces/books.interface';
 })
 export class BooksEditPageComponent implements OnInit {
 
-  public booksForm: FormGroup;
+  public booksForm: FormGroup = new FormGroup({});
 
   constructor(
     private _booksService: BooksServices,
@@ -25,15 +25,19 @@ export class BooksEditPageComponent implements OnInit {
       .getBookById(+id);
   }
 
-  public get book(): IDataBook {
+  public get book(): IDataBookComplete {
     return this._booksService
       .book;
   }
 
   public submit(): void {}
 
-  public clear(): void {}
+  public clear(): void {
+    this.booksForm.reset();
+  }
 
-  public reset(): void {}
+  public reset(): void {
+    this.booksForm.reset(this.booksForm.value);
+  }
 
 }

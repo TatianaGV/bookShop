@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { IDataBook } from '../interfaces/books.interface';
+import { IDataBook, IDataBookComplete } from '../interfaces/books.interface';
 import { IMetaData } from '../interfaces/meta.interface';
 
 export interface IBooksResponse {
@@ -50,9 +50,9 @@ export class BooksDataServices {
 
   public getBookById(
     id: number,
-  ): Observable<IDataBook> {
+  ): Observable<IDataBookComplete> {
     return this._http
-      .get<IDataBook>(
+      .get<IDataBookComplete>(
         `${environment.apiUrl}/books/${id}`,
       );
   }

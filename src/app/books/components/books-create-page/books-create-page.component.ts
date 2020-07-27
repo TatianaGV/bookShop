@@ -15,7 +15,7 @@ import { GenresServices } from '../../../core/services/genres.service';
 })
 export class BooksCreatePageComponent implements OnInit {
 
-  public booksForm: FormGroup;
+  public booksForm: FormGroup = new FormGroup({});
 
   constructor(
     private _authorService: AuthorsServices,

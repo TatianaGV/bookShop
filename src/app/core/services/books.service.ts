@@ -5,7 +5,7 @@ import { takeUntil, tap } from 'rxjs/operators';
 
 import { IMetaData } from '../interfaces/meta.interface';
 import { BooksDataServices, IBooksResponse } from '../data/books.data';
-import { IDataBook } from '../interfaces/books.interface';
+import { IDataBook, IDataBookComplete } from '../interfaces/books.interface';
 
 
 @Injectable({
@@ -15,7 +15,7 @@ export class BooksServices implements OnDestroy {
 
   public meta: IMetaData = {};
   public allBooks: IDataBook[] = [];
-  public book: IDataBook;
+  public book: IDataBookComplete;
 
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -66,7 +66,7 @@ export class BooksServices implements OnDestroy {
       .pipe(
         takeUntil(this._destroy),
       )
-      .subscribe((response: IDataBook) => {
+      .subscribe((response: IDataBookComplete) => {
         this.book = response;
       });
   }
