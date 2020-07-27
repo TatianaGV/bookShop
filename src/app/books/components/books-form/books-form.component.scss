@@ -1,0 +1,30 @@
+.date-container {
+  display: flex;
+
+  .mat-form-field {
+    margin-right: 24px;
+    width: 236px;
+  }
+}
+
+.price-container {
+  .mat-form-field {
+    width: 236px;
+  }
+}
+
+.description {
+  resize: none;
+}
+
+.page-creator {
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+.mat-form-field{
+    width: 100%;
+}
+

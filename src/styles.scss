@@ -41,10 +41,6 @@ button {
   outline: none;
 }
 
-.submit-btn:hover, .find-book:hover {
-  background-color: #ED5170;
-}
-
 .submit {
   cursor: pointer;
   border: none;
@@ -59,11 +55,11 @@ button {
   outline: none;
 }
 
-.submit:hover {
+.submit:hover,.submit-btn:hover, .find-book:hover {
   background-color: #ED5170;
 }
 
-.form-btn {
-  display: flex;
-  align-items: center;
+.form-btn-save {
+  width: 80%;
+  margin: auto;
 }

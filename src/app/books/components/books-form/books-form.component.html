@@ -1,1 +1,149 @@
-<p>books-form works!</p>
+<form class="page-creator" [formGroup]="booksForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input type="text"
+             id="title"
+             name="title-books"
+             matInput
+             formControlName="title"
+             required>
+      <mat-error *ngIf="booksForm.get('title').errors?.required">
+        Input the title
+      </mat-error>
+      <mat-error *ngIf="booksForm.get('title').errors?.minlength">
+        The title is too small
+      </mat-error>
+      <mat-error *ngIf="booksForm.get('title').errors?.maxlength">
+        The title is too big
+      </mat-error>
+    </mat-form-field>
+    <br>
+    <ng-container *ngIf="allAuthors.length">
+      <mat-form-field appearance="fill">
+        <mat-label>Author</mat-label>
+        <input type="text"
+               name="author"
+               matInput
+               formControlName="author"
+               required
+               [matAutocomplete]="autoAuthors">
+        <mat-autocomplete #autoAuthors="matAutocomplete" [displayWith]="displayValue">
+          <mat-option *ngFor="let author of filteredOptions$ | async"
+                      [value]="author">
+            {{author.first_name}} {{author.last_name}}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error
+          *ngIf="booksForm.get('author').invalid && (booksForm.get('author').dirty || booksForm.get('author').touched)">
+          <span *ngIf="booksForm.get('author').errors?.required">
+            Select the author
+          </span>
+          <span *ngIf="booksForm.get('author').errors?.maxlength">
+            The author is too big
+          </span>
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Genres</mat-label>
+      <mat-chip-list
+        formControlName="genres" required #chipList aria-label="Genres selection">
+        <mat-chip
+          *ngFor="let genre of selectableGenres"
+          [removable]="true"
+          (removed)="remove(genre)">
+          {{ genre.name }}
+          <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+        </mat-chip>
+        <input
+          matInput
+          #genresInput
+          [matAutocomplete]="autoGenres"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+      </mat-chip-list>
+      <mat-autocomplete #autoGenres="matAutocomplete"
+                        (optionSelected)="selected($event)">
+        <mat-option *ngFor="let genre of allGenres"
+                    [value]="genre">
+          {{ genre.name }}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="booksForm.get('genres').errors?.required">
+        Select genres
+      </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea
+        class="description"
+        rows="7"
+        matInput
+        formControlName="description"
+        required>
+        </textarea>
+      <mat-error *ngIf="booksForm.get('description').errors?.required">
+        Input the description
+      </mat-error>
+      <mat-error *ngIf="booksForm.get('description').errors?.minlength">
+        The description is too small
+      </mat-error>
+      <mat-error *ngIf="booksForm.get('description').errors?.maxlength">
+        The description is too big
+      </mat-error>
+    </mat-form-field>
+    <br>
+    <div class="price-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Price</mat-label>
+        <input
+          type="number"
+          name="price-book"
+          matInput
+          #priceInput
+          formControlName="price"
+          required>
+        <mat-error *ngIf="booksForm.get('price').errors?.required">
+          Input the price
+        </mat-error>
+        <mat-error *ngIf="booksForm.get('price').errors?.pattern">
+          Incorrect price
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <br>
+    <div class="date-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Writing Date</mat-label>
+        <input
+          name="date"
+          matInput
+          [matDatepicker]="picker"
+          formControlName="writingDate"
+          required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="booksForm.get('writingDate').errors?.required">
+          Input the date of writing a book
+        </mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Release Date</mat-label>
+        <input
+          name="date"
+          matInput
+          [matDatepicker]="picker1"
+          formControlName="releaseDate"
+          required>
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        <mat-error *ngIf="booksForm.get('releaseDate').errors?.required">
+          Input the date of release a book
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <br>
+</form>

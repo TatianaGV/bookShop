@@ -1,17 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
+
+import { ReplaySubject, Observable } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
 
 import { IMetaData } from '../interfaces/meta.interface';
 import { BooksDataServices, IBooksResponse } from '../data/books.data';
-import { IDataBooks } from '../interfaces/books.interface';
+import { IDataBook } from '../interfaces/books.interface';
 
 
 @Injectable({
   providedIn: 'root',
 })
-export class BooksServices {
+export class BooksServices implements OnDestroy {
 
   public meta: IMetaData = {};
-  public allBooks: IDataBooks[] = [];
+  public allBooks: IDataBook[] = [];
+  public book: IDataBook;
+
+  private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
     private _booksService: BooksDataServices,
@@ -19,20 +25,49 @@ export class BooksServices {
     this.getAllBooks(this.meta);
   }
 
-  public createBook(book: IDataBooks): void {
+  public ngOnDestroy(): void {
+    this._destroy.next(null);
+    this._destroy.complete();
+  }
+
+  public createBook(book: IDataBook): void {
     this._booksService
       .createBook(book)
-      .subscribe((response) => {
-        console.log(response);
-      });
+      .pipe(
+        takeUntil(this._destroy),
+      )
+      .subscribe();
   }
 
   public getAllBooks(meta: IMetaData): void {
     this._booksService
       .getAllBooks(meta)
+      .pipe(
+        takeUntil(this._destroy),
+      )
       .subscribe((response: IBooksResponse) => {
         this.meta = response.meta;
         this.allBooks = response.books;
+      });
+  }
+
+  public deleteBook(id: number): void {
+    this._booksService
+      .deleteBook(id)
+      .pipe(
+        takeUntil(this._destroy),
+      )
+      .subscribe();
+  }
+
+  public getBookById(id: number): void {
+    this._booksService
+      .getBookById(id)
+      .pipe(
+        takeUntil(this._destroy),
+      )
+      .subscribe((response: IDataBook) => {
+        this.book = response;
       });
   }
 

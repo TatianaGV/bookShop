@@ -4,12 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { IDataAuthors } from '../interfaces/authors.interface';
+import { IDataAuthor } from '../interfaces/authors.interface';
 import { IMetaData } from '../interfaces/meta.interface';
 
 
 export interface IAuthorsResponse {
-  authors: IDataAuthors[];
+  authors: IDataAuthor[];
   meta: IMetaData;
 }
 
@@ -33,10 +33,10 @@ export class AuthorsDataServices {
   }
 
   public createAuthor(
-    author: IDataAuthors,
-  ): Observable<IDataAuthors> {
+    author: IDataAuthor,
+  ): Observable<IDataAuthor> {
     return this._http
-      .post<IDataAuthors>(
+      .post<IDataAuthor>(
         `${environment.apiUrl}/authors`, author);
   }
 

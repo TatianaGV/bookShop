@@ -1,34 +1,9 @@
-.page-creator {
-  max-width: 800px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-}
-
 .title {
   text-align: center;
   font-size: 24px;
 }
 
-.date-container {
-  display: flex;
-
-  .mat-form-field {
-    margin-right: 24px;
-  }
-}
-
-.price-container {
-  .mat-form-field {
-    width: 236px;
-  }
-}
-
 .mat-card {
   width: 80%;
   margin: auto;
-}
-
-.description {
-  resize: none;
 }

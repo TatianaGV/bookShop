@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { IDataGenres } from '../../../core/interfaces/genres.interface';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { IGenresResponse, GenresDataServices } from '../../../core/data/genres.data';
 import { IMetaData } from '../../../core/interfaces/meta.interface';
+import { IDataBook } from '../../../core/interfaces/books.interface';
 
 @Component({
   selector: 'app-books-filter',

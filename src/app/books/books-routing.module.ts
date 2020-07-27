@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BooksListComponent } from './components/books-list/books-list.component';
 import { BooksCreatePageComponent } from './components/books-create-page/books-create-page.component';
 import { BooksPanelsComponent } from './components/books-panels/books-panels.component';
+import { BooksEditPageComponent } from './components/books-edit-page/books-edit-page.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,9 @@ const routes: Routes = [
       },
       {
         path: 'create', component: BooksCreatePageComponent,
+      },
+      {
+        path: ':id', component: BooksEditPageComponent,
       },
     ],
   },

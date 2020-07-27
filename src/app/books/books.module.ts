@@ -27,6 +27,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDividerModule } from '@angular/material/divider';
 import { BooksEditPageComponent } from './components/books-edit-page/books-edit-page.component';
 import { BooksFormComponent } from './components/books-form/books-form.component';
+import { BooksConfirmDialogComponent } from './components/books-confirm-dialog/books-confirm-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -38,6 +40,7 @@ import { BooksFormComponent } from './components/books-form/books-form.component
     BooksCreatePageComponent,
     BooksEditPageComponent,
     BooksFormComponent,
+    BooksConfirmDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +62,7 @@ import { BooksFormComponent } from './components/books-form/books-form.component
     MatNativeDateModule,
     MatAutocompleteModule,
     MatDividerModule,
+    MatDialogModule,
   ],
 })
 export class BooksModule { }

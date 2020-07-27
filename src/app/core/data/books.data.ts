@@ -4,11 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { IDataBooks } from '../interfaces/books.interface';
+import { IDataBook } from '../interfaces/books.interface';
 import { IMetaData } from '../interfaces/meta.interface';
 
 export interface IBooksResponse {
-  books: IDataBooks[];
+  books: IDataBook[];
   meta: IMetaData;
 }
 
@@ -31,10 +31,31 @@ export class BooksDataServices {
       );
   }
 
-  public createBook(book: IDataBooks): Observable<IDataBooks> {
+  public createBook(
+    book: IDataBook,
+  ): Observable<IDataBook> {
     return this._http
-      .post<IDataBooks>(
+      .post<IDataBook>(
         `${environment.apiUrl}/authors/${book.id}/books`, book);
   }
+
+  public deleteBook(
+    id: number,
+  ): Observable<{}> {
+    return this._http
+      .delete(
+        `${environment.apiUrl}/books/${id}`,
+      );
+  }
+
+  public getBookById(
+    id: number,
+  ): Observable<IDataBook> {
+    return this._http
+      .get<IDataBook>(
+        `${environment.apiUrl}/books/${id}`,
+      );
+  }
+
 
 }

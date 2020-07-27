@@ -1,22 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 
-import { IDataAuthors } from '../interfaces/authors.interface';
+import { IDataAuthor } from '../interfaces/authors.interface';
 import { IMetaData } from '../interfaces/meta.interface';
 import { AuthorsDataServices } from '../data/authors.data';
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 export interface IAuthorsResponse {
-  authors: IDataAuthors[];
+  authors: IDataAuthor[];
   meta: IMetaData;
 }
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthorsServices {
+export class AuthorsServices implements OnDestroy {
 
   public meta: IMetaData = {};
-  public allAuthors: IDataAuthors[] = [];
+  public allAuthors: IDataAuthor[] = [];
+
+  private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
     private _authorsService: AuthorsDataServices,
@@ -24,9 +28,17 @@ export class AuthorsServices {
     this.getAllAuthors(this.meta);
   }
 
-  public createAuthor(author: IDataAuthors): void {
+  public ngOnDestroy(): void {
+    this._destroy.next(null);
+    this._destroy.complete();
+  }
+
+  public createAuthor(author: IDataAuthor): void {
     this._authorsService
       .createAuthor(author)
+      .pipe(
+        takeUntil(this._destroy),
+      )
       .subscribe((response) => {
         console.log(response);
       });
@@ -35,6 +47,9 @@ export class AuthorsServices {
   public getAllAuthors(meta: IMetaData): void {
     this._authorsService
       .getAllAuthors(meta)
+      .pipe(
+        takeUntil(this._destroy),
+      )
       .subscribe((response: IAuthorsResponse) => {
         this.meta = response.meta;
         this.allAuthors = response.authors;

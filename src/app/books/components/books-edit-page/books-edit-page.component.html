@@ -1,1 +1,21 @@
-<p>books-edit-page works!</p>
+<mat-card>
+  <mat-card-content>
+    <h2 class="title">Edit book</h2>
+    <app-books-form [booksForm]="booksForm" [book]="book">
+    </app-books-form>
+  </mat-card-content>
+  <div class="form-btn-save">
+    <button
+      class="submit-btn"
+      (click)="clear()"
+    >Clear</button>
+    <button
+      class="submit-btn"
+      (click)="reset()"
+    >Reset</button>
+    <button
+      class="submit-btn"
+      (click)="submit()"
+    >Save</button>
+  </div>
+</mat-card>

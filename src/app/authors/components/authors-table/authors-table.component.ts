@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { PageEvent } from '@angular/material/paginator';
 
-import { IDataAuthors } from '../../../core/interfaces/authors.interface';
+import { IDataAuthor } from '../../../core/interfaces/authors.interface';
 import { IMetaData } from '../../../core/interfaces/meta.interface';
 import { AuthorsServices } from '../../../core/services/authors.service';
 
@@ -25,7 +25,7 @@ export class AuthorsTableComponent {
     private _authorsService: AuthorsServices,
   ) { }
 
-  public get allAuthors(): IDataAuthors[] {
+  public get allAuthors(): IDataAuthor[] {
     return this._authorsService.allAuthors;
   }
 

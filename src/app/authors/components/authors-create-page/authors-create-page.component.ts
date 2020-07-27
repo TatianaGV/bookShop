@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { IDataAuthors } from '../../../core/interfaces/authors.interface';
+import { IDataAuthor } from '../../../core/interfaces/authors.interface';
 import { AuthorsServices } from '../../../core/services/authors.service';
 
 @Component({
@@ -35,7 +35,7 @@ export class AuthorsCreatePageComponent implements OnInit {
     this.createAuthor(author);
   }
 
-  public createAuthor(author : IDataAuthors): void {
+  public createAuthor(author : IDataAuthor): void {
     this._authorService
       .createAuthor(author);
   }
