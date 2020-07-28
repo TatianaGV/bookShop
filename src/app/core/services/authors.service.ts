@@ -54,6 +54,9 @@ export class AuthorsServices implements OnDestroy {
         takeUntil(this._destroy),
       )
       .subscribe(() => {
+        if (meta.page === this.meta.pages && this.allAuthors.length === 1) {
+          meta.page -= 1;
+        }
         this.getAllAuthors(meta);
       });
   }

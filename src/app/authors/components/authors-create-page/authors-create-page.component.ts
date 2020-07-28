@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { IDataAuthor } from '../../../core/interfaces/authors.interface';
 import { AuthorsServices } from '../../../core/services/authors.service';
@@ -17,6 +18,7 @@ export class AuthorsCreatePageComponent implements OnInit {
 
   constructor(
     private _authorService: AuthorsServices,
+    private _route: Router,
   ) { }
 
   public ngOnInit(): void {
@@ -33,6 +35,8 @@ export class AuthorsCreatePageComponent implements OnInit {
       last_name: this.authorForm.value.lastName,
     };
     this.createAuthor(author);
+    this._route
+      .navigate(['/authors']);
   }
 
   public createAuthor(author : IDataAuthor): void {

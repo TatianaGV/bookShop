@@ -69,6 +69,9 @@ export class BooksServices implements OnDestroy {
         takeUntil(this._destroy),
       )
       .subscribe(() => {
+        if (meta.page === this.meta.pages && this.allBooks.length === 1) {
+          meta.page -= 1;
+        }
         this.getAllBooks(meta);
       });
   }
