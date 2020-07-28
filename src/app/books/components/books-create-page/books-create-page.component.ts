@@ -55,7 +55,6 @@ export class BooksCreatePageComponent implements OnInit {
         releaseDate: this.booksForm.value.releaseDate,
       };
       const book = this._prepareObjBeforeCreate(bookFormData);
-      console.log(book);
       this.createBook(book);
     } else {
       alert('Date of release can not be early than writing date');

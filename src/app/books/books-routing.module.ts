@@ -13,9 +13,6 @@ const routes: Routes = [
     component: BooksListComponent,
     children: [
       {
-        path: '', redirectTo: '/books', pathMatch: 'full',
-      },
-      {
         path: '', component: BooksPanelsComponent,
       },
       {

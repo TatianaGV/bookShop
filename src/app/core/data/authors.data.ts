@@ -40,4 +40,31 @@ export class AuthorsDataServices {
         `${environment.apiUrl}/authors`, author);
   }
 
+  public deleteAuthor(
+    id: number,
+  ): Observable<{}> {
+    return this._http
+      .delete(
+        `${environment.apiUrl}/authors/${id}`);
+  }
+
+  public getAuthorById(
+    id: number,
+  ): Observable<IDataAuthor> {
+    return this._http
+      .get<IDataAuthor>(
+        `${environment.apiUrl}/authors/${id}`,
+      );
+  }
+
+  public updateAuthorById(
+    author: IDataAuthor,
+  ): Observable<IDataAuthor> {
+    return this._http
+      .put<IDataAuthor>(
+        `${environment.apiUrl}/authors/${author.id}`,
+        author,
+      );
+  }
+
 }

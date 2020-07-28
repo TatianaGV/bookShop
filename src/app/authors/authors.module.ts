@@ -19,6 +19,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { AuthorsEditPageComponent } from './components/authors-edit-page/authors-edit-page.component';
+import { AuthorsFormComponent } from './components/authors-form/authors-form.component';
+import { AuthorsConfirmDialogComponent } from './components/authors-confirm-dialog/authors-confirm-dialog.component';
 
 
 @NgModule({
@@ -28,6 +37,9 @@ import { MatDividerModule } from '@angular/material/divider';
     AuthorsTableComponent,
     AuthorsFilterComponent,
     AuthorsCreatePageComponent,
+    AuthorsEditPageComponent,
+    AuthorsFormComponent,
+    AuthorsConfirmDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -36,14 +48,20 @@ import { MatDividerModule } from '@angular/material/divider';
     MatIconModule,
     MatTableModule,
     MatPaginatorModule,
+    MatChipsModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatMenuModule,
-    MatCardModule,
-    ReactiveFormsModule,
-    FormsModule,
     MatFormFieldModule,
+    MatSelectModule,
     MatInputModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatAutocompleteModule,
     MatDividerModule,
+    MatDialogModule,
   ],
 })
 export class AuthorsModule { }

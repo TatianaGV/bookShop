@@ -1,0 +1,28 @@
+<div class="create-page-author">
+
+  <div class="pic-container">
+    <img src="assets/pic/3.svg" alt="no" class="author-pic">
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <h2 class="title"> Edit author </h2>
+      <app-authors-form *ngIf="authorForm" [authorForm]="authorForm" [author]="author">
+      </app-authors-form>
+      <div class="form-btn">
+        <button
+          class="submit"
+          (click)="clear()"
+        >Clear</button>
+        <button
+          class="submit"
+          (click)="reset()"
+        >Reset</button>
+        <button
+          class="submit"
+          (click)="submit()"
+        >Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { IDataBook } from '../../../core/interfaces/books.interface';
-import { IBooksResponse } from '../../../core/data/books.data';
 import { IMetaData } from '../../../core/interfaces/meta.interface';
 import { PageEvent } from '@angular/material/paginator';
 import { BooksServices } from '../../../core/services/books.service';
@@ -54,7 +53,7 @@ export class BooksTableComponent {
       .getAllBooks(this.meta);
   }
 
-  public confirmDelete(id: number): void {
+  public confirmDeleting(id: number): void {
     const dialogRef = this.dialog.open(BooksConfirmDialogComponent);
     dialogRef
       .afterClosed()

@@ -1,0 +1,47 @@
+<form class="page-author-creator" [formGroup]="authorForm">
+  <mat-form-field appearance="fill">
+    <mat-label>First Name</mat-label>
+    <input type="text"
+           name="first_name"
+           matInput
+           formControlName="firstName"
+           required>
+    <mat-error *ngIf="authorForm.get('firstName').invalid && (authorForm.get('firstName').dirty || authorForm.get('firstName').touched)">
+            <span *ngIf="authorForm.get('firstName').errors?.required">
+              Input the first name
+            </span>
+      <span *ngIf="authorForm.get('firstName').errors?.minlength">
+              The first name is too small
+            </span>
+      <span *ngIf="authorForm.get('firstName').errors?.maxlength">
+              The first name is too big
+            </span>
+      <span *ngIf="authorForm.get('firstName').errors?.pattern">
+              The first name is incorrect
+            </span>
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Last Name</mat-label>
+    <input type="text"
+           name="last_name"
+           matInput
+           formControlName="lastName"
+           required>
+    <mat-error *ngIf="authorForm.get('lastName').invalid && (authorForm.get('lastName').dirty || authorForm.get('lastName').touched)">
+            <span *ngIf="authorForm.get('lastName').errors?.required">
+              Input the last name
+            </span>
+      <span *ngIf="authorForm.get('lastName').errors?.minlength">
+              The last name is too small
+            </span>
+      <span *ngIf="authorForm.get('lastName').errors?.maxlength">
+              The last name is too big
+            </span>
+      <span *ngIf="authorForm.get('lastName').errors?.pattern">
+              The last name is incorrect
+            </span>
+    </mat-error>
+  </mat-form-field>
+</form>

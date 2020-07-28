@@ -1,0 +1,23 @@
+.mat-card {
+  width: 30%;
+  margin: auto;
+
+  .title {
+    text-align: center;
+  }
+}
+
+.create-page-author {
+  display: flex;
+}
+
+.author-pic {
+  width: 700px;
+}
+
+.form-btn {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}

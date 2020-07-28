@@ -31,14 +31,23 @@ export class BooksEditPageComponent implements OnInit {
       .book;
   }
 
-  public submit(): void {}
+  public submit(): void {
+
+  }
 
   public clear(): void {
     this.booksForm.reset();
   }
 
   public reset(): void {
-    this.booksForm.reset(this.booksForm.value);
+    this.booksForm.reset({
+      title: this.book.title,
+      price: this.book.price,
+      author: this.book.author,
+      description: this.book.description,
+      writingDate: this.book.writing_date,
+      releaseDate: this.book.release_date,
+    });
   }
 
 }

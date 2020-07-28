@@ -36,7 +36,9 @@ export class BooksDataServices {
   ): Observable<IDataBook> {
     return this._http
       .post<IDataBook>(
-        `${environment.apiUrl}/authors/${book.author_id}/books`, book);
+        `${environment.apiUrl}/authors/${book.author_id}/books`,
+        book,
+      );
   }
 
   public deleteBook(
@@ -57,5 +59,14 @@ export class BooksDataServices {
       );
   }
 
+  public updateBookById(
+    book: IDataBookComplete,
+  ): Observable<IDataBookComplete> {
+    return this._http
+      .put<IDataBookComplete>(
+        `${environment.apiUrl}/books/${book.id}`,
+        book,
+      );
+  }
 
 }

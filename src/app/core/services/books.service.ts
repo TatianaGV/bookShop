@@ -6,6 +6,7 @@ import { takeUntil, tap } from 'rxjs/operators';
 import { IMetaData } from '../interfaces/meta.interface';
 import { BooksDataServices, IBooksResponse } from '../data/books.data';
 import { IDataBook, IDataBookComplete } from '../interfaces/books.interface';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Injectable({
@@ -21,6 +22,8 @@ export class BooksServices implements OnDestroy {
 
   constructor(
     private _booksService: BooksDataServices,
+    private _activatedRoute: ActivatedRoute,
+    private _route: Router,
   ) {
     this.getAllBooks(this.meta);
   }
@@ -48,6 +51,14 @@ export class BooksServices implements OnDestroy {
       .subscribe((response: IBooksResponse) => {
         this.meta = response.meta;
         this.allBooks = response.books;
+        this._route.navigate([], {
+          relativeTo: this._activatedRoute,
+          queryParams: {
+            page: this.meta.page,
+            limit: this.meta.limit,
+          },
+          queryParamsHandling: 'merge',
+        });
       });
   }
 
