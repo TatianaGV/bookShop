@@ -7,14 +7,16 @@
              matInput
              formControlName="title"
              required>
-      <mat-error *ngIf="booksForm.get('title').errors?.required">
-        Input the title
-      </mat-error>
-      <mat-error *ngIf="booksForm.get('title').errors?.minlength">
-        The title is too small
-      </mat-error>
-      <mat-error *ngIf="booksForm.get('title').errors?.maxlength">
-        The title is too big
+      <mat-error *ngIf="booksForm.get('title').invalid && (booksForm.get('title').dirty || booksForm.get('title').touched)">
+        <span *ngIf="booksForm.get('title').errors?.required">
+           Input the title
+        </span>
+        <span *ngIf="booksForm.get('title').errors?.minlength">
+          The title is too small
+        </span>
+        <span *ngIf="booksForm.get('title').errors?.maxlength">
+          The title is too big
+        </span>
       </mat-error>
     </mat-form-field>
     <br>
@@ -70,8 +72,10 @@
           {{ genre.name }}
         </mat-option>
       </mat-autocomplete>
-      <mat-error *ngIf="booksForm.get('genres').errors?.required">
-        Select genres
+      <mat-error *ngIf="booksForm.get('genres').invalid && (booksForm.get('genres').dirty || booksForm.get('genres').touched)">
+        <span *ngIf="booksForm.get('genres').errors?.required">
+          Select genres
+        </span>
       </mat-error>
     </mat-form-field>
     <br>
@@ -84,14 +88,16 @@
         formControlName="description"
         required>
         </textarea>
-      <mat-error *ngIf="booksForm.get('description').errors?.required">
-        Input the description
-      </mat-error>
-      <mat-error *ngIf="booksForm.get('description').errors?.minlength">
-        The description is too small
-      </mat-error>
-      <mat-error *ngIf="booksForm.get('description').errors?.maxlength">
-        The description is too big
+      <mat-error *ngIf="booksForm.get('genres').invalid && (booksForm.get('genres').dirty || booksForm.get('genres').touched)">
+        <span *ngIf="booksForm.get('description').errors?.required">
+          Input the description
+        </span>
+        <span *ngIf="booksForm.get('description').errors?.minlength">
+          The description is too small
+        </span>
+        <span *ngIf="booksForm.get('description').errors?.maxlength">
+          The description is too big
+        </span>
       </mat-error>
     </mat-form-field>
     <br>
@@ -105,11 +111,13 @@
           #priceInput
           formControlName="price"
           required>
-        <mat-error *ngIf="booksForm.get('price').errors?.required">
-          Input the price
-        </mat-error>
-        <mat-error *ngIf="booksForm.get('price').errors?.pattern">
-          Incorrect price
+        <mat-error *ngIf="booksForm.get('price').invalid && (booksForm.get('price').dirty || booksForm.get('price').touched)">
+          <span *ngIf="booksForm.get('price').errors?.required">
+            Input the price
+          </span>
+          <span *ngIf="booksForm.get('price').errors?.pattern">
+            Incorrect price
+          </span>
         </mat-error>
       </mat-form-field>
     </div>
@@ -125,8 +133,10 @@
           required>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-        <mat-error *ngIf="booksForm.get('writingDate').errors?.required">
-          Input the date of writing a book
+        <mat-error *ngIf="booksForm.get('writingDate').invalid && (booksForm.get('writingDate').dirty || booksForm.get('writingDate').touched)">
+          <span *ngIf="booksForm.get('writingDate').errors?.required">
+            Input the date of writing a book
+          </span>
         </mat-error>
       </mat-form-field>
       <br>
@@ -140,8 +150,10 @@
           required>
         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
-        <mat-error *ngIf="booksForm.get('releaseDate').errors?.required">
-          Input the date of release a book
+        <mat-error *ngIf="booksForm.get('releaseDate').invalid && (booksForm.get('releaseDate').dirty || booksForm.get('releaseDate').touched)">
+          <span *ngIf="booksForm.get('releaseDate').errors?.required">
+            Input the date of release a book
+          </span>
         </mat-error>
       </mat-form-field>
     </div>

@@ -51,13 +51,15 @@ export class BooksServices implements OnDestroy {
       });
   }
 
-  public deleteBook(id: number): void {
+  public deleteBook(id: number, meta: IMetaData): void {
     this._booksService
       .deleteBook(id)
       .pipe(
         takeUntil(this._destroy),
       )
-      .subscribe();
+      .subscribe(() => {
+        this.getAllBooks(meta);
+      });
   }
 
   public getBookById(id: number): void {

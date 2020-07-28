@@ -17,6 +17,8 @@ import { BooksConfirmDialogComponent } from '../books-confirm-dialog/books-confi
 
 export class BooksTableComponent {
 
+  public meta: IMetaData;
+
   public displayedColumns: string[] = [
     'id',
     'description',
@@ -44,12 +46,12 @@ export class BooksTableComponent {
   }
 
   public changeStateInPaginator(event: PageEvent): void {
-    const meta: IMetaData = {
+    this.meta = {
       page: event.pageIndex + 1,
       limit: event.pageSize,
     };
     this._booksService
-      .getAllBooks(meta);
+      .getAllBooks(this.meta);
   }
 
   public confirmDelete(id: number): void {
@@ -59,7 +61,7 @@ export class BooksTableComponent {
       .subscribe((result) => {
         if (result) {
           this._booksService
-            .deleteBook(id);
+            .deleteBook(id, this.meta);
         }
       });
   }

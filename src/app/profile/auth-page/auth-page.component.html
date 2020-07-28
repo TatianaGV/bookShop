@@ -14,11 +14,13 @@
                matInput
                formControlName="login"
                required>
-        <mat-error *ngIf="authPageForm.get('login').errors?.required">
-          Input the login
-        </mat-error>
-        <mat-error *ngIf="authPageForm.get('login').errors?.minlength">
-          The login name is too small
+        <mat-error *ngIf="authPageForm.get('login').invalid && (authPageForm.get('login').dirty || authPageForm.get('login').touched)">
+          <span *ngIf="authPageForm.get('login').errors?.required">
+            Input the login
+          </span>
+          <span *ngIf="authPageForm.get('login').errors?.minlength">
+            The login name is too small
+          </span>
         </mat-error>
       </mat-form-field>
       <br>
@@ -29,11 +31,13 @@
                matInput
                formControlName="password"
                required>
-        <mat-error *ngIf="authPageForm.get('password').errors?.required">
-          Input the password
-        </mat-error>
-        <mat-error *ngIf="authPageForm.get('password').errors?.minlength">
-          The password is too small
+        <mat-error *ngIf="authPageForm.get('password').invalid && (authPageForm.get('password').dirty || authPageForm.get('password').touched)">
+          <span *ngIf="authPageForm.get('password').errors?.required">
+            Input the password
+          </span>
+          <span *ngIf="authPageForm.get('password').errors?.minlength">
+            The password is too small
+          </span>
         </mat-error>
       </mat-form-field>
       <br>
