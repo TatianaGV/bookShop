@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ReplaySubject } from 'rxjs';
@@ -23,6 +23,8 @@ export class AuthorsServices implements OnDestroy {
   public allAuthors: IDataAuthor[] = [];
   public author: IDataAuthor;
 
+  public allAuthorsChanged = new EventEmitter<any>();
+
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
@@ -30,7 +32,6 @@ export class AuthorsServices implements OnDestroy {
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
   ) {
-    this.getAllAuthors(this.meta);
   }
 
   public ngOnDestroy(): void {
@@ -47,37 +48,27 @@ export class AuthorsServices implements OnDestroy {
       .subscribe();
   }
 
-  public deleteAuthor(id: number, meta: IMetaData): void {
+  public deleteAuthor(id: number): void {
     this._authorsService
       .deleteAuthor(id)
       .pipe(
         takeUntil(this._destroy),
       )
       .subscribe(() => {
-        if (meta.page === this.meta.pages && this.allAuthors.length === 1) {
-          meta.page -= 1;
-        }
-        this.getAllAuthors(meta);
+        this.getAllAuthors();
       });
   }
 
-  public getAllAuthors(meta: IMetaData): void {
+  public getAllAuthors(): void {
     this._authorsService
-      .getAllAuthors(meta)
+      .getAllAuthors({ page: this.meta.page, limit: this.meta.limit })
       .pipe(
         takeUntil(this._destroy),
       )
       .subscribe((response: IAuthorsResponse) => {
         this.meta = response.meta;
         this.allAuthors = response.authors;
-        this._route.navigate([], {
-          relativeTo: this._activatedRoute,
-          queryParams: {
-            page: this.meta.page,
-            limit: this.meta.limit,
-          },
-          queryParamsHandling: 'merge',
-        });
+        this.allAuthorsChanged.emit();
       });
   }
 
@@ -99,6 +90,14 @@ export class AuthorsServices implements OnDestroy {
         takeUntil(this._destroy),
       )
       .subscribe();
+  }
+
+  public changeMeta(meta: IMetaData): void {
+    meta = { ...this.meta, ...meta };
+    this.meta.pages = meta.pages;
+    this.meta.limit = meta.limit;
+    this.meta.page = meta.page;
+    this.getAllAuthors();
   }
 
 }

@@ -1,7 +1,7 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, EventEmitter } from '@angular/core';
 
-import { ReplaySubject, Observable } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { IMetaData } from '../interfaces/meta.interface';
 import { BooksDataServices, IBooksResponse } from '../data/books.data';
@@ -17,6 +17,7 @@ export class BooksServices implements OnDestroy {
   public meta: IMetaData = {};
   public allBooks: IDataBook[] = [];
   public book: IDataBookComplete;
+  public allBooksChanged = new EventEmitter<any>();
 
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -25,7 +26,6 @@ export class BooksServices implements OnDestroy {
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
   ) {
-    this.getAllBooks(this.meta);
   }
 
   public ngOnDestroy(): void {
@@ -42,37 +42,27 @@ export class BooksServices implements OnDestroy {
       .subscribe();
   }
 
-  public getAllBooks(meta: IMetaData): void {
+  public getAllBooks(): void {
     this._booksService
-      .getAllBooks(meta)
+      .getAllBooks({ page: this.meta.page, limit: this.meta.limit })
       .pipe(
         takeUntil(this._destroy),
       )
       .subscribe((response: IBooksResponse) => {
         this.meta = response.meta;
         this.allBooks = response.books;
-        this._route.navigate([], {
-          relativeTo: this._activatedRoute,
-          queryParams: {
-            page: this.meta.page,
-            limit: this.meta.limit,
-          },
-          queryParamsHandling: 'merge',
-        });
+        this.allBooksChanged.emit();
       });
   }
 
-  public deleteBook(id: number, meta: IMetaData): void {
+  public deleteBook(id: number): void {
     this._booksService
       .deleteBook(id)
       .pipe(
         takeUntil(this._destroy),
       )
       .subscribe(() => {
-        if (meta.page === this.meta.pages && this.allBooks.length === 1) {
-          meta.page -= 1;
-        }
-        this.getAllBooks(meta);
+        this.getAllBooks();
       });
   }
 
@@ -85,6 +75,14 @@ export class BooksServices implements OnDestroy {
       .subscribe((response: IDataBookComplete) => {
         this.book = response;
       });
+  }
+
+  public changeMeta(meta: IMetaData): void {
+    meta = { ...this.meta, ...meta };
+    this.meta.pages = meta.pages;
+    this.meta.limit = meta.limit;
+    this.meta.page = meta.page;
+    this.getAllBooks();
   }
 
 }
