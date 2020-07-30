@@ -1,4 +1,5 @@
 import { Injectable, OnDestroy, EventEmitter } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -6,7 +7,6 @@ import { takeUntil } from 'rxjs/operators';
 import { IMetaData } from '../interfaces/meta.interface';
 import { BooksDataServices, IBooksResponse } from '../data/books.data';
 import { IDataBook, IDataBookComplete } from '../interfaces/books.interface';
-import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Injectable({

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { PageEvent } from '@angular/material/paginator';
@@ -8,6 +8,8 @@ import { IDataAuthor } from '../../../core/interfaces/authors.interface';
 import { IMetaData } from '../../../core/interfaces/meta.interface';
 import { AuthorsServices } from '../../../core/services/authors.service';
 import { AuthorsConfirmDialogComponent } from '../authors-confirm-dialog/authors-confirm-dialog.component';
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -15,7 +17,7 @@ import { AuthorsConfirmDialogComponent } from '../authors-confirm-dialog/authors
   templateUrl: './authors-table.component.html',
   styleUrls: ['./authors-table.component.scss'],
 })
-export class AuthorsTableComponent implements OnInit {
+export class AuthorsTableComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [
     'id',
@@ -23,6 +25,8 @@ export class AuthorsTableComponent implements OnInit {
     'lastName',
     'menu',
   ];
+
+  private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
     private _authorsService: AuthorsServices,
@@ -41,6 +45,9 @@ export class AuthorsTableComponent implements OnInit {
 
   public ngOnInit(): void {
     this._activatedRoute.queryParams
+      .pipe(
+        takeUntil(this._destroy),
+      )
       .subscribe(
         (queryParam: any) => {
           const page = queryParam['page'] || 1;
@@ -51,6 +58,9 @@ export class AuthorsTableComponent implements OnInit {
         });
 
     this._authorsService.allAuthorsChanged
+      .pipe(
+        takeUntil(this._destroy),
+      )
       .subscribe(() => {
         this._setUrlParams();
       });
@@ -66,6 +76,9 @@ export class AuthorsTableComponent implements OnInit {
     const dialogRef = this.dialog.open(AuthorsConfirmDialogComponent);
     dialogRef
       .afterClosed()
+      .pipe(
+        takeUntil(this._destroy),
+      )
       .subscribe((result) => {
         if (result) {
           if (this.allAuthors.length === 1) {
@@ -77,6 +90,11 @@ export class AuthorsTableComponent implements OnInit {
             .deleteAuthor(id);
         }
       });
+  }
+
+  public ngOnDestroy(): void {
+    this._destroy.next(null);
+    this._destroy.complete();
   }
 
   private _setUrlParams(): void {

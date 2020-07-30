@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 
-import { Observable, fromEvent } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { Observable, fromEvent, ReplaySubject } from 'rxjs';
+import { startWith, map, takeUntil } from 'rxjs/operators';
 
 import { IDataAuthor } from '../../../core/interfaces/authors.interface';
 import { IDataGenres } from '../../../core/interfaces/genres.interface';
@@ -19,7 +19,7 @@ import { IDataBookComplete } from '../../../core/interfaces/books.interface';
   templateUrl: './books-form.component.html',
   styleUrls: ['./books-form.component.scss'],
 })
-export class BooksFormComponent implements OnInit {
+export class BooksFormComponent implements OnInit, OnDestroy {
 
   @Input()
   public booksForm: FormGroup;
@@ -44,6 +44,9 @@ export class BooksFormComponent implements OnInit {
 
   public filteredOptions$: Observable<IDataAuthor[]>;
   public selectableGenres: IDataGenres[] = [];
+
+  private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+
 
   @ViewChild('genresInput')
   public genresInput: ElementRef<HTMLInputElement>;
@@ -72,7 +75,9 @@ export class BooksFormComponent implements OnInit {
           value ? this._filter(value) : this.allAuthors.slice()),
       );
     fromEvent(this.priceInput.nativeElement, 'keydown')
-      .pipe()
+      .pipe(
+        takeUntil(this._destroy),
+      )
       .subscribe((e: KeyboardEvent) => {
         if (e.code === 'KeyE' || e.code === 'Minus') {
           e.preventDefault();
@@ -107,6 +112,11 @@ export class BooksFormComponent implements OnInit {
 
   public displayValue(value?: IDataAuthor): string {
     return !value ? '' : `${value.first_name} ${value.last_name}`;
+  }
+
+  public ngOnDestroy(): void {
+    this._destroy.next(null);
+    this._destroy.complete();
   }
 
   private _initForm(): void {

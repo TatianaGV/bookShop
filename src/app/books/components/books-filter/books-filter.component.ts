@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -14,6 +14,8 @@ import { IBookFilter } from '../../../core/interfaces/book-filter.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BooksServices } from '../../../core/services/books.service';
 import { checkingPriceDifference } from '../../share/price-validation';
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -21,7 +23,7 @@ import { checkingPriceDifference } from '../../share/price-validation';
   templateUrl: './books-filter.component.html',
   styleUrls: ['./books-filter.component.scss'],
 })
-export class BooksFilterComponent implements OnInit {
+export class BooksFilterComponent implements OnInit, OnDestroy {
 
   public separatorKeysCodes: number[] = [ENTER, COMMA];
   public priceValidator = '^\\d+(?:[.,]\\d{1,2})*$';
@@ -31,6 +33,9 @@ export class BooksFilterComponent implements OnInit {
   public booksForm: FormGroup;
 
   public filterParams: IBookFilter;
+
+  private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+
 
   @ViewChild('genresInput')
   public genresInput: ElementRef<HTMLInputElement>;
@@ -85,9 +90,17 @@ export class BooksFilterComponent implements OnInit {
     };
     this._genresService
       .getAllGenres(meta)
+      .pipe(
+        takeUntil(this._destroy),
+      )
       .subscribe((response: IGenresResponse) => {
         this.allGenres = response.genres;
       });
+  }
+
+  public ngOnDestroy(): void {
+    this._destroy.next(null);
+    this._destroy.complete();
   }
 
   private _setUrlParams(): void {
