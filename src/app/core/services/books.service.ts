@@ -44,11 +44,16 @@ export class BooksServices implements OnDestroy {
 
   public getAllBooks(): void {
     this._booksService
-      .getAllBooks({ page: this.meta.page, limit: this.meta.limit })
+      .getAllBooks({
+        page: this.meta.page,
+        limit: this.meta.limit,
+        title: this.meta.title,
+      })
       .pipe(
         takeUntil(this._destroy),
       )
       .subscribe((response: IBooksResponse) => {
+        console.log(response);
         this.meta = response.meta;
         this.allBooks = response.books;
         this.allBooksChanged.emit();
@@ -78,10 +83,7 @@ export class BooksServices implements OnDestroy {
   }
 
   public changeMeta(meta: IMetaData): void {
-    meta = { ...this.meta, ...meta };
-    this.meta.pages = meta.pages;
-    this.meta.limit = meta.limit;
-    this.meta.page = meta.page;
+    Object.assign(this.meta, meta);
     this.getAllBooks();
   }
 

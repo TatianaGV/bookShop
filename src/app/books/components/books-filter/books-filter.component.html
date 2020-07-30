@@ -1,5 +1,6 @@
 <form class="books-filter-panel" [formGroup]="booksForm" (ngSubmit)="submit()">
   <div class="title-genres">
+    <!-- title -->
     <mat-form-field appearance="standard">
       <mat-label>Title</mat-label>
       <input type="text"
@@ -7,10 +8,13 @@
              name="title-books"
              matInput
              formControlName="title">
-      <mat-error *ngIf="booksForm.get('title').errors?.minlength">
-        The title is too small
+      <mat-error>
+        <span *ngIf="booksForm.get('title').errors?.minlength">
+          The title is too small
+        </span>
       </mat-error>
     </mat-form-field>
+    <!-- genres -->
     <div class="genres-field">
       <mat-form-field class="fill">
         <mat-label>Genres</mat-label>
@@ -38,13 +42,11 @@
             {{ genre.name }}
           </mat-option>
         </mat-autocomplete>
-        <mat-error *ngIf="booksForm.get('genres').errors?.required">
-          Select genres
-        </mat-error>
       </mat-form-field>
     </div>
   </div>
-  <div class="price-container">
+  <!-- price -->
+  <div class="price-container" formGroupName="price">
     <mat-form-field appearance="standard">
       <mat-label>Price from</mat-label>
       <input
@@ -52,8 +54,10 @@
         name="price-book"
         matInput
         formControlName="priceFrom">
-      <mat-error *ngIf="booksForm.get('priceFrom').errors?.pattern">
-        Incorrect price
+      <mat-error>
+        <span>
+          Incorrect price.
+        </span>
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard">
@@ -63,11 +67,14 @@
         name="price-book"
         matInput
         formControlName="priceTo">
-      <mat-error *ngIf="booksForm.get('priceTo').errors?.pattern">
-        Incorrect price
+      <mat-error>
+        <span>
+          Incorrect price
+        </span>
       </mat-error>
     </mat-form-field>
   </div>
+  <!-- date -->
   <div class="date-container">
     <mat-form-field appearance="standard">
       <mat-label>Writing Date</mat-label>
@@ -75,7 +82,7 @@
         name="date"
         matInput
         [matDatepicker]="picker"
-        formControlName="writingDate">
+        formControlName="writingData">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -85,7 +92,7 @@
         name="date"
         matInput
         [matDatepicker]="picker1"
-        formControlName="releaseDate">
+        formControlName="releaseData">
       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
       <mat-datepicker #picker1></mat-datepicker>
     </mat-form-field>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { IDataBook } from '../../../core/interfaces/books.interface';
 import { IMetaData } from '../../../core/interfaces/meta.interface';
@@ -7,6 +7,8 @@ import { BooksServices } from '../../../core/services/books.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BooksConfirmDialogComponent } from '../books-confirm-dialog/books-confirm-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -15,7 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./books-table.component.scss'],
 })
 
-export class BooksTableComponent implements OnInit {
+export class BooksTableComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [
     'id',
@@ -28,6 +30,8 @@ export class BooksTableComponent implements OnInit {
     'releaseDate',
     'menu',
   ];
+
+  private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
     private _booksService: BooksServices,
@@ -46,6 +50,9 @@ export class BooksTableComponent implements OnInit {
 
   public ngOnInit(): void {
     this._activatedRoute.queryParams
+      .pipe(
+        takeUntil(this._destroy),
+      )
       .subscribe(
         (queryParam: any) => {
           const page = queryParam['page'] || 1;
@@ -56,6 +63,9 @@ export class BooksTableComponent implements OnInit {
         });
 
     this._booksService.allBooksChanged
+      .pipe(
+        takeUntil(this._destroy),
+      )
       .subscribe(() => {
         this._setUrlParams();
       });
@@ -71,6 +81,9 @@ export class BooksTableComponent implements OnInit {
     const dialogRef = this.dialog.open(BooksConfirmDialogComponent);
     dialogRef
       .afterClosed()
+      .pipe(
+        takeUntil(this._destroy),
+      )
       .subscribe((result) => {
         if (result) {
           if (this.allBooks.length === 1) {
@@ -82,6 +95,11 @@ export class BooksTableComponent implements OnInit {
             .deleteBook(id);
         }
       });
+  }
+
+  public ngOnDestroy(): void {
+    this._destroy.next(null);
+    this._destroy.complete();
   }
 
   private _setUrlParams(): void {
