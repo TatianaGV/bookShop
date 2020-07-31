@@ -47,7 +47,9 @@ export class BooksServices implements OnDestroy {
       .getAllBooks({
         page: this.meta.page,
         limit: this.meta.limit,
-        title: this.meta.title,
+        q: {
+          title_cont: this.meta.title,
+        },
       })
       .pipe(
         takeUntil(this._destroy),

@@ -15,7 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BooksServices } from '../../../core/services/books.service';
 import { checkingPriceDifference } from '../../share/price-validation';
 import { ReplaySubject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, debounceTime } from 'rxjs/operators';
 
 
 @Component({
@@ -37,6 +37,9 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
 
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
   private _priceGroup: FormGroup;
+
+  private _min = 0;
+  private _max: number;
 
 
   @ViewChild('genresInput')
@@ -64,10 +67,36 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
 
     this.priceFromControl.valueChanges
       .pipe(
+        debounceTime(500),
         takeUntil(this._destroy),
       )
-      .subscribe(() => {
-        this.priceToControl.updateValueAndValidity();
+      .subscribe((value: number) => {
+        if (value === null) {
+          this._min = 0;
+          this.priceToControl.setValidators(Validators.min(this._min));
+          this.priceToControl.updateValueAndValidity();
+        } else if (+value !== this._min) {
+          this._min = value;
+          this.priceToControl.setValidators(Validators.min(value));
+          this.priceToControl.updateValueAndValidity();
+        }
+      });
+
+    this.priceToControl.valueChanges
+      .pipe(
+        debounceTime(500),
+        takeUntil(this._destroy),
+      )
+      .subscribe((value: number) => {
+        if (value === null) {
+          this._max = undefined;
+          this.priceFromControl.setValidators(Validators.max(this._max));
+          this.priceFromControl.updateValueAndValidity();
+        } else if (+value !== this._max) {
+          this._max = value;
+          this.priceFromControl.setValidators(Validators.max(value));
+          this.priceFromControl.updateValueAndValidity();
+        }
       });
   }
 
@@ -134,14 +163,11 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
       {
         priceFrom: new FormControl('', [
           Validators.min(0),
-          Validators.max(1000000),
           Validators.pattern(this.priceValidator),
         ]),
         priceTo: new FormControl('', [
           Validators.min(0),
-          Validators.max(1000000),
           Validators.pattern(this.priceValidator),
-          checkingPriceDifference(),
         ]),
       });
     this.booksForm = this._fb.group({

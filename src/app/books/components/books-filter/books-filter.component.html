@@ -68,11 +68,8 @@
         matInput
         formControlName="priceTo">
       <mat-error *ngIf="priceToControl.invalid && (priceToControl.dirty || priceToControl.touched)">
-        <span *ngIf="priceToControl.errors?.min || priceToControl.errors?.max || priceToControl.errors?.pattern">
-          Incorrect price
-        </span>
-        <span *ngIf="priceToControl.hasError('check')">
-          The price from is bigger than price to
+        <span *ngIf="priceToControl.errors?.min || priceToControl.errors?.pattern">
+          Incorrect price <br>
         </span>
       </mat-error>
     </mat-form-field>
