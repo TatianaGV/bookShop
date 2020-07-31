@@ -3,7 +3,7 @@ import {
   FormGroup,
   FormControl,
   Validators,
-  FormBuilder,
+  FormBuilder, AbstractControl,
 } from '@angular/forms';
 
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
@@ -33,8 +33,10 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   public booksForm: FormGroup;
 
   public filterParams: IBookFilter;
+  public maxDate = new Date(new Date().setDate(new Date().getDate() - 1));
 
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+  private _priceGroup: FormGroup;
 
 
   @ViewChild('genresInput')
@@ -48,9 +50,25 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
     private _route: Router,
   ) { }
 
+  public get priceToControl(): AbstractControl {
+    return this._priceGroup.get('priceTo');
+  }
+
+  public get priceFromControl(): AbstractControl {
+    return this._priceGroup.get('priceFrom');
+  }
+
   public ngOnInit(): void {
     this._initForm();
     this.getAllGenres();
+
+    this.priceFromControl.valueChanges
+      .pipe(
+        takeUntil(this._destroy),
+      )
+      .subscribe(() => {
+        this.priceToControl.updateValueAndValidity();
+      });
   }
 
   public submit(): void {
@@ -112,29 +130,27 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   }
 
   private _initForm(): void {
+    this._priceGroup = this._fb.group(
+      {
+        priceFrom: new FormControl('', [
+          Validators.min(0),
+          Validators.max(1000000),
+          Validators.pattern(this.priceValidator),
+        ]),
+        priceTo: new FormControl('', [
+          Validators.min(0),
+          Validators.max(1000000),
+          Validators.pattern(this.priceValidator),
+          checkingPriceDifference(),
+        ]),
+      });
     this.booksForm = this._fb.group({
       title: new FormControl('', [
         Validators.minLength(3),
       ]),
       genres: new FormControl(null, [
       ]),
-      price: this._fb.group(
-        {
-          priceFrom: new FormControl('', [
-            Validators.min(0),
-            Validators.max(1000000),
-            Validators.pattern(this.priceValidator),
-          ]),
-          priceTo: new FormControl('', [
-            Validators.min(0),
-            Validators.max(1000000),
-            Validators.pattern(this.priceValidator),
-          ]),
-        },
-        {
-          validators: checkingPriceDifference,
-        },
-      ),
+      price: this._priceGroup,
       writingData: new FormControl('', [
       ]),
       releaseData: new FormControl('', [

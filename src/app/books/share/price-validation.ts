@@ -1,6 +1,11 @@
-import { FormGroup } from '@angular/forms';
+import { ValidatorFn, AbstractControl } from '@angular/forms';
 
-export function checkingPriceDifference(fg: FormGroup): {} | null {
-  return fg.get('priceFrom').value <= fg.get('priceTo').value
-    ? null : { check : true };
+export function checkingPriceDifference(): ValidatorFn {
+  return (priceToControl: AbstractControl) => {
+    const fg = priceToControl.parent;
+    const priceFromControl = fg?.get('priceFrom');
+
+    return priceFromControl?.value <= priceToControl.value
+      ? null : { check : true };
+  };
 }
