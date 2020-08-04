@@ -53,9 +53,9 @@
         type="number"
         name="price-book"
         matInput
-        formControlName="priceFrom">
-      <mat-error *ngIf="priceToControl.invalid && (priceToControl.dirty || priceToControl.touched)">
-        <span *ngIf="priceToControl.errors?.min || priceToControl.errors?.max || priceToControl.errors?.pattern">
+        formControlName="from">
+      <mat-error *ngIf="priceFromControl.invalid">
+        <span *ngIf="priceFromControl.errors?.min || priceFromControl.errors?.max || priceFromControl.errors?.pattern">
           Incorrect price
         </span>
       </mat-error>
@@ -66,10 +66,10 @@
         type="number"
         name="price-book"
         matInput
-        formControlName="priceTo">
-      <mat-error *ngIf="priceToControl.invalid && (priceToControl.dirty || priceToControl.touched)">
+        formControlName="to">
+      <mat-error *ngIf="priceToControl.invalid">
         <span *ngIf="priceToControl.errors?.min || priceToControl.errors?.pattern">
-          Incorrect price <br>
+          Incorrect price
         </span>
       </mat-error>
     </mat-form-field>
@@ -81,7 +81,7 @@
       <input
         name="date"
         matInput
-        [max]="maxDate"
+        [max]="maxDateWriting"
         [matDatepicker]="picker"
         formControlName="writingData">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -92,7 +92,8 @@
       <input
         name="date"
         matInput
-        [max]="maxDate"
+        [max]="maxDateRelease"
+        [min]="minDateRelease"
         [matDatepicker]="picker1"
         formControlName="releaseData">
       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>

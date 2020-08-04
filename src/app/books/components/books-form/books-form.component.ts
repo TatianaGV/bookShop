@@ -68,12 +68,15 @@ export class BooksFormComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this._initForm();
-    this.filteredOptions$ = this.booksForm.get('author').valueChanges
+    this.filteredOptions$ = this.booksForm
+      .get('author')
+      .valueChanges
       .pipe(
         startWith(''),
         map((value: string | null) =>
           value ? this._filter(value) : this.allAuthors.slice()),
       );
+
     fromEvent(this.priceInput.nativeElement, 'keydown')
       .pipe(
         takeUntil(this._destroy),
@@ -160,10 +163,11 @@ export class BooksFormComponent implements OnInit, OnDestroy {
   private _filter(value: string | IDataAuthor): IDataAuthor[] {
     if (typeof value === 'string') {
       return this.allAuthors
-        .filter((author) => author.first_name
-          .toLowerCase()
-          .includes(value.toLowerCase()),
-        );
+        .filter((author) => {
+          return author.first_name
+            .toLowerCase()
+            .includes(value.toLowerCase());
+        });
     } else {
       return [value];
     }

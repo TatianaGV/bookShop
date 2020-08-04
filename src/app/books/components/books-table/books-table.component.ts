@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BooksConfirmDialogComponent } from '../books-confirm-dialog/books-confirm-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 
 
 @Component({
@@ -49,26 +49,8 @@ export class BooksTableComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this._activatedRoute.queryParams
-      .pipe(
-        takeUntil(this._destroy),
-      )
-      .subscribe(
-        (queryParam: any) => {
-          const page = queryParam['page'] || 1;
-          const limit = queryParam['limit'] || 10;
-          if (+page !== this.metaData.page || +limit !== this.metaData.limit) {
-            this._booksService.changeMeta({ page, limit });
-          }
-        });
-
-    this._booksService.allBooksChanged
-      .pipe(
-        takeUntil(this._destroy),
-      )
-      .subscribe(() => {
-        this._setUrlParams();
-      });
+    this._listenQueryParams();
+    this._listenUrlParams();
   }
 
   public changeStateInPaginator(event: PageEvent): void {
@@ -82,18 +64,17 @@ export class BooksTableComponent implements OnInit, OnDestroy {
     dialogRef
       .afterClosed()
       .pipe(
+        filter((result) => !!result),
         takeUntil(this._destroy),
       )
-      .subscribe((result) => {
-        if (result) {
-          if (this.allBooks.length === 1) {
-            const page = this._booksService.meta.page - 1;
-            const pages = this._booksService.meta.pages - 1;
-            this._booksService.changeMeta({ page, pages });
-          }
-          this._booksService
-            .deleteBook(id);
+      .subscribe(() => {
+        if (this.allBooks.length === 1) {
+          const page = this._booksService.meta.page - 1;
+          const pages = this._booksService.meta.pages - 1;
+          this._booksService.changeMeta({ page, pages });
         }
+        this._booksService
+          .deleteBook(id);
       });
   }
 
@@ -112,6 +93,31 @@ export class BooksTableComponent implements OnInit, OnDestroy {
       queryParams: params,
       queryParamsHandling: 'merge',
     });
+  }
+
+  private _listenQueryParams(): void {
+    this._activatedRoute.queryParams
+      .pipe(
+        takeUntil(this._destroy),
+      )
+      .subscribe(
+        (queryParam: any) => {
+          const page = queryParam['page'] || 1;
+          const limit = queryParam['limit'] || 10;
+          if (+page !== this.metaData.page || +limit !== this.metaData.limit) {
+            this._booksService.changeMeta({ page, limit });
+          }
+        });
+  }
+
+  private _listenUrlParams(): void {
+    this._booksService.allBooksChanged
+      .pipe(
+        takeUntil(this._destroy),
+      )
+      .subscribe(() => {
+        this._setUrlParams();
+      });
   }
 
 }

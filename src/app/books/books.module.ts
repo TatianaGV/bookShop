@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 
-import { BooksListComponent } from './components/books-list/books-list.component';
+import { BooksPageComponent } from './components/books-page/books-page.component';
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksPanelsComponent } from './components/books-panels/books-panels.component';
 import { BooksTableComponent } from './components/books-table/books-table.component';
@@ -33,7 +33,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
-    BooksListComponent,
+    BooksPageComponent,
     BooksPanelsComponent,
     BooksTableComponent,
     BooksFilterComponent,

@@ -1,12 +1,13 @@
-import { Injectable, OnDestroy, EventEmitter } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { IMetaData } from '../interfaces/meta.interface';
 import { BooksDataServices, IBooksResponse } from '../data/books.data';
 import { IDataBook, IDataBookComplete } from '../interfaces/books.interface';
+import { toRansack, prepareParams } from '../helpers/ransack';
 
 
 @Injectable({
@@ -17,9 +18,9 @@ export class BooksServices implements OnDestroy {
   public meta: IMetaData = {};
   public allBooks: IDataBook[] = [];
   public book: IDataBookComplete;
-  public allBooksChanged = new EventEmitter<any>();
+  public allBooksChanged = new Subject<any>();
 
-  private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+  private _destroy = new ReplaySubject<void>(1);
 
   constructor(
     private _booksService: BooksDataServices,
@@ -29,7 +30,7 @@ export class BooksServices implements OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this._destroy.next(null);
+    this._destroy.next();
     this._destroy.complete();
   }
 
@@ -43,13 +44,11 @@ export class BooksServices implements OnDestroy {
   }
 
   public getAllBooks(): void {
+    const params = prepareParams(this.meta);
     this._booksService
       .getAllBooks({
         page: this.meta.page,
         limit: this.meta.limit,
-        q: {
-          title_cont: this.meta.title,
-        },
       })
       .pipe(
         takeUntil(this._destroy),
@@ -58,7 +57,7 @@ export class BooksServices implements OnDestroy {
         console.log(response);
         this.meta = response.meta;
         this.allBooks = response.books;
-        this.allBooksChanged.emit();
+        this.allBooksChanged.next();
       });
   }
 
