@@ -1,4 +1,4 @@
-export function preparingDateFromUrl(date: string): any {
+export function preparingDateFromUrl(date: string): Date {
   if (date) {
     const arrWriteDate = date.split('-');
 

@@ -1,4 +1,4 @@
-export interface IDataGenres {
+export interface IDataGenre {
   id: number;
   name: string;
 }

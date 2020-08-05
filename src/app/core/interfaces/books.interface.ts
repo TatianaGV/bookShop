@@ -1,4 +1,4 @@
-import { IDataGenres } from './genres.interface';
+import { IDataGenre } from './genres.interface';
 import { IDataAuthor } from './authors.interface';
 
 export interface IDataBook {
@@ -7,7 +7,7 @@ export interface IDataBook {
   author_id: number;
   title: string;
   price: number;
-  genres: IDataGenres[];
+  genres: IDataGenre[];
   writing_date: string;
   release_date: string;
 }

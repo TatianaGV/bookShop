@@ -1,16 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 
 import { IMetaData } from '../interfaces/meta.interface';
-import { IDataGenres } from '../interfaces/genres.interface';
+import { IDataGenre } from '../interfaces/genres.interface';
 import { GenresDataServices, IGenresResponse } from '../data/genres.data';
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Injectable({
   providedIn: 'root',
 })
-export class GenresServices {
+export class GenresServices implements OnDestroy {
 
-  public allGenres: IDataGenres[] = [];
+  public allGenres: IDataGenre[] = [];
+  private _destroy = new ReplaySubject<any>(1);
+
 
   constructor(
     private _genresService: GenresDataServices,
@@ -24,9 +28,17 @@ export class GenresServices {
     };
     this._genresService
       .getAllGenres(meta)
+      .pipe(
+        takeUntil(this._destroy),
+      )
       .subscribe((response: IGenresResponse) => {
         this.allGenres = response.genres;
       });
+  }
+
+  public ngOnDestroy(): void {
+    this._destroy.next(null);
+    this._destroy.complete();
   }
 
 }

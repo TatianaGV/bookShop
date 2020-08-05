@@ -104,8 +104,23 @@ export class BooksTableComponent implements OnInit, OnDestroy {
         (queryParam: any) => {
           const page = queryParam['page'] || 1;
           const limit = queryParam['limit'] || 10;
+          const title = queryParam['title'];
+          const priceTo = queryParam['priceTo'];
+          const priceFrom = queryParam['priceFrom'];
+          const writingDate = this._getDateFromUrl(queryParam['writingDate']);
+          const releaseDate = this._getDateFromUrl(queryParam['releaseDate']);
+
           if (+page !== this.metaData.page || +limit !== this.metaData.limit) {
-            this._booksService.changeMeta({ page, limit });
+            this._booksService.changeMeta(
+              {
+                page,
+                limit,
+                title,
+                priceTo,
+                priceFrom,
+                writingDate,
+                releaseDate,
+              });
           }
         });
   }
@@ -118,6 +133,16 @@ export class BooksTableComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this._setUrlParams();
       });
+  }
+
+  private _getDateFromUrl(date: string): Date {
+    if (date) {
+      const arrDate = date.split('-');
+      date = `${arrDate[1]}-${arrDate[0]}-${arrDate[2]}`;
+      const msecDate = Date.parse(date);
+
+      return new Date(msecDate);
+    }
   }
 
 }

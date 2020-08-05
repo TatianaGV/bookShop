@@ -1,10 +1,20 @@
-import { IDataGenres } from './genres.interface';
+import { IDataGenre } from './genres.interface';
 
-export interface IBookFilter {
+interface IBookParent {
+  page?: number;
   title?: string;
-  genres?: IDataGenres[];
-  priceFrom?: any;
-  priceTo?: any;
-  writingData?: string;
-  releaseData?: string;
+  priceFrom?: number;
+  priceTo?: number;
+}
+
+export interface IBookFilter extends IBookParent {
+  genres?: IDataGenre[];
+  writingDate?: Date;
+  releaseDate?: Date;
+}
+
+export interface IBookFilterUrlParams extends IBookParent {
+  genres?: string[];
+  writingDate?: string;
+  releaseDate?: string;
 }

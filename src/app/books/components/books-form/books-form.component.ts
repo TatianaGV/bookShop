@@ -8,7 +8,7 @@ import { Observable, fromEvent, ReplaySubject } from 'rxjs';
 import { startWith, map, takeUntil } from 'rxjs/operators';
 
 import { IDataAuthor } from '../../../core/interfaces/authors.interface';
-import { IDataGenres } from '../../../core/interfaces/genres.interface';
+import { IDataGenre } from '../../../core/interfaces/genres.interface';
 import { AuthorsServices } from '../../../core/services/authors.service';
 import { GenresServices } from '../../../core/services/genres.service';
 import { BooksServices } from '../../../core/services/books.service';
@@ -43,7 +43,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
   public priceValidator = '^\\d+(?:[.,]\\d{1,2})*$';
 
   public filteredOptions$: Observable<IDataAuthor[]>;
-  public selectableGenres: IDataGenres[] = [];
+  public selectableGenres: IDataGenre[] = [];
 
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -93,7 +93,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
       .allAuthors;
   }
 
-  public get allGenres(): IDataGenres[] {
+  public get allGenres(): IDataGenre[] {
     return this._genresService
       .allGenres;
   }
@@ -106,7 +106,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
     this.genresInput.nativeElement.value = '';
   }
 
-  public remove(fruit: IDataGenres): void {
+  public remove(fruit: IDataGenre): void {
     const index = this.selectableGenres.indexOf(fruit);
     if (index >= 0) {
       this.selectableGenres.splice(index, 1);

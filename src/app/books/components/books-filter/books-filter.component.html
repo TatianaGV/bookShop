@@ -20,7 +20,7 @@
         <mat-label>Genres</mat-label>
         <mat-chip-list #chipList aria-label="Genres selection">
           <mat-chip
-            *ngFor="let genre of selectableGenres"
+            *ngFor="let genre of selectedGenres"
             [selectable]="true"
             [removable]="true"
             (removed)="remove(genre)">
@@ -83,7 +83,7 @@
         matInput
         [max]="maxDateWriting"
         [matDatepicker]="picker"
-        formControlName="writingData">
+        formControlName="writingDate">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -95,7 +95,7 @@
         [max]="maxDateRelease"
         [min]="minDateRelease"
         [matDatepicker]="picker1"
-        formControlName="releaseData">
+        formControlName="releaseDate">
       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
       <mat-datepicker #picker1></mat-datepicker>
     </mat-form-field>
@@ -106,4 +106,5 @@
       type="submit"
     >Save</button>
   </div>
+  <!-- <mat-spinner></mat-spinner> -->
 </form>

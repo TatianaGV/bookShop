@@ -7,16 +7,16 @@ import {
 } from '@angular/forms';
 
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { IDataGenres } from '../../../core/interfaces/genres.interface';
+import { IDataGenre } from '../../../core/interfaces/genres.interface';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { IGenresResponse, GenresDataServices } from '../../../core/data/genres.data';
-import { IBookFilter } from '../../../core/interfaces/book-filter.interface';
+import { IBookFilter, IBookFilterUrlParams } from '../../../core/interfaces/book-filter.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BooksServices } from '../../../core/services/books.service';
-import { checkingPriceDifference } from '../../share/price-validation';
-import { ReplaySubject } from 'rxjs';
-import { takeUntil, debounceTime } from 'rxjs/operators';
+import { ReplaySubject, forkJoin } from 'rxjs';
+import { takeUntil, debounceTime, take } from 'rxjs/operators';
 import { preparingDateFromUrl } from '../../../core/helpers/data.helpers';
+import { GenresServices } from '../../../core/services/genres.service';
 
 
 @Component({
@@ -31,11 +31,10 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
 
   public separatorKeysCodes: number[] = [ENTER, COMMA];
   public priceValidator = '^\\d+(?:[.,]\\d{1,2})*$';
-  public allGenres: IDataGenres[] = [];
-  public selectableGenres: IDataGenres[] = [];
+  public selectedGenres: IDataGenre[] = [];
   public booksForm: FormGroup;
   public filterParams: IBookFilter;
-  public queryParams: IBookFilter;
+  public queryParams: IBookFilterUrlParams;
 
   public maxDateWriting = new Date(new Date().setDate(new Date().getDate() - 1));
   public maxDateRelease = new Date(new Date().setDate(new Date().getDate() - 1));
@@ -48,11 +47,12 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   private _max: number;
 
   constructor(
-    private _genresService: GenresDataServices,
-    private _booksService: BooksServices,
     private _fb: FormBuilder,
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
+    private _genresService: GenresServices,
+    private _genresDateService: GenresDataServices,
+    private _booksService: BooksServices,
   ) { }
 
   public get priceToControl(): AbstractControl {
@@ -64,17 +64,33 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   }
 
   public get writingDateControl(): AbstractControl {
-    return this.booksForm.get('writingData');
+    return this.booksForm.get('writingDate');
   }
 
   public get releaseDateControl(): AbstractControl {
-    return this.booksForm.get('releaseData');
+    return this.booksForm.get('releaseDate');
+  }
+
+  public get allGenres(): IDataGenre[] {
+    return this._genresService
+      .allGenres;
   }
 
   public ngOnInit(): void {
     this._initForm();
-    this.getAllGenres();
-    this._setParamsFromUrl();
+    this._getParamsFromUrl();
+
+    const genres = this._activatedRoute.snapshot.queryParamMap.getAll('genres');
+
+    const arr = genres
+      .map((id) => this._genresDateService.getGenresById(+id));
+
+    forkJoin(arr)
+      .pipe()
+      .subscribe((result) => {
+        this.selectedGenres.push(...result);
+        this.booksForm.get('genres').setValue(this.selectedGenres);
+      });
   }
 
   public submit(): void {
@@ -82,22 +98,32 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
       return;
     }
 
+    debugger;
+    const writingDate = this.booksForm.value.writingDate ?
+      this._parseDate(this.booksForm.value.writingDate) :
+      null;
+
+    const releaseDate = this.booksForm.value.releaseDate
+      ? this._parseDate(this.booksForm.value.releaseDate)
+      : null;
+
     this.filterParams = {
+      page: 1,
       title: this.booksForm.value.title,
       genres: this.booksForm.value.genres,
       priceFrom: this.booksForm.value.price.from,
       priceTo: this.booksForm.value.price.to,
-      writingData: this.booksForm.value.writingData,
-      releaseData: this.booksForm.value.releaseData,
+      writingDate: this.booksForm.value.writingDate,
+      releaseDate: this.booksForm.value.releaseDate,
     };
 
     this.queryParams = {
       title: this.booksForm.value.title,
-      genres: this.booksForm.value.genres,
+      genres: this.booksForm.value.genres?.map((genre) => genre.id),
       priceFrom: this.booksForm.value.price.from,
       priceTo: this.booksForm.value.price.to,
-      writingData: this.booksForm.value.writingData ? this._parseDate(this.booksForm.value.writingData) : null,
-      releaseData: this.booksForm.value.releaseData ? this._parseDate(this.booksForm.value.releaseData) : null,
+      writingDate,
+      releaseDate,
     };
 
     this._setUrlParams();
@@ -105,33 +131,30 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   }
 
   public selected(event: MatAutocompleteSelectedEvent): void {
-    if (this.selectableGenres.indexOf(event.option.value) === -1) {
-      this.selectableGenres.push(event.option.value);
-      this.booksForm.get('genres').setValue(this.selectableGenres);
+    debugger;
+    if (!this.selectedGenres) {
+      this.selectedGenres = [];
+    }
+    if (this.selectedGenres.indexOf(event.option.value) === -1) {
+      this.selectedGenres.push(event.option.value);
+      this.booksForm.get('genres').setValue(this.selectedGenres);
     }
     this.genresInput.nativeElement.value = '';
   }
 
-  public remove(fruit: IDataGenres): void {
-    const index = this.selectableGenres.indexOf(fruit);
+  public remove(genre: IDataGenre): void {
+    debugger;
+    const index = this.selectedGenres.indexOf(genre);
     if (index >= 0) {
-      this.selectableGenres.splice(index, 1);
+      this.selectedGenres.splice(index, 1);
+      this.booksForm.get('genres').setValue(this.selectedGenres);
+    }
+    if (this.selectedGenres.length === 0) {
+      this.selectedGenres = null;
+      this.booksForm.get('genres').setValue(this.selectedGenres);
     }
   }
 
-  public getAllGenres(): void {
-    const meta = {
-      limit: 100,
-    };
-    this._genresService
-      .getAllGenres(meta)
-      .pipe(
-        takeUntil(this._destroy),
-      )
-      .subscribe((response: IGenresResponse) => {
-        this.allGenres = response.genres;
-      });
-  }
 
   public ngOnDestroy(): void {
     this._destroy.next(null);
@@ -168,9 +191,9 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
       genres: new FormControl(null, [
       ]),
       price: this._priceGroup,
-      writingData: new FormControl('', [
+      writingDate: new FormControl('', [
       ]),
-      releaseData: new FormControl('', [
+      releaseDate: new FormControl('', [
       ]),
     });
 
@@ -219,7 +242,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   }
 
   private _subWritingDateControl(): void {
-    this.writingDateControl.valueChanges
+    this.writingDateControl?.valueChanges
       .pipe(
         takeUntil(this._destroy),
       )
@@ -233,7 +256,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   }
 
   private _subReleaseDateControl(): void {
-    this.releaseDateControl.valueChanges
+    this.releaseDateControl?.valueChanges
       .pipe(
         takeUntil(this._destroy),
       )
@@ -263,24 +286,41 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
     return `${day}-${month}-${year}`;
   }
 
-  private _setParamsFromUrl(): void {
-    const writingDataUrl = this._activatedRoute.snapshot.queryParamMap.get('writingData');
-    const releaseDataUrl = this._activatedRoute.snapshot.queryParamMap.get('releaseData');
-    const writingDataParse = preparingDateFromUrl(writingDataUrl);
-    const releaseDataParse = preparingDateFromUrl(releaseDataUrl);
+  private _getParamsFromUrl(): void {
+    const params: IBookFilter = {};
 
-    // добавить проверки
+    debugger;
+
+    const writingDataUrl = this._activatedRoute.snapshot.queryParamMap.get('writingDate');
+    const writingDataParse = writingDataUrl ?
+      preparingDateFromUrl(writingDataUrl) :
+      null;
+    if (writingDataParse) {
+      params.writingDate = writingDataParse;
+    }
+
+    const releaseDataUrl = this._activatedRoute.snapshot.queryParamMap.get('releaseDate');
+    const releaseDataParse = releaseDataUrl ?
+      preparingDateFromUrl(releaseDataUrl) :
+      null;
+    if (releaseDataParse) {
+      params.releaseDate = releaseDataParse;
+    }
+
     const priceToUrl = this._activatedRoute.snapshot.queryParamMap.get('priceTo');
-    const priceFromUrl = this._activatedRoute.snapshot.queryParamMap.get('priceFrom');
-    const titleUrl = this._activatedRoute.snapshot.queryParamMap.get('title');
+    if (priceToUrl) {
+      params.priceTo = +priceToUrl;
+    }
 
-    const params: IBookFilter = {
-      priceTo: priceToUrl,
-      priceFrom: priceFromUrl,
-      title: titleUrl,
-      writingData: writingDataParse,
-      releaseData: releaseDataParse,
-    };
+    const priceFromUrl = this._activatedRoute.snapshot.queryParamMap.get('priceFrom');
+    if (priceFromUrl) {
+      params.priceFrom = +priceFromUrl;
+    }
+
+    const titleUrl = this._activatedRoute.snapshot.queryParamMap.get('title');
+    if (titleUrl) {
+      params.title = titleUrl;
+    }
 
     this._fillFilterFieldFromUrl(params);
   }
@@ -288,6 +328,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   private _fillFilterFieldFromUrl(
     params: IBookFilter,
     ): void {
+    debugger;
     this._priceGroup.patchValue({
       to: params.priceTo,
       from: params.priceFrom,
@@ -295,8 +336,9 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
 
     this.booksForm.patchValue({
       title: params.title,
-      writingData: params.writingData,
-      releaseData: params.releaseData,
+      genres: params.genres,
+      writingDate: params.writingDate,
+      releaseDate: params.releaseDate,
     });
   }
 

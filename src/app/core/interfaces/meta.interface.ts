@@ -1,4 +1,4 @@
-import { IDataGenres } from './genres.interface';
+import { IDataGenre } from './genres.interface';
 
 export interface IMetaData {
   pages?: number;
@@ -6,9 +6,9 @@ export interface IMetaData {
   page?: number;
   limit?: number;
   title?: string;
-  genres?: IDataGenres[];
+  genres?: IDataGenre[];
   priceFrom?: number;
   priceTo?: number;
-  writingDate?: string;
-  releaseDate?: string;
+  writingDate?: Date;
+  releaseDate?: Date;
 }

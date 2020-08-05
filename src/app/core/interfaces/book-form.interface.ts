@@ -1,10 +1,10 @@
 import { IDataAuthor } from './authors.interface';
-import { IDataGenres } from './genres.interface';
+import { IDataGenre } from './genres.interface';
 
 export interface IBookCreation {
   title?: string;
   author?: IDataAuthor;
-  genres?: IDataGenres[];
+  genres?: IDataGenre[];
   description?: string;
   price?: number;
   writingDate?: string;

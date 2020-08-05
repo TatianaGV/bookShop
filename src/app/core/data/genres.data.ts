@@ -5,11 +5,11 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { IMetaData } from '../interfaces/meta.interface';
-import { IDataGenres } from '../interfaces/genres.interface';
+import { IDataGenre } from '../interfaces/genres.interface';
 
 
 export interface IGenresResponse {
-  genres: IDataGenres[];
+  genres: IDataGenre[];
   meta: IMetaData;
 }
 
@@ -29,6 +29,15 @@ export class GenresDataServices {
       .get<IGenresResponse>(
         `${environment.apiUrl}/genres`,
         { params: <any>params },
+      );
+  }
+
+  public getGenresById(
+    id: number,
+  ): Observable<IDataGenre> {
+    return this._http
+      .get<IDataGenre>(
+        `${environment.apiUrl}/genres/${id}`,
       );
   }
 

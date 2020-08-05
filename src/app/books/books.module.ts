@@ -29,6 +29,7 @@ import { BooksEditPageComponent } from './components/books-edit-page/books-edit-
 import { BooksFormComponent } from './components/books-form/books-form.component';
 import { BooksConfirmDialogComponent } from './components/books-confirm-dialog/books-confirm-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatAutocompleteModule,
     MatDividerModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class BooksModule { }
