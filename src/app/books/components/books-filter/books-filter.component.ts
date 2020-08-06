@@ -107,10 +107,12 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
       ? this._parseDate(this.booksForm.value.releaseDate)
       : null;
 
+    debugger;
+
     this.filterParams = {
       page: 1,
       title: this.booksForm.value.title,
-      genres: this.booksForm.value.genres,
+      genres: this.booksForm.value.genres?.map((genre) => genre.id),
       priceFrom: this.booksForm.value.price.from,
       priceTo: this.booksForm.value.price.to,
       writingDate: this.booksForm.value.writingDate,
@@ -131,7 +133,6 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   }
 
   public selected(event: MatAutocompleteSelectedEvent): void {
-    debugger;
     if (!this.selectedGenres) {
       this.selectedGenres = [];
     }
@@ -143,7 +144,6 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   }
 
   public remove(genre: IDataGenre): void {
-    debugger;
     const index = this.selectedGenres.indexOf(genre);
     if (index >= 0) {
       this.selectedGenres.splice(index, 1);
@@ -328,7 +328,6 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   private _fillFilterFieldFromUrl(
     params: IBookFilter,
     ): void {
-    debugger;
     this._priceGroup.patchValue({
       to: params.priceTo,
       from: params.priceFrom,
@@ -336,7 +335,6 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
 
     this.booksForm.patchValue({
       title: params.title,
-      genres: params.genres,
       writingDate: params.writingDate,
       releaseDate: params.releaseDate,
     });

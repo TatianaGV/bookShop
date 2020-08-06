@@ -1,5 +1,7 @@
 import { snakeCase } from 'lodash-es';
-import { IDataGenre } from '../interfaces/genres.interface';
+
+import { IMetaData } from '../interfaces/meta.interface';
+import { IRansackMeta } from '../interfaces/ransack-meta.interface';
 
 export enum RansackType {
   Cont ,
@@ -11,30 +13,30 @@ export enum RansackType {
 
 export function toRansack(obj: any, type: { [key: string]: RansackType | RansackType[] }): any {
   const result = { ...obj };
+  debugger;
   Object.keys(type)
     .forEach((key) => {
       if (result[key]) {
         let transformedKey = snakeCase(key);
-        if (transformedKey === 'price_to' || transformedKey === 'price_from') {
-          transformedKey = 'price';
-        }
-        debugger;
-        if (transformedKey === 'genres') {
-          transformedKey = 'genres_id';
-          // if (Array.isArray(result[key])) {
-          //   (result[key] as [])
-          //     .forEach((elem) => {
-          //       transformedKey = prepareQueryKey(elem, transformedKey);
-          //       result[transformedKey] = result[key].id;
-          //     });
-          // }
-        }
         if (Array.isArray(type[key])) {
+          let idx = 0;
           (type[key] as [])
             .forEach((elem) => {
-              transformedKey = prepareQueryKey(elem, transformedKey);
-              result[transformedKey] = result[key];
+              const keyType = prepareQueryKey(elem, transformedKey);
+              result[keyType] = result[key][idx];
+              idx++;
             });
+          delete result[key];
+        } else if (Array.isArray(result[key])) {
+          let keyType: string = '';
+          const arrDate = [];
+          (result[key] as [])
+            .forEach((elem) => {
+              keyType = prepareQueryKey(type[key], transformedKey);
+              result[keyType] = elem;
+              arrDate.push(elem);
+            });
+          result[keyType] = arrDate;
           delete result[key];
         } else {
           transformedKey = prepareQueryKey(type[key], transformedKey);
@@ -49,6 +51,7 @@ export function toRansack(obj: any, type: { [key: string]: RansackType | Ransack
 }
 
 function prepareQueryKey(elem: any, transformedKey: any): string {
+  debugger;
   switch (elem) {
     case RansackType.Cont: {
       return`q[${transformedKey}_cont]`;
@@ -71,3 +74,80 @@ function prepareQueryKey(elem: any, transformedKey: any): string {
     }
   }
 }
+
+
+export function prepareMetaForRansack(meta: IMetaData): any {
+  debugger;
+  let result: IRansackMeta = {};
+  let config = {};
+
+  // перетирается
+  result = {
+    pages: +meta.pages,
+    records: +meta.records,
+    page: +meta.page,
+    limit: +meta.limit,
+    title: meta.title,
+  };
+
+  if (meta.priceTo && meta.priceFrom) {
+    result.price = [meta.priceFrom, meta.priceTo];
+    config = {
+      title: RansackType.Cont,
+      price: [RansackType.Gteq, RansackType.Lteq],
+      writingDate: RansackType.Eq,
+      releaseDate: RansackType.Eq,
+      genres_id: RansackType.In,
+    };
+  }
+
+  if (!meta.priceTo && meta.priceFrom) {
+    result.price = meta.priceFrom;
+    config = {
+      title: RansackType.Cont,
+      price: RansackType.Gteq,
+      writingDate: RansackType.Eq,
+      releaseDate: RansackType.Eq,
+      genres_id: RansackType.In,
+    };
+  }
+
+  if (meta.priceTo && !meta.priceFrom) {
+    result.price = meta.priceTo;
+    config = {
+      title: RansackType.Cont,
+      price: RansackType.Lteq,
+      writingDate: RansackType.Eq,
+      releaseDate: RansackType.Eq,
+      genres_id: RansackType.In,
+    };
+  }
+
+  if (meta.priceTo === undefined && meta.priceFrom === undefined) {
+    config = {
+      title: RansackType.Cont,
+      writingDate: RansackType.Eq,
+      releaseDate: RansackType.Eq,
+      genres_id: RansackType.In,
+    };
+  }
+
+  const arrGen = [];
+  if (Array.isArray(meta.genres)) {
+    for (const elem of meta.genres) {
+      arrGen.push(elem);
+    }
+    result.genres_id = arrGen;
+  } else {
+    result.genres_id = meta.genres;
+  }
+
+  console.log(result);
+  console.log(config);
+
+  return {
+    meta: result,
+    config,
+  };
+}
+

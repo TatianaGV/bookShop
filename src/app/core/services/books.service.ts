@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { IMetaData } from '../interfaces/meta.interface';
 import { BooksDataServices, IBooksResponse } from '../data/books.data';
 import { IDataBook, IDataBookComplete } from '../interfaces/books.interface';
-import { toRansack, RansackType } from '../helpers/ransack';
+import { toRansack, RansackType, prepareMetaForRansack } from '../helpers/ransack';
 
 
 @Injectable({
@@ -19,6 +19,7 @@ export class BooksServices implements OnDestroy {
   public allBooks: IDataBook[] = [];
   public book: IDataBookComplete;
   public allBooksChanged = new Subject<any>();
+  public config = {};
 
   private _destroy = new ReplaySubject<void>(1);
 
@@ -44,16 +45,11 @@ export class BooksServices implements OnDestroy {
   }
 
   public getAllBooks(): void {
+    const { meta, config } = prepareMetaForRansack(this.meta);
+
     const q = toRansack(
-      this.meta,
-      {
-        title: RansackType.Cont,
-        priceTo: RansackType.Lteq,
-        priceFrom: RansackType.Gteq,
-        writingDate: RansackType.Eq,
-        releaseDate: RansackType.Eq,
-        genres: RansackType.In,
-      },
+      meta,
+      config,
     );
 
     this._booksService
@@ -62,7 +58,6 @@ export class BooksServices implements OnDestroy {
         takeUntil(this._destroy),
       )
       .subscribe((response: IBooksResponse) => {
-        console.log(response);
         Object.assign(this.meta, response.meta);
         this.allBooks = response.books;
         this.allBooksChanged.next();

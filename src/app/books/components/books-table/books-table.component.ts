@@ -107,6 +107,7 @@ export class BooksTableComponent implements OnInit, OnDestroy {
           const title = queryParam['title'];
           const priceTo = queryParam['priceTo'];
           const priceFrom = queryParam['priceFrom'];
+          const genres = queryParam['genres'];
           const writingDate = this._getDateFromUrl(queryParam['writingDate']);
           const releaseDate = this._getDateFromUrl(queryParam['releaseDate']);
 
@@ -118,6 +119,7 @@ export class BooksTableComponent implements OnInit, OnDestroy {
                 title,
                 priceTo,
                 priceFrom,
+                genres,
                 writingDate,
                 releaseDate,
               });
