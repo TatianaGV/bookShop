@@ -34,9 +34,15 @@
             [matAutocomplete]="autoGenres"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+          <mat-spinner
+            matSuffix
+            [diameter]="24"
+            *ngIf="loaded">
+          </mat-spinner>
         </mat-chip-list>
-        <mat-autocomplete #autoGenres="matAutocomplete"
-                          (optionSelected)="selected($event)">
+        <mat-autocomplete
+          #autoGenres="matAutocomplete"
+          (optionSelected)="selected($event)">
           <mat-option *ngFor="let genre of allGenres"
                       [value]="genre">
             {{ genre.name }}

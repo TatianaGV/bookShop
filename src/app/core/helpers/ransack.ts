@@ -2,6 +2,8 @@ import { snakeCase } from 'lodash-es';
 
 import { IMetaData } from '../interfaces/meta.interface';
 import { IRansackMeta } from '../interfaces/ransack-meta.interface';
+import { IconfigRansack } from '../interfaces/q-config.interface';
+
 
 export enum RansackType {
   Cont ,
@@ -79,9 +81,16 @@ function prepareQueryKey(elem: any, transformedKey: any): string {
 export function prepareMetaForRansack(meta: IMetaData): any {
   debugger;
   let result: IRansackMeta = {};
-  let config = {};
+  let config: IconfigRansack;
 
-  // перетирается
+  config = {
+    title: RansackType.Cont,
+    price: [RansackType.Gteq, RansackType.Lteq],
+    writingDate: RansackType.Eq,
+    releaseDate: RansackType.Eq,
+    genres_id: RansackType.In,
+  };
+
   result = {
     pages: +meta.pages,
     records: +meta.records,
@@ -92,44 +101,16 @@ export function prepareMetaForRansack(meta: IMetaData): any {
 
   if (meta.priceTo && meta.priceFrom) {
     result.price = [meta.priceFrom, meta.priceTo];
-    config = {
-      title: RansackType.Cont,
-      price: [RansackType.Gteq, RansackType.Lteq],
-      writingDate: RansackType.Eq,
-      releaseDate: RansackType.Eq,
-      genres_id: RansackType.In,
-    };
   }
 
   if (!meta.priceTo && meta.priceFrom) {
     result.price = meta.priceFrom;
-    config = {
-      title: RansackType.Cont,
-      price: RansackType.Gteq,
-      writingDate: RansackType.Eq,
-      releaseDate: RansackType.Eq,
-      genres_id: RansackType.In,
-    };
+    config.price = RansackType.Gteq;
   }
 
   if (meta.priceTo && !meta.priceFrom) {
     result.price = meta.priceTo;
-    config = {
-      title: RansackType.Cont,
-      price: RansackType.Lteq,
-      writingDate: RansackType.Eq,
-      releaseDate: RansackType.Eq,
-      genres_id: RansackType.In,
-    };
-  }
-
-  if (meta.priceTo === undefined && meta.priceFrom === undefined) {
-    config = {
-      title: RansackType.Cont,
-      writingDate: RansackType.Eq,
-      releaseDate: RansackType.Eq,
-      genres_id: RansackType.In,
-    };
+    config.price = RansackType.Lteq;
   }
 
   const arrGen = [];
@@ -142,8 +123,13 @@ export function prepareMetaForRansack(meta: IMetaData): any {
     result.genres_id = meta.genres;
   }
 
-  console.log(result);
-  console.log(config);
+  if (meta.releaseDate) {
+    result.releaseDate = meta.releaseDate;
+  }
+
+  if (meta.writingDate) {
+    result.writingDate = meta.writingDate;
+  }
 
   return {
     meta: result,

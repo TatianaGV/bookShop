@@ -6,6 +6,7 @@ import { IDataBook } from '../../../core/interfaces/books.interface';
 import { BooksServices } from '../../../core/services/books.service';
 import { AuthorsServices } from '../../../core/services/authors.service';
 import { GenresServices } from '../../../core/services/genres.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class BooksCreatePageComponent implements OnInit {
   public booksForm: FormGroup = new FormGroup({});
 
   constructor(
+    private _route: Router,
     private _authorService: AuthorsServices,
     private _genresService: GenresServices,
     private _booksService: BooksServices,
@@ -40,6 +42,7 @@ export class BooksCreatePageComponent implements OnInit {
   }
 
   public submit(): void {
+    debugger;
     this.booksForm.markAllAsTouched();
     if (this.booksForm.invalid) {
       return;
@@ -56,6 +59,8 @@ export class BooksCreatePageComponent implements OnInit {
       };
       const book = this._prepareObjBeforeCreate(bookFormData);
       this.createBook(book);
+      this._route
+        .navigate(['/books']);
     } else {
       alert('Date of release can not be early than writing date');
     }

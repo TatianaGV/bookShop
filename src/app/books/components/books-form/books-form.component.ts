@@ -68,6 +68,9 @@ export class BooksFormComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this._initForm();
+    this._authorService
+      .changeMeta({ limit: 100 });
+
     this.filteredOptions$ = this.booksForm
       .get('author')
       .valueChanges

@@ -35,6 +35,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   public booksForm: FormGroup;
   public filterParams: IBookFilter;
   public queryParams: IBookFilterUrlParams;
+  public loaded = false;
 
   public maxDateWriting = new Date(new Date().setDate(new Date().getDate() - 1));
   public maxDateRelease = new Date(new Date().setDate(new Date().getDate() - 1));
@@ -80,17 +81,23 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
     this._initForm();
     this._getParamsFromUrl();
 
+    debugger;
+
     const genres = this._activatedRoute.snapshot.queryParamMap.getAll('genres');
 
-    const arr = genres
-      .map((id) => this._genresDateService.getGenresById(+id));
+    if (genres.length !== 0) {
+      this.loaded = true;
+      const arr = genres
+        .map((id) => this._genresDateService.getGenresById(+id));
 
-    forkJoin(arr)
-      .pipe()
-      .subscribe((result) => {
-        this.selectedGenres.push(...result);
-        this.booksForm.get('genres').setValue(this.selectedGenres);
-      });
+      forkJoin(arr)
+        .pipe()
+        .subscribe((result) => {
+          this.loaded = false;
+          this.selectedGenres.push(...result);
+          this.booksForm.get('genres').setValue(this.selectedGenres);
+        });
+    }
   }
 
   public submit(): void {
@@ -107,7 +114,9 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
       ? this._parseDate(this.booksForm.value.releaseDate)
       : null;
 
-    debugger;
+    if (this.booksForm.value.title === '') {
+      this.booksForm.value.title = null;
+    }
 
     this.filterParams = {
       page: 1,

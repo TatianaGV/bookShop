@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy, EventEmitter } from '@angular/core';
+import { Injectable, OnDestroy, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ReplaySubject } from 'rxjs';
@@ -93,10 +93,7 @@ export class AuthorsServices implements OnDestroy {
   }
 
   public changeMeta(meta: IMetaData): void {
-    meta = { ...this.meta, ...meta };
-    this.meta.pages = meta.pages;
-    this.meta.limit = meta.limit;
-    this.meta.page = meta.page;
+    this.meta = { ...this.meta, ...meta };
     this.getAllAuthors();
   }
 
