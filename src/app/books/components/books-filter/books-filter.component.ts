@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Input } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -29,13 +29,11 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   @ViewChild('genresInput')
   public genresInput: ElementRef<HTMLInputElement>;
 
-  public separatorKeysCodes: number[] = [ENTER, COMMA];
-  public priceValidator = '^\\d+(?:[.,]\\d{1,2})*$';
-  public selectedGenres: IDataGenre[] = [];
   public booksForm: FormGroup;
+  public priceValidator = '^\\d+(?:[.,]\\d{1,2})*$';
+
   public filterParams: IBookFilter;
   public queryParams: IBookFilterUrlParams;
-  public loaded = false;
 
   public maxDateWriting = new Date(new Date().setDate(new Date().getDate() - 1));
   public maxDateRelease = new Date(new Date().setDate(new Date().getDate() - 1));
@@ -72,32 +70,9 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
     return this.booksForm.get('releaseDate');
   }
 
-  public get allGenres(): IDataGenre[] {
-    return this._genresService
-      .allGenres;
-  }
-
   public ngOnInit(): void {
     this._initForm();
     this._getParamsFromUrl();
-
-    debugger;
-
-    const genres = this._activatedRoute.snapshot.queryParamMap.getAll('genres');
-
-    if (genres.length !== 0) {
-      this.loaded = true;
-      const arr = genres
-        .map((id) => this._genresDateService.getGenresById(+id));
-
-      forkJoin(arr)
-        .pipe()
-        .subscribe((result) => {
-          this.loaded = false;
-          this.selectedGenres.push(...result);
-          this.booksForm.get('genres').setValue(this.selectedGenres);
-        });
-    }
   }
 
   public submit(): void {
@@ -140,30 +115,6 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
     this._setUrlParams();
     this._booksService.changeMeta(this.filterParams);
   }
-
-  public selected(event: MatAutocompleteSelectedEvent): void {
-    if (!this.selectedGenres) {
-      this.selectedGenres = [];
-    }
-    if (this.selectedGenres.indexOf(event.option.value) === -1) {
-      this.selectedGenres.push(event.option.value);
-      this.booksForm.get('genres').setValue(this.selectedGenres);
-    }
-    this.genresInput.nativeElement.value = '';
-  }
-
-  public remove(genre: IDataGenre): void {
-    const index = this.selectedGenres.indexOf(genre);
-    if (index >= 0) {
-      this.selectedGenres.splice(index, 1);
-      this.booksForm.get('genres').setValue(this.selectedGenres);
-    }
-    if (this.selectedGenres.length === 0) {
-      this.selectedGenres = null;
-      this.booksForm.get('genres').setValue(this.selectedGenres);
-    }
-  }
-
 
   public ngOnDestroy(): void {
     this._destroy.next(null);
