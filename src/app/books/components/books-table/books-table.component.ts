@@ -19,6 +19,8 @@ import { takeUntil, filter } from 'rxjs/operators';
 
 export class BooksTableComponent implements OnInit, OnDestroy {
 
+  public loadedData = false;
+
   public displayedColumns: string[] = [
     'id',
     'description',
@@ -51,6 +53,10 @@ export class BooksTableComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this._listenQueryParams();
     this._listenUrlParams();
+
+    if (this.allBooks.length !== 0) {
+      this.loadedData = true;
+    }
   }
 
   public changeStateInPaginator(event: PageEvent): void {
@@ -134,6 +140,7 @@ export class BooksTableComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => {
         this._setUrlParams();
+        this.loadedData = true;
       });
   }
 

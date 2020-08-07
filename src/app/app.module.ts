@@ -7,11 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
 import { CoreModule } from './core/core.module';
+import { SpinnerComponent } from './lib/spinner/spinner-component/spinner.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -19,6 +22,7 @@ import { CoreModule } from './core/core.module';
     AppRoutingModule,
     LayoutModule,
     CoreModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

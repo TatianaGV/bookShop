@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="allBooks" class="mat-elevation-z8">
+<table mat-table [dataSource]="allBooks" *appSpinner="loadedData">
 
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> No. </th>
@@ -47,7 +47,7 @@
   <ng-container matColumnDef="menu">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">

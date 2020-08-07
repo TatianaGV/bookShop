@@ -30,6 +30,9 @@ import { BooksFormComponent } from './components/books-form/books-form.component
 import { BooksConfirmDialogComponent } from './components/books-confirm-dialog/books-confirm-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SpinnerModule } from '../lib/spinner/spinner.module';
+import { SpinnerComponent } from '../lib/spinner/spinner-component/spinner.component';
+import { SpinnerDirective } from '../lib/spinner/spinner.directive';
 
 
 @NgModule({
@@ -65,6 +68,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDividerModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    SpinnerModule,
   ],
 })
 export class BooksModule { }
