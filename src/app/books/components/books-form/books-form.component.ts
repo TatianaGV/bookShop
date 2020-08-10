@@ -13,6 +13,7 @@ import { AuthorsServices } from '../../../core/services/authors.service';
 import { GenresServices } from '../../../core/services/genres.service';
 import { BooksServices } from '../../../core/services/books.service';
 import { IDataBookComplete } from '../../../core/interfaces/books.interface';
+import { EventEmitter } from 'events';
 
 @Component({
   selector: 'app-books-form',
@@ -44,6 +45,8 @@ export class BooksFormComponent implements OnInit, OnDestroy {
 
   public filteredOptions$: Observable<IDataAuthor[]>;
   public selectableGenres: IDataGenre[] = [];
+  public src = 'assets/pic/agenda.png';
+  public file: File | null;
 
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -68,8 +71,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this._initForm();
-    this._authorService
-      .changeMeta({ limit: 100 });
+    this._authorService.changeMeta({ limit: 100 });
 
     this.filteredOptions$ = this.booksForm
       .get('author')
@@ -118,6 +120,15 @@ export class BooksFormComponent implements OnInit, OnDestroy {
 
   public displayValue(value?: IDataAuthor): string {
     return !value ? '' : `${value.first_name} ${value.last_name}`;
+  }
+
+  public previewImage(event: FileList): void {
+    const fEvent = event && event.item(0);
+    const fileReader = new FileReader();
+    fileReader.onloadend = (e) => {
+      this.src = <string>e.target.result;
+    };
+    fileReader.readAsDataURL(fEvent);
   }
 
   public ngOnDestroy(): void {

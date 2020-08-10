@@ -1,14 +1,18 @@
 import {
   Component,
   OnInit,
-  forwardRef,
   ViewChild,
   ElementRef,
-  Input,
   Self,
-  Optional
+  Optional, Input
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, NgControl } from '@angular/forms';
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  FormGroup,
+  NgControl,
+  FormControl
+} from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { IDataGenre } from '../../../core/interfaces/genres.interface';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
@@ -27,20 +31,22 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
   @ViewChild('genresInput', { static: true })
   public genresInput: ElementRef<HTMLInputElement>;
 
+  @Input()
+  public fillClass;
+
   public separatorKeysCodes: number[] = [ENTER, COMMA];
   public selectedGenres: IDataGenre[] = [];
   public loaded = false;
-
-  private _value: IDataGenre;
+  public genresControl = new FormControl(null);
 
   constructor(
-    @Self() @Optional() private _genresControl: NgControl,
+    @Self() @Optional() public _genresNgControl: NgControl,
     private _activatedRoute: ActivatedRoute,
     private _genresService: GenresServices,
     private _genresDateService: GenresDataServices,
   ) {
-    if (this._genresControl) {
-      this._genresControl.valueAccessor = this;
+    if (this._genresNgControl) {
+      this._genresNgControl.valueAccessor = this;
     }
   }
 
@@ -57,7 +63,7 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
         .subscribe((result) => {
           this.loaded = false;
           this.selectedGenres.push(...result);
-          this._genresControl.control.setValue(this.selectedGenres);
+          this.genresControl.setValue(this.selectedGenres);
         });
     }
   }
@@ -68,7 +74,6 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
   }
 
   public writeValue(val: any): void {
-    this._value = val;
   }
 
   public onChange = (val: any) => {};
@@ -89,7 +94,7 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
     }
     if (this.selectedGenres.indexOf(event.option.value) === -1) {
       this.selectedGenres.push(event.option.value);
-      this._genresControl.control.setValue(this.selectedGenres);
+      this.genresControl.setValue(this.selectedGenres);
     }
     this.genresInput.nativeElement.value = '';
   }
@@ -98,11 +103,11 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
     const index = this.selectedGenres.indexOf(genre);
     if (index >= 0) {
       this.selectedGenres.splice(index, 1);
-      this._genresControl.control.setValue(this.selectedGenres);
+      this.genresControl.setValue(this.selectedGenres);
     }
     if (this.selectedGenres.length === 0) {
       this.selectedGenres = null;
-      this._genresControl.control.setValue(this.selectedGenres);
+      this.genresControl.setValue(this.selectedGenres);
     }
   }
 
