@@ -4,7 +4,7 @@ import {
   ViewChild,
   ElementRef,
   Self,
-  Optional, Input
+  Optional, Input, forwardRef
 } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,

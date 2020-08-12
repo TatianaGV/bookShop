@@ -31,7 +31,7 @@ import { BooksConfirmDialogComponent } from './components/books-confirm-dialog/b
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerModule } from '../lib/spinner/spinner.module';
-import { SpinnerComponent } from '../lib/spinner/spinner-component/spinner.component';
+import { SpinnerComponent } from '../lib/spinner/spinner/spinner.component';
 import { SpinnerDirective } from '../lib/spinner/spinner.directive';
 import { GenresControlModule } from '../lib/genres-control/genres-control.module';
 

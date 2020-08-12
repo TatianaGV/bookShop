@@ -7,7 +7,7 @@ import {
   ViewContainerRef, TemplateRef, ComponentFactoryResolver
 } from '@angular/core';
 
-import { SpinnerComponent } from './spinner-component/spinner.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @Directive({
   selector: '[appSpinner]',

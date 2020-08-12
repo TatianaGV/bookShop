@@ -1,6 +1,6 @@
 import { NgModule, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GenresCustomControlComponent } from './genres-custom-control/genres-custom-control.component';
+import { GenresCustomControlComponent } from './genres/genres-custom-control.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';

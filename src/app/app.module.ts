@@ -7,14 +7,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
 import { CoreModule } from './core/core.module';
-import { SpinnerComponent } from './lib/spinner/spinner-component/spinner.component';
+import { SpinnerComponent } from './lib/spinner/spinner/spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ErrorsDialogComponent } from './lib/errors-dialog/errors-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SpinnerComponent,
+    ErrorsDialogComponent,
   ],
   imports: [
     BrowserModule,
