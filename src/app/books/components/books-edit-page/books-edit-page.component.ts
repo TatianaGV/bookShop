@@ -2,8 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { BooksServices } from '../../../core/services/books.service';
-import { ActivatedRoute } from '@angular/router';
-import { IDataBookComplete } from '../../../core/interfaces/books.interface';
+import {ActivatedRoute, Route, Router} from '@angular/router';
+import {IDataBook, IDataBookComplete} from '../../../core/interfaces/books.interface';
+import {IBookCreation} from "../../../core/interfaces/book-form.interface";
+import {prepareObjBeforeCreate} from "../../../core/helpers/prepare-object.helper";
 
 @Component({
   selector: 'app-books-edit-page',
@@ -15,13 +17,14 @@ export class BooksEditPageComponent implements OnInit {
   public booksForm: FormGroup;
 
   constructor(
+    private _activatedRoute: ActivatedRoute,
+    private _route: Router,
     private _booksService: BooksServices,
-    private _route: ActivatedRoute,
   ) { }
 
   public ngOnInit(): void {
     this.booksForm = new FormGroup({});
-    const id = this._route.snapshot.paramMap.get('id');
+    const id = this._activatedRoute.snapshot.paramMap.get('id');
     this._booksService
       .getBookById(+id);
   }
@@ -31,8 +34,28 @@ export class BooksEditPageComponent implements OnInit {
       .book;
   }
 
-  public submit(): void {
+  public updateBook(item: IDataBook): void {
+    this._booksService
+      .createBook(item);
+  }
 
+  public submit(): void {
+    if (this.booksForm.invalid) {
+      return;
+    }
+    const bookFormData: IBookCreation = {
+      title: this.booksForm.value.title,
+      description: this.booksForm.value.description,
+      price: this.booksForm.value.price,
+      author: this.booksForm.value.author,
+      genres: this.booksForm.value.genres,
+      writingDate: this.booksForm.value.writingDate,
+      releaseDate: this.booksForm.value.releaseDate,
+    };
+   //const book = prepareObjBeforeCreate(bookFormData);
+    //this.updateBook(book);
+    this._route
+      .navigate(['/books']);
   }
 
   public clear(): void {

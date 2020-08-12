@@ -6,17 +6,15 @@ import {
   FormBuilder, AbstractControl,
 } from '@angular/forms';
 
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { IDataGenre } from '../../../core/interfaces/genres.interface';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { IGenresResponse, GenresDataServices } from '../../../core/data/genres.data';
 import { IBookFilter, IBookFilterUrlParams } from '../../../core/interfaces/book-filter.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BooksServices } from '../../../core/services/books.service';
 import { ReplaySubject, forkJoin } from 'rxjs';
 import { takeUntil, debounceTime, take } from 'rxjs/operators';
-import { preparingDateFromUrl } from '../../../core/helpers/data.helpers';
+import {parseDate, preparingDateFromUrl} from '../../../core/helpers/data.helpers';
 import { GenresServices } from '../../../core/services/genres.service';
+import { MatFormFieldAppearance } from '@angular/material/form-field';
 
 
 @Component({
@@ -38,6 +36,8 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   public maxDateWriting = new Date(new Date().setDate(new Date().getDate() - 1));
   public maxDateRelease = new Date(new Date().setDate(new Date().getDate() - 1));
   public minDateRelease: Date;
+
+  public appearanceStandard: MatFormFieldAppearance = 'standard';
 
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
   private _priceGroup: FormGroup;
@@ -80,13 +80,12 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
       return;
     }
 
-    debugger;
     const writingDate = this.booksForm.value.writingDate ?
-      this._parseDate(this.booksForm.value.writingDate) :
+      parseDate(this.booksForm.value.writingDate) :
       null;
 
     const releaseDate = this.booksForm.value.releaseDate
-      ? this._parseDate(this.booksForm.value.releaseDate)
+      ? parseDate(this.booksForm.value.releaseDate)
       : null;
 
     if (this.booksForm.value.title === '') {
@@ -229,27 +228,8 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _parseDate(datePickerValue: string): string {
-    const date = new Date(datePickerValue);
-    const year = date.getFullYear();
-    let month = (date.getMonth() + 1).toString();
-    let day = date.getDate().toString();
-
-    if (+day < 10) {
-      day = '0' + day;
-    }
-
-    if (+month < 10) {
-      month = '0' + month;
-    }
-
-    return `${day}-${month}-${year}`;
-  }
-
   private _getParamsFromUrl(): void {
     const params: IBookFilter = {};
-
-    debugger;
 
     const writingDataUrl = this._activatedRoute.snapshot.queryParamMap.get('writingDate');
     const writingDataParse = writingDataUrl ?
@@ -285,9 +265,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
     this._fillFilterFieldFromUrl(params);
   }
 
-  private _fillFilterFieldFromUrl(
-    params: IBookFilter,
-    ): void {
+  private _fillFilterFieldFromUrl(params: IBookFilter): void {
     this._priceGroup.patchValue({
       to: params.priceTo,
       from: params.priceFrom,

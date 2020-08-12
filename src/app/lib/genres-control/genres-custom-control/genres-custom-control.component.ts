@@ -11,7 +11,7 @@ import {
   ControlValueAccessor,
   FormGroup,
   NgControl,
-  FormControl
+  FormControl,
 } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { IDataGenre } from '../../../core/interfaces/genres.interface';
@@ -20,6 +20,8 @@ import { GenresServices } from '../../../core/services/genres.service';
 import { forkJoin } from 'rxjs';
 import { GenresDataServices } from '../../../core/data/genres.data';
 import { ActivatedRoute } from '@angular/router';
+import { MatFormFieldAppearance } from '@angular/material/form-field';
+
 
 @Component({
   selector: 'app-genres-custom-control',
@@ -32,27 +34,33 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
   public genresInput: ElementRef<HTMLInputElement>;
 
   @Input()
-  public fillClass;
+  public appearanceClass: MatFormFieldAppearance = 'standard';
+
+  @Input()
+  public parentForm: FormGroup;
 
   public separatorKeysCodes: number[] = [ENTER, COMMA];
+  public inputControl: FormControl = new FormControl('');
   public selectedGenres: IDataGenre[] = [];
   public loaded = false;
-  public genresControl = new FormControl(null);
 
   constructor(
-    @Self() @Optional() public _genresNgControl: NgControl,
+    @Self() @Optional() public genresNgControl: NgControl,
     private _activatedRoute: ActivatedRoute,
     private _genresService: GenresServices,
     private _genresDateService: GenresDataServices,
   ) {
-    if (this._genresNgControl) {
-      this._genresNgControl.valueAccessor = this;
+    if (this.genresNgControl != null) {
+      this.genresNgControl.valueAccessor = this;
     }
   }
 
   public ngOnInit(): void {
-    const genres = this._activatedRoute.snapshot.queryParamMap.getAll('genres');
+    const validators = this.genresNgControl.control.validator;
+    this.inputControl.setValidators(validators ? validators : null);
+    this.inputControl.updateValueAndValidity();
 
+    const genres = this._activatedRoute.snapshot.queryParamMap.getAll('genres');
     if (genres.length !== 0) {
       this.loaded = true;
       const arr = genres
@@ -63,7 +71,7 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
         .subscribe((result) => {
           this.loaded = false;
           this.selectedGenres.push(...result);
-          this.genresControl.setValue(this.selectedGenres);
+          this.inputControl.setValue(this.selectedGenres);
         });
     }
   }
@@ -74,14 +82,24 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
   }
 
   public writeValue(val: any): void {
+    if (!val) {
+      val = [];
+    }
+
+    if (Array.isArray(val)) {
+      this.genresInput.nativeElement.value = '';
+      this.inputControl.setValue(val);
+    } else {
+      console.info('Genres Control: Not array');
+    }
   }
 
-  public onChange = (val: any) => {};
+  public onChanged = (val: any) => {};
 
   public onTouched = () => {};
 
   public registerOnChange(fn: (val: any) => void): void {
-    this.onChange = fn;
+    this.onChanged = fn;
   }
 
   public registerOnTouched(fn: () => void): void {
@@ -94,7 +112,7 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
     }
     if (this.selectedGenres.indexOf(event.option.value) === -1) {
       this.selectedGenres.push(event.option.value);
-      this.genresControl.setValue(this.selectedGenres);
+      this.inputControl.setValue(this.selectedGenres);
     }
     this.genresInput.nativeElement.value = '';
   }
@@ -103,11 +121,11 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
     const index = this.selectedGenres.indexOf(genre);
     if (index >= 0) {
       this.selectedGenres.splice(index, 1);
-      this.genresControl.setValue(this.selectedGenres);
+      this.inputControl.setValue(this.selectedGenres);
     }
     if (this.selectedGenres.length === 0) {
       this.selectedGenres = null;
-      this.genresControl.setValue(this.selectedGenres);
+      this.inputControl.setValue(this.selectedGenres);
     }
   }
 

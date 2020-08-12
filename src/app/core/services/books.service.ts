@@ -24,9 +24,9 @@ export class BooksServices implements OnDestroy {
   private _destroy = new ReplaySubject<void>(1);
 
   constructor(
-    private _booksService: BooksDataServices,
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
+    private _booksService: BooksDataServices,
   ) {
   }
 

@@ -1,6 +1,6 @@
-<mat-form-field class="fill">
+<mat-form-field [appearance]=appearanceClass>
   <mat-label>Genres</mat-label>
-  <mat-chip-list #chipList aria-label="Genres selection">
+  <mat-chip-list #chipList required="false" aria-label="Genres selection">
     <mat-chip
       *ngFor="let genre of selectedGenres"
       [selectable]="true"
@@ -11,7 +11,7 @@
     </mat-chip>
     <input
       matInput
-      [formControl]="genresControl"
+      [formControl]="inputControl"
       #genresInput
       [matAutocomplete]="autoGenres"
       [matChipInputFor]="chipList"
@@ -30,4 +30,9 @@
       {{ genre.name }}
     </mat-option>
   </mat-autocomplete>
+  <mat-error *ngIf="inputControl.invalid && (inputControl.dirty || inputControl.touched)">
+      <span *ngIf="inputControl.errors?.required">
+        ERROR: Genre is required
+      </span>
+  </mat-error>
 </mat-form-field>

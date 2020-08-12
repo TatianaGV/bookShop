@@ -19,7 +19,6 @@ export class SpinnerDirective implements OnInit {
 
   @Input('appSpinner')
   set showSpinner(spinning: boolean) {
-    console.log(spinning);
     this.container.clear();
 
     if (!spinning) {

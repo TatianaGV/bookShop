@@ -7,6 +7,7 @@ import { BooksServices } from '../../../core/services/books.service';
 import { AuthorsServices } from '../../../core/services/authors.service';
 import { GenresServices } from '../../../core/services/genres.service';
 import { Router } from '@angular/router';
+import {prepareObjBeforeCreate} from "../../../core/helpers/prepare-object.helper";
 
 
 @Component({
@@ -16,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class BooksCreatePageComponent implements OnInit {
 
-  public booksForm: FormGroup = new FormGroup({});
+  public booksForm: FormGroup;
 
   constructor(
     private _route: Router,
@@ -27,13 +28,7 @@ export class BooksCreatePageComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-  }
-
-  public checkDate(): boolean {
-    const writingDate = this.booksForm.value.writingDate;
-    const releaseDate = this.booksForm.value.releaseDate;
-
-    return writingDate < releaseDate;
+    this.booksForm = new FormGroup({});
   }
 
   public createBook(item: IDataBook): void {
@@ -42,42 +37,22 @@ export class BooksCreatePageComponent implements OnInit {
   }
 
   public submit(): void {
-    debugger;
     this.booksForm.markAllAsTouched();
     if (this.booksForm.invalid) {
       return;
     }
-    if (this.checkDate()) {
-      const bookFormData: IBookCreation = {
-        title: this.booksForm.value.title,
-        description: this.booksForm.value.description,
-        price: this.booksForm.value.price,
-        author: this.booksForm.value.author,
-        genres: this.booksForm.value.genres,
-        writingDate: this.booksForm.value.writingDate,
-        releaseDate: this.booksForm.value.releaseDate,
-      };
-      const book = this._prepareObjBeforeCreate(bookFormData);
-      this.createBook(book);
-      this._route
-        .navigate(['/books']);
-    } else {
-      alert('Date of release can not be early than writing date');
-    }
-  }
-
-
-  private _prepareObjBeforeCreate(book: IBookCreation): IDataBook {
-    return {
-      id: null,
-      description: book.description,
-      title: book.title,
-      author_id: book.author.id,
-      price: book.price,
-      genres: book.genres,
-      writing_date: book.writingDate,
-      release_date: book.releaseDate,
+    const bookFormData: IBookCreation = {
+      title: this.booksForm.value.title,
+      description: this.booksForm.value.description,
+      price: this.booksForm.value.price,
+      author: this.booksForm.value.author,
+      genres: this.booksForm.value.genres,
+      writingDate: this.booksForm.value.writingDate,
+      releaseDate: this.booksForm.value.releaseDate,
     };
+    const book = prepareObjBeforeCreate(bookFormData);
+    this.createBook(book);
+    this._route.navigate(['/books']);
   }
 
 }
