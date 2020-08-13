@@ -89,6 +89,8 @@ export function prepareMetaForRansack(meta: IMetaData): any {
     writingDate: RansackType.Eq,
     releaseDate: RansackType.Eq,
     genres_id: RansackType.In,
+    first_name: RansackType.Cont,
+    last_name: RansackType.Cont,
   };
 
   result = {
@@ -129,6 +131,14 @@ export function prepareMetaForRansack(meta: IMetaData): any {
 
   if (meta.writingDate) {
     result.writingDate = meta.writingDate;
+  }
+
+  if (meta.firstName) {
+    result.first_name = meta.firstName;
+  }
+
+  if (meta.lastName) {
+    result.last_name = meta.lastName;
   }
 
   return {

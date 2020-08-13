@@ -8,4 +8,6 @@ export interface IRansackMeta {
   price?: number[] | number;
   writingDate?: Date;
   releaseDate?: Date;
+  first_name?: string;
+  last_name?: string;
 }

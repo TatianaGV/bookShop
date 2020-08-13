@@ -6,4 +6,6 @@ export interface IconfigRansack {
   writingDate?: RansackType.Eq;
   releaseDate?: RansackType.Eq;
   genres_id?: RansackType.In;
+  first_name?: RansackType.Cont;
+  last_name?: RansackType.Cont;
 }

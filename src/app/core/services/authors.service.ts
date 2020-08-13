@@ -1,12 +1,13 @@
 import { Injectable, OnDestroy, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { IDataAuthor } from '../interfaces/authors.interface';
 import { IMetaData } from '../interfaces/meta.interface';
 import { AuthorsDataServices } from '../data/authors.data';
+import { prepareMetaForRansack, toRansack } from '../helpers/ransack';
 
 
 export interface IAuthorsResponse {
@@ -23,7 +24,7 @@ export class AuthorsServices implements OnDestroy {
   public allAuthors: IDataAuthor[] = [];
   public author: IDataAuthor;
 
-  public allAuthorsChanged = new EventEmitter<any>();
+  public allAuthorsChanged = new Subject<any>();
 
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -60,15 +61,22 @@ export class AuthorsServices implements OnDestroy {
   }
 
   public getAllAuthors(): void {
+    const { meta, config } = prepareMetaForRansack(this.meta);
+
+    const q = toRansack(
+      meta,
+      config,
+    );
+
     this._authorsService
-      .getAllAuthors({ page: this.meta.page, limit: this.meta.limit })
+      .getAllAuthors(q)
       .pipe(
         takeUntil(this._destroy),
       )
       .subscribe((response: IAuthorsResponse) => {
-        this.meta = response.meta;
+        Object.assign(this.meta, response.meta);
         this.allAuthors = response.authors;
-        this.allAuthorsChanged.emit();
+        this.allAuthorsChanged.next();
       });
   }
 
@@ -93,7 +101,7 @@ export class AuthorsServices implements OnDestroy {
   }
 
   public changeMeta(meta: IMetaData): void {
-    this.meta = { ...this.meta, ...meta };
+    Object.assign(this.meta, meta);
     this.getAllAuthors();
   }
 

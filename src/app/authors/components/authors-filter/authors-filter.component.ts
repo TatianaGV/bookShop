@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IAuthorFilter } from '../../../core/interfaces/author-filter.interface';
 import { AuthorsServices } from '../../../core/services/authors.service';
 import { IMetaData } from '../../../core/interfaces/meta.interface';
-import { IBookFilter } from '../../../core/interfaces/book-filter.interface';
 
 @Component({
   selector: 'app-authors-filter',
