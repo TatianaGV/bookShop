@@ -19,6 +19,8 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class AuthorsTableComponent implements OnInit, OnDestroy {
 
+  public loadedData = false;
+
   public displayedColumns: string[] = [
     'id',
     'firstName',
@@ -44,26 +46,12 @@ export class AuthorsTableComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this._activatedRoute.queryParams
-      .pipe(
-        takeUntil(this._destroy),
-      )
-      .subscribe(
-        (queryParam: any) => {
-          const page = queryParam['page'] || 1;
-          const limit = queryParam['limit'] || 10;
-          if (+page !== this.metaData.page || +limit !== this.metaData.limit) {
-            this._authorsService.changeMeta({ page, limit });
-          }
-        });
+    this._listenQueryParams();
+    this._listenUrlParams();
 
-    this._authorsService.allAuthorsChanged
-      .pipe(
-        takeUntil(this._destroy),
-      )
-      .subscribe(() => {
-        this._setUrlParams();
-      });
+    if (this.allAuthors.length !== 0) {
+      this.loadedData = true;
+    }
   }
 
   public changeStateInPaginator(event: PageEvent): void {
@@ -107,6 +95,40 @@ export class AuthorsTableComponent implements OnInit, OnDestroy {
       queryParams: params,
       queryParamsHandling: 'merge',
     });
+  }
+
+  private _listenQueryParams(): void {
+    this._activatedRoute.queryParams
+      .pipe(
+        takeUntil(this._destroy),
+      )
+      .subscribe(
+        (queryParam: any) => {
+          const page = queryParam['page'] || 1;
+          const limit = queryParam['limit'] || 10;
+          const firstName = queryParam['first_name'];
+          const lastName = queryParam['last_name'];
+          if (+page !== this.metaData.page || +limit !== this.metaData.limit) {
+            this._authorsService.changeMeta(
+              {
+                page,
+                limit,
+                firstName,
+                lastName,
+              });
+          }
+        });
+  }
+
+  private _listenUrlParams(): void {
+    this._authorsService.allAuthorsChanged
+      .pipe(
+        takeUntil(this._destroy),
+      )
+      .subscribe(() => {
+        this._setUrlParams();
+        this.loadedData = true;
+      });
   }
 
 }

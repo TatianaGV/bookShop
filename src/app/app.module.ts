@@ -10,6 +10,8 @@ import { CoreModule } from './core/core.module';
 import { SpinnerComponent } from './lib/spinner/spinner/spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ErrorsDialogComponent } from './lib/errors-dialog/errors-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -25,10 +27,11 @@ import { ErrorsDialogComponent } from './lib/errors-dialog/errors-dialog.compone
     LayoutModule,
     CoreModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [
-  ],
+  exports: [],
 })
 export class AppModule { }

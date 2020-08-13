@@ -11,7 +11,7 @@ import {
   ControlValueAccessor,
   FormGroup,
   NgControl,
-  FormControl,
+  FormControl, AbstractControl,
 } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { IDataGenre } from '../../../core/interfaces/genres.interface';
@@ -40,7 +40,7 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
   public parentForm: FormGroup;
 
   public separatorKeysCodes: number[] = [ENTER, COMMA];
-  public inputControl: FormControl = new FormControl('');
+  public inputControl: AbstractControl = new FormControl('');
   public selectedGenres: IDataGenre[] = [];
   public loaded = false;
 
@@ -57,6 +57,7 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
 
   public ngOnInit(): void {
     const validators = this.genresNgControl.control.validator;
+    this.inputControl = this.genresNgControl.control;
     this.inputControl.setValidators(validators ? validators : null);
     this.inputControl.updateValueAndValidity();
 
@@ -81,18 +82,7 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
       .allGenres;
   }
 
-  public writeValue(val: any): void {
-    if (!val) {
-      val = [];
-    }
-
-    if (Array.isArray(val)) {
-      this.genresInput.nativeElement.value = '';
-      this.inputControl.setValue(val);
-    } else {
-      console.info('Genres Control: Not array');
-    }
-  }
+  public writeValue(val: any): void {}
 
   public onChanged = (val: any) => {};
 
