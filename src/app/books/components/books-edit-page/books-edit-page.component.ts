@@ -1,11 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { BooksServices } from '../../../core/services/books.service';
-import {ActivatedRoute, Route, Router} from '@angular/router';
-import {IDataBook, IDataBookComplete} from '../../../core/interfaces/books.interface';
-import {IBookCreation} from "../../../core/interfaces/book-form.interface";
-import {prepareObjBeforeCreate} from "../../../core/helpers/prepare-object.helper";
+import { BooksServices } from '../../services/books.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IDataBook, IDataBookComplete } from '../../../core/interfaces/books.interface';
+import { IBookCreation } from '../../../core/interfaces/book-form.interface';
 
 @Component({
   selector: 'app-books-edit-page',

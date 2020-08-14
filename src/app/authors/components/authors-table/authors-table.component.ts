@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { IDataAuthor } from '../../../core/interfaces/authors.interface';
 import { IMetaData } from '../../../core/interfaces/meta.interface';
-import { AuthorsServices } from '../../../core/services/authors.service';
+import { AuthorsServices } from '../../services/authors.service';
 import { AuthorsConfirmDialogComponent } from '../authors-confirm-dialog/authors-confirm-dialog.component';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -31,10 +31,10 @@ export class AuthorsTableComponent implements OnInit, OnDestroy {
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
-    private _authorsService: AuthorsServices,
     public dialog: MatDialog,
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
+    private _authorsService: AuthorsServices,
   ) { }
 
   public get allAuthors(): IDataAuthor[] {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AuthorsServices } from '../../../core/services/authors.service';
+import { AuthorsServices } from '../../services/authors.service';
 import { IDataAuthor } from '../../../core/interfaces/authors.interface';
 
 @Component({

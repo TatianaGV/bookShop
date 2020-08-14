@@ -4,10 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { IDataAuthor } from '../interfaces/authors.interface';
-import { IMetaData } from '../interfaces/meta.interface';
-import { AuthorsDataServices } from '../data/authors.data';
-import { prepareMetaForRansack, toRansack } from '../helpers/ransack';
+import { IDataAuthor } from '../../core/interfaces/authors.interface';
+import { IMetaData } from '../../core/interfaces/meta.interface';
+import { AuthorsDataServices } from '../../core/data/authors.data';
+import { prepareMetaForRansack, toRansack } from '../../core/helpers/ransack';
 
 
 export interface IAuthorsResponse {
@@ -15,9 +15,7 @@ export interface IAuthorsResponse {
   meta: IMetaData;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AuthorsServices implements OnDestroy {
 
   public meta: IMetaData = {};

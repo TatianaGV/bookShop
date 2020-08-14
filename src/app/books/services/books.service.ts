@@ -4,15 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { IMetaData } from '../interfaces/meta.interface';
-import { BooksDataServices, IBooksResponse } from '../data/books.data';
-import { IDataBook, IDataBookComplete } from '../interfaces/books.interface';
-import { toRansack, RansackType, prepareMetaForRansack } from '../helpers/ransack';
+import { IMetaData } from '../../core/interfaces/meta.interface';
+import { BooksDataServices, IBooksResponse } from '../../core/data/books.data';
+import { IDataBook, IDataBookComplete } from '../../core/interfaces/books.interface';
+import { toRansack, RansackType, prepareMetaForRansack } from '../../core/helpers/ransack';
 
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class BooksServices implements OnDestroy {
 
   public meta: IMetaData = {};

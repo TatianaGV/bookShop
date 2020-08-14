@@ -9,11 +9,12 @@ import { startWith, map, takeUntil } from 'rxjs/operators';
 
 import { IDataAuthor } from '../../../core/interfaces/authors.interface';
 import { IDataGenre } from '../../../core/interfaces/genres.interface';
-import { AuthorsServices } from '../../../core/services/authors.service';
+import { AuthorsServices } from '../../../authors/services/authors.service';
 import { GenresServices } from '../../../core/services/genres.service';
-import { BooksServices } from '../../../core/services/books.service';
+import { BooksServices } from '../../services/books.service';
 import { IDataBookComplete } from '../../../core/interfaces/books.interface';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
+import { AuthorsDataServices } from '../../../core/data/authors.data';
 
 @Component({
   selector: 'app-books-form',
@@ -35,19 +36,6 @@ export class BooksFormComponent implements OnInit, OnDestroy {
       });
       this.selectableGenres = book.genres;
     }
-  }
-
-  public get allAuthors(): IDataAuthor[] {
-    return this._authorService
-      .allAuthors;
-  }
-
-  public get writingDateControl(): AbstractControl {
-    return this.booksForm.get('writingDate');
-  }
-
-  public get releaseDateControl(): AbstractControl {
-    return this.booksForm.get('releaseDate');
   }
 
   @Input()
@@ -72,6 +60,8 @@ export class BooksFormComponent implements OnInit, OnDestroy {
   public src = 'assets/pic/agenda.png';
   public file: File | null;
 
+  public allAuthors: IDataAuthor[] = [];
+
   public maxDateWriting = new Date(new Date().setDate(new Date().getDate() - 1));
   public maxDateRelease = new Date(new Date().setDate(new Date().getDate() - 1));
   public minDateRelease: Date;
@@ -81,7 +71,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
-    private _authorService: AuthorsServices,
+    private _authorService: AuthorsDataServices,
     private _genresService: GenresServices,
     private _booksService: BooksServices,
   ) { }
@@ -99,9 +89,17 @@ export class BooksFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  public get writingDateControl(): AbstractControl {
+    return this.booksForm.get('writingDate');
+  }
+
+  public get releaseDateControl(): AbstractControl {
+    return this.booksForm.get('releaseDate');
+  }
+
   public ngOnInit(): void {
+    this._getAuthors();
     this._initForm();
-    this._authorService.changeMeta({ limit: 100 });
     this._filterAuthors();
     this._filterInput();
   }
@@ -219,6 +217,17 @@ export class BooksFormComponent implements OnInit, OnDestroy {
         } else if (new Date(value).getTime() !== this.maxDateWriting?.getTime()) {
           this.maxDateWriting = new Date(value);
         }
+      });
+  }
+
+  private _getAuthors(): void {
+    debugger;
+    this._authorService.getAllAuthors({ limit: 100 })
+      .pipe(
+        takeUntil(this._destroy),
+      )
+      .subscribe((response) => {
+        this.allAuthors = response.authors;
       });
   }
 

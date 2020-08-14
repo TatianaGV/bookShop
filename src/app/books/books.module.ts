@@ -32,6 +32,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerModule } from '../libs/spinner/spinner.module';
 import { GenresControlModule } from '../libs/genres-control/genres-control.module';
+import { BooksServices } from './services/books.service';
 
 
 @NgModule({
@@ -69,6 +70,9 @@ import { GenresControlModule } from '../libs/genres-control/genres-control.modul
     MatProgressSpinnerModule,
     SpinnerModule,
     GenresControlModule,
+  ],
+  providers: [
+    BooksServices,
   ],
 })
 export class BooksModule { }

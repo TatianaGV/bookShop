@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IAuthorFilter } from '../../../core/interfaces/author-filter.interface';
-import { AuthorsServices } from '../../../core/services/authors.service';
+import { AuthorsServices } from '../../services/authors.service';
 import { IMetaData } from '../../../core/interfaces/meta.interface';
 
 @Component({

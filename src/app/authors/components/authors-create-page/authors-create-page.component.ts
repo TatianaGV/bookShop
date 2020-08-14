@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { IDataAuthor } from '../../../core/interfaces/authors.interface';
-import { AuthorsServices } from '../../../core/services/authors.service';
+import { AuthorsServices } from '../../services/authors.service';
 
 @Component({
   selector: 'app-authors-create-page',

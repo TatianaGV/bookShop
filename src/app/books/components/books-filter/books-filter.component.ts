@@ -9,7 +9,7 @@ import {
 import { IGenresResponse, GenresDataServices } from '../../../core/data/genres.data';
 import { IBookFilter, IBookFilterUrlParams } from '../../../core/interfaces/book-filter.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BooksServices } from '../../../core/services/books.service';
+import { BooksServices } from '../../services/books.service';
 import { ReplaySubject, forkJoin } from 'rxjs';
 import { takeUntil, debounceTime, take } from 'rxjs/operators';
 import {parseDate, preparingDateFromUrl} from '../../../core/helpers/data.helpers';
@@ -49,7 +49,6 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
     private _fb: FormBuilder,
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
-    private _genresService: GenresServices,
     private _genresDateService: GenresDataServices,
     private _booksService: BooksServices,
   ) { }

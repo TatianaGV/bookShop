@@ -27,7 +27,7 @@ export class AuthorsDataServices {
   ): Observable<IAuthorsResponse> {
     return this._http
       .get<IAuthorsResponse>(
-        `${environment.apiUrl}/author`,
+        `${environment.apiUrl}/authors`,
         { params: <any>params },
       );
   }

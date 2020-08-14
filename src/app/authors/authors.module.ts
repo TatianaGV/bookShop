@@ -30,6 +30,7 @@ import { AuthorsFormComponent } from './components/authors-form/authors-form.com
 import { AuthorsConfirmDialogComponent } from './components/authors-confirm-dialog/authors-confirm-dialog.component';
 import { SpinnerModule } from '../libs/spinner/spinner.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AuthorsServices } from './services/authors.service';
 
 
 @NgModule({

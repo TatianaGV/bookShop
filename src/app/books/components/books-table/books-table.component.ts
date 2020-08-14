@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IDataBook } from '../../../core/interfaces/books.interface';
 import { IMetaData } from '../../../core/interfaces/meta.interface';
 import { PageEvent } from '@angular/material/paginator';
-import { BooksServices } from '../../../core/services/books.service';
+import { BooksServices } from '../../services/books.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BooksConfirmDialogComponent } from '../books-confirm-dialog/books-confirm-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -36,10 +36,10 @@ export class BooksTableComponent implements OnInit, OnDestroy {
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
-    private _booksService: BooksServices,
     public dialog: MatDialog,
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
+    private _booksService: BooksServices,
   ) { }
 
   public get allBooks(): IDataBook[] {
