@@ -30,8 +30,8 @@ import { BooksFormComponent } from './components/books-form/books-form.component
 import { BooksConfirmDialogComponent } from './components/books-confirm-dialog/books-confirm-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { SpinnerModule } from '../lib/spinner/spinner.module';
-import { GenresControlModule } from '../lib/genres-control/genres-control.module';
+import { SpinnerModule } from '../libs/spinner/spinner.module';
+import { GenresControlModule } from '../libs/genres-control/genres-control.module';
 
 
 @NgModule({

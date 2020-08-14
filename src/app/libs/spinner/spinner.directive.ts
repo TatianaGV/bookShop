@@ -15,15 +15,15 @@ import { SpinnerComponent } from './spinner/spinner.component';
 export class SpinnerDirective implements OnInit {
 
   public componentFactory: ComponentFactory<SpinnerComponent>;
-  public spinnerComponent: ComponentRef<SpinnerComponent>;
+  // public spinnerComponent: ComponentRef<SpinnerComponent>;
 
   @Input('appSpinner')
   set showSpinner(spinning: boolean) {
     this.container.clear();
 
     if (!spinning) {
-      this.container.createEmbeddedView(this.template);
-      this.spinnerComponent = this.container.createComponent(this.componentFactory);
+      // this.container.createEmbeddedView(this.template);
+      this.container.createComponent(this.componentFactory);
     } else {
       this.container.createEmbeddedView(this.template);
     }

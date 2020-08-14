@@ -28,7 +28,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AuthorsEditPageComponent } from './components/authors-edit-page/authors-edit-page.component';
 import { AuthorsFormComponent } from './components/authors-form/authors-form.component';
 import { AuthorsConfirmDialogComponent } from './components/authors-confirm-dialog/authors-confirm-dialog.component';
-import { SpinnerModule } from '../lib/spinner/spinner.module';
+import { SpinnerModule } from '../libs/spinner/spinner.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
