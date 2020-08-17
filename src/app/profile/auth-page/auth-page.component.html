@@ -23,7 +23,6 @@
           </span>
         </mat-error>
       </mat-form-field>
-      <br>
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
         <input type="password"
@@ -40,14 +39,16 @@
           </span>
         </mat-error>
       </mat-form-field>
-      <br>
       <button
         class="submit"
         type="submit"
       >Log in</button>
     </form>
-    <br>
     <a class="restore-pwd"> Forgot the password? </a>
+    <div class="registration">
+      <span class="registration-message">Don`t have an account yet?</span>
+      <a [routerLink]="['/registration']" class="registration-ref">Sign up</a>
+    </div>
   </mat-card-content>
 </mat-card>
 </div>

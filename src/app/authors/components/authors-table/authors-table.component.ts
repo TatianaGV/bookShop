@@ -46,10 +46,11 @@ export class AuthorsTableComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this._checkResolve();
     this._listenQueryParams();
     this._listenUrlParams();
 
-    if (this.allAuthors.length !== 0) {
+    if (this.allAuthors?.length !== 0) {
       this.loadedData = true;
     }
   }
@@ -102,22 +103,21 @@ export class AuthorsTableComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this._destroy),
       )
-      .subscribe(
-        (queryParam: any) => {
-          const page = queryParam['page'] || 1;
-          const limit = queryParam['limit'] || 10;
-          const firstName = queryParam['first_name'];
-          const lastName = queryParam['last_name'];
+      .subscribe((queryParam: any) => {
+        const page = queryParam['page'];
+        const limit = queryParam['limit'];
+        debugger;
+        if (page !== undefined && limit !== undefined) {
+          console.log('listen', this.metaData);
           if (+page !== this.metaData.page || +limit !== this.metaData.limit) {
             this._authorsService.changeMeta(
               {
                 page,
                 limit,
-                firstName,
-                lastName,
               });
           }
-        });
+        }
+      });
   }
 
   private _listenUrlParams(): void {
@@ -128,6 +128,25 @@ export class AuthorsTableComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this._setUrlParams();
         this.loadedData = true;
+      });
+  }
+
+  private _checkResolve(): void {
+    this._activatedRoute.data
+      .pipe(
+        takeUntil(this._destroy),
+      )
+      .subscribe((resp) => {
+        const {
+          author: {
+            authors,
+            meta,
+          },
+        } = resp;
+        debugger;
+        console.log('resolver', meta);
+        this._authorsService.changeMeta(meta, true);
+        Object.assign(this._authorsService.allAuthors, authors);
       });
   }
 

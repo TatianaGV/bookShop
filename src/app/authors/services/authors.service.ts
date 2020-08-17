@@ -18,7 +18,10 @@ export interface IAuthorsResponse {
 @Injectable()
 export class AuthorsServices implements OnDestroy {
 
-  public meta: IMetaData = {};
+  public meta: IMetaData = {
+    page: 1,
+    limit: 10,
+  };
   public allAuthors: IDataAuthor[] = [];
   public author: IDataAuthor;
 
@@ -27,9 +30,9 @@ export class AuthorsServices implements OnDestroy {
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
-    private _authorsService: AuthorsDataServices,
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
+    private _authorsService: AuthorsDataServices,
   ) {
   }
 
@@ -59,19 +62,13 @@ export class AuthorsServices implements OnDestroy {
   }
 
   public getAllAuthors(): void {
-    const { meta, config } = prepareMetaForRansack(this.meta);
-
-    const q = toRansack(
-      meta,
-      config,
-    );
-
     this._authorsService
-      .getAllAuthors(q)
+      .getAllAuthors(this.meta)
       .pipe(
         takeUntil(this._destroy),
       )
       .subscribe((response: IAuthorsResponse) => {
+        debugger;
         Object.assign(this.meta, response.meta);
         this.allAuthors = response.authors;
         this.allAuthorsChanged.next();
@@ -98,9 +95,13 @@ export class AuthorsServices implements OnDestroy {
       .subscribe();
   }
 
-  public changeMeta(meta: IMetaData): void {
+  public changeMeta(meta: IMetaData, resolver: boolean = false): void {
+    console.log('meta', meta);
+    debugger;
     Object.assign(this.meta, meta);
-    this.getAllAuthors();
+    if (!resolver) {
+      this.getAllAuthors();
+    }
   }
 
 }

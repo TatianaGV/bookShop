@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { environment } from '../../../environments/environment';
 import { IDataAuthor } from '../interfaces/authors.interface';
 import { IMetaData } from '../interfaces/meta.interface';
 
@@ -23,11 +22,11 @@ export class AuthorsDataServices {
   ) {}
 
   public getAllAuthors(
-    params: IMetaData,
+    params: IMetaData = { page: 1, limit: 10 },
   ): Observable<IAuthorsResponse> {
     return this._http
       .get<IAuthorsResponse>(
-        `${environment.apiUrl}/authors`,
+        '/authors',
         { params: <any>params },
       );
   }
@@ -37,7 +36,7 @@ export class AuthorsDataServices {
   ): Observable<IDataAuthor> {
     return this._http
       .post<IDataAuthor>(
-        `${environment.apiUrl}/authors`, author);
+        '/authors', author);
   }
 
   public deleteAuthor(
@@ -45,7 +44,7 @@ export class AuthorsDataServices {
   ): Observable<{}> {
     return this._http
       .delete(
-        `${environment.apiUrl}/authors/${id}`);
+        `/authors/${id}`);
   }
 
   public getAuthorById(
@@ -53,7 +52,7 @@ export class AuthorsDataServices {
   ): Observable<IDataAuthor> {
     return this._http
       .get<IDataAuthor>(
-        `${environment.apiUrl}/authors/${id}`,
+        `/authors/${id}`,
       );
   }
 
@@ -62,7 +61,7 @@ export class AuthorsDataServices {
   ): Observable<IDataAuthor> {
     return this._http
       .put<IDataAuthor>(
-        `${environment.apiUrl}/authors/${author.id}`,
+        `/authors/${author.id}`,
         author,
       );
   }

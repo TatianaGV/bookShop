@@ -14,6 +14,7 @@ const routes: Routes = [
       { path: '', component: MainPageComponent },
       {
         path: 'authors',
+
         loadChildren: () => import('./authors/authors.module')
           .then((m) => m.AuthorsModule),
       },
@@ -21,9 +22,13 @@ const routes: Routes = [
         loadChildren: () => import('./books/books.module')
           .then((m) => m.BooksModule),
       },
-      { path: 'profile',
+      { path: 'login',
         loadChildren: () => import('./profile/profile.module')
           .then((m) => m.ProfileModule),
+      },
+      { path: 'registration',
+        loadChildren: () => import('./registration/registration.module')
+          .then((m) => m.RegistrationModule),
       },
     ],
   },

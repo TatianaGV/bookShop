@@ -5,6 +5,7 @@ import { AuthorsListComponent } from './components/authors-list/authors-list.com
 import { AuthorsPanelsComponent } from './components/authors-panels/authors-panels.component';
 import { AuthorsCreatePageComponent } from './components/authors-create-page/authors-create-page.component';
 import { AuthorsEditPageComponent } from './components/authors-edit-page/authors-edit-page.component';
+import { AuthorsResolver } from './resolvers/authors.resolver';
 
 
 const routes: Routes = [
@@ -13,13 +14,19 @@ const routes: Routes = [
     component: AuthorsListComponent,
     children: [
       {
-        path: '', component: AuthorsPanelsComponent,
+        path: '',
+        component: AuthorsPanelsComponent,
+        resolve: {
+          author: AuthorsResolver,
+        },
       },
       {
-        path: 'create', component: AuthorsCreatePageComponent,
+        path: 'create',
+        component: AuthorsCreatePageComponent,
       },
       {
-        path: ':id', component: AuthorsEditPageComponent,
+        path: ':id',
+        component: AuthorsEditPageComponent,
       },
     ],
   },

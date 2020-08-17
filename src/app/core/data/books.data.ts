@@ -26,7 +26,7 @@ export class BooksDataServices {
     ): Observable<IBooksResponse> {
     return this._http
       .get<IBooksResponse>(
-        `${environment.apiUrl}/books`,
+        '/books',
         { params: <any>params },
       );
   }
@@ -36,7 +36,7 @@ export class BooksDataServices {
   ): Observable<IDataBook> {
     return this._http
       .post<IDataBook>(
-        `${environment.apiUrl}/authors/${book.author_id}/books`,
+        `/authors/${book.author_id}/books`,
         book,
       );
   }
@@ -46,7 +46,7 @@ export class BooksDataServices {
   ): Observable<{}> {
     return this._http
       .delete(
-        `${environment.apiUrl}/books/${id}`,
+        `/books/${id}`,
       );
   }
 
@@ -55,7 +55,7 @@ export class BooksDataServices {
   ): Observable<IDataBookComplete> {
     return this._http
       .get<IDataBookComplete>(
-        `${environment.apiUrl}/books/${id}`,
+        `/books/${id}`,
       );
   }
 
@@ -64,7 +64,7 @@ export class BooksDataServices {
   ): Observable<IDataBookComplete> {
     return this._http
       .put<IDataBookComplete>(
-        `${environment.apiUrl}/books/${book.id}`,
+        `/books/${book.id}`,
         book,
       );
   }

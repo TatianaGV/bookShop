@@ -43,12 +43,7 @@ export class AuthorsFilterComponent implements OnInit {
       first_name: this.filterForm.value.firstName,
       last_name: this.filterForm.value.lastName,
     };
-    const meta: IMetaData = {
-      firstName: this.filterForm.value.firstName,
-      lastName: this.filterForm.value.lastName,
-    };
-    this._setUrlParams();
-    this._authorsService.changeMeta(meta);
+
   }
 
   private _setUrlParams(): void {

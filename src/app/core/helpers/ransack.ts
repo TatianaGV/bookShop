@@ -47,7 +47,7 @@ export function toRansack(obj: any, type: { [key: string]: RansackType | Ransack
         }
       }
     });
-  console.log(result);
+  console.log('ransack');
 
   return result;
 }
@@ -131,14 +131,6 @@ export function prepareMetaForRansack(meta: IMetaData): any {
 
   if (meta.writingDate) {
     result.writingDate = meta.writingDate;
-  }
-
-  if (meta.firstName) {
-    result.first_name = meta.firstName;
-  }
-
-  if (meta.lastName) {
-    result.last_name = meta.lastName;
   }
 
   return {

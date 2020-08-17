@@ -9,10 +9,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { PersonalAccountComponent } from './personal-account/personal-account.component';
 
 @NgModule({
   declarations: [
     AuthPageComponent,
+    PersonalAccountComponent,
   ],
   imports: [
     CommonModule,

@@ -11,6 +11,4 @@ export interface IMetaData {
   priceTo?: number;
   writingDate?: Date;
   releaseDate?: Date;
-  firstName?: string;
-  lastName?: string;
 }

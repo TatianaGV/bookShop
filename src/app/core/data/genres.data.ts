@@ -27,7 +27,7 @@ export class GenresDataServices {
   ): Observable<IGenresResponse> {
     return this._http
       .get<IGenresResponse>(
-        `${environment.apiUrl}/genres`,
+        '/genres',
         { params: <any>params },
       );
   }
@@ -37,7 +37,7 @@ export class GenresDataServices {
   ): Observable<IDataGenre> {
     return this._http
       .get<IDataGenre>(
-        `${environment.apiUrl}/genres/${id}`,
+        `/genres/${id}`,
       );
   }
 

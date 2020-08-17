@@ -13,13 +13,16 @@ const routes: Routes = [
     component: BooksPageComponent,
     children: [
       {
-        path: '', component: BooksPanelsComponent,
+        path: '',
+        component: BooksPanelsComponent,
       },
       {
-        path: 'create', component: BooksCreatePageComponent,
+        path: 'create',
+        component: BooksCreatePageComponent,
       },
       {
-        path: ':id', component: BooksEditPageComponent,
+        path: ':id',
+        component: BooksEditPageComponent,
       },
     ],
   },
