@@ -1,16 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+
+import { takeUntil } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
+
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-auth-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss'],
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit, OnDestroy {
 
   public authPageForm: FormGroup;
+
+  private _destroy$ = new ReplaySubject<any>(1);
 
   constructor(
     private _router: Router,
@@ -25,18 +31,23 @@ export class LoginPageComponent implements OnInit {
     if (this.authPageForm.invalid) {
       return;
     }
-    debugger;
-
     const user = {
       login: this.authPageForm.value.login,
       password: this.authPageForm.value.password,
     };
 
     this._authService.login(user)
+      .pipe(
+        takeUntil(this._destroy$),
+      )
       .subscribe(() => {
         this._router.navigate(['/', 'account']).then();
       });
+  }
 
+  public ngOnDestroy(): void {
+    this._destroy$.next(null);
+    this._destroy$.complete();
   }
 
   private _initForm(): void {

@@ -8,9 +8,9 @@ import {
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { AuthService } from '../../login/services/auth.service';
-import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -24,9 +24,6 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean | UrlTree> {
-    console.log('canActivate');
-    debugger;
-
     return this._authService.isLoggedIn()
       .pipe(
         map((param) => {

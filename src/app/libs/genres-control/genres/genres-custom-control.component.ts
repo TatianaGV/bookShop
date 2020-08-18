@@ -4,23 +4,26 @@ import {
   ViewChild,
   ElementRef,
   Self,
-  Optional, Input, forwardRef
+  Optional, Input, OnDestroy
 } from '@angular/core';
 import {
-  NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   FormGroup,
   NgControl,
   FormControl, AbstractControl,
 } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { IDataGenre } from '../../../core/interfaces/genres.interface';
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { GenresServices } from '../../../core/services/genres.service';
-import { forkJoin } from 'rxjs';
-import { GenresDataServices } from '../../../core/data/genres.data';
 import { ActivatedRoute } from '@angular/router';
+
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
+
+import { forkJoin, ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { IDataGenre } from '../../../core/interfaces/genres.interface';
+import { GenresServices } from '../../../core/services/genres.service';
+import { GenresDataServices } from '../../../core/data/genres.data';
 
 
 @Component({
@@ -28,7 +31,7 @@ import { MatFormFieldAppearance } from '@angular/material/form-field';
   templateUrl: './genres-custom-control.component.html',
   styleUrls: ['./genres-custom-control.component.scss'],
 })
-export class GenresCustomControlComponent implements OnInit, ControlValueAccessor {
+export class GenresCustomControlComponent implements OnInit, ControlValueAccessor, OnDestroy {
 
   @ViewChild('genresInput', { static: true })
   public genresInput: ElementRef<HTMLInputElement>;
@@ -43,6 +46,8 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
   public inputControl: AbstractControl = new FormControl('');
   public selectedGenres: IDataGenre[] = [];
   public loaded = false;
+
+  private _destroy$ = new ReplaySubject<any>(1);
 
   constructor(
     @Self() @Optional() public genresNgControl: NgControl,
@@ -68,7 +73,9 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
         .map((id) => this._genresDateService.getGenresById(+id));
 
       forkJoin(arr)
-        .pipe()
+        .pipe(
+          takeUntil(this._destroy$),
+        )
         .subscribe((result) => {
           this.loaded = false;
           this.selectedGenres.push(...result);
@@ -117,6 +124,11 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
       this.selectedGenres = null;
       this.inputControl.setValue(this.selectedGenres);
     }
+  }
+
+  public ngOnDestroy(): void {
+    this._destroy$.next(null);
+    this._destroy$.complete();
   }
 
 }

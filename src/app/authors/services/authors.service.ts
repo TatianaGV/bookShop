@@ -1,13 +1,11 @@
-import { Injectable, OnDestroy, EventEmitter, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Injectable, OnDestroy } from '@angular/core';
 
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject, Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { IDataAuthor } from '../../core/interfaces/authors.interface';
 import { IMetaData } from '../../core/interfaces/meta.interface';
 import { AuthorsDataServices } from '../../core/data/authors.data';
-import { prepareMetaForRansack, toRansack } from '../../core/helpers/ransack';
 
 
 export interface IAuthorsResponse {
@@ -25,27 +23,27 @@ export class AuthorsServices implements OnDestroy {
   public allAuthors: IDataAuthor[] = [];
   public author: IDataAuthor;
 
-  public allAuthorsChanged = new Subject<any>();
+  private _allAuthorsChanged$ = new Subject<any>();
+  private _destroy$ = new ReplaySubject<any>(1);
 
-  private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
-
+  public get authorsChanged$(): Observable<any> {
+    return this._allAuthorsChanged$;
+  }
   constructor(
-    private _activatedRoute: ActivatedRoute,
-    private _route: Router,
     private _authorsService: AuthorsDataServices,
   ) {
   }
 
   public ngOnDestroy(): void {
-    this._destroy.next(null);
-    this._destroy.complete();
+    this._destroy$.next(null);
+    this._destroy$.complete();
   }
 
   public createAuthor(author: IDataAuthor): void {
     this._authorsService
       .createAuthor(author)
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe();
   }
@@ -54,7 +52,7 @@ export class AuthorsServices implements OnDestroy {
     this._authorsService
       .deleteAuthor(id)
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe(() => {
         this.getAllAuthors();
@@ -65,13 +63,12 @@ export class AuthorsServices implements OnDestroy {
     this._authorsService
       .getAllAuthors(this.meta)
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((response: IAuthorsResponse) => {
-        debugger;
         Object.assign(this.meta, response.meta);
         this.allAuthors = response.authors;
-        this.allAuthorsChanged.next();
+        this._allAuthorsChanged$.next();
       });
   }
 
@@ -79,7 +76,7 @@ export class AuthorsServices implements OnDestroy {
     this._authorsService
       .getAuthorById(id)
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((response: IDataAuthor) => {
         this.author = response;
@@ -90,14 +87,12 @@ export class AuthorsServices implements OnDestroy {
     this._authorsService
       .updateAuthorById(author)
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe();
   }
 
   public changeMeta(meta: IMetaData, resolver: boolean = false): void {
-    console.log('meta', meta);
-    debugger;
     Object.assign(this.meta, meta);
     if (!resolver) {
       this.getAllAuthors();

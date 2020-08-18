@@ -1,14 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+
+import { ReplaySubject } from 'rxjs';
+import { takeUntil, filter } from 'rxjs/operators';
 
 import { IDataBook } from '../../../core/interfaces/books.interface';
 import { IMetaData } from '../../../core/interfaces/meta.interface';
-import { PageEvent } from '@angular/material/paginator';
 import { BooksServices } from '../../services/books.service';
-import { MatDialog } from '@angular/material/dialog';
 import { BooksConfirmDialogComponent } from '../books-confirm-dialog/books-confirm-dialog.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ReplaySubject } from 'rxjs';
-import { takeUntil, filter } from 'rxjs/operators';
 
 
 @Component({
@@ -33,7 +35,7 @@ export class BooksTableComponent implements OnInit, OnDestroy {
     'menu',
   ];
 
-  private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+  private _destroy$ = new ReplaySubject<any>(1);
 
   constructor(
     public dialog: MatDialog,
@@ -71,7 +73,7 @@ export class BooksTableComponent implements OnInit, OnDestroy {
       .afterClosed()
       .pipe(
         filter((result) => !!result),
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe(() => {
         if (this.allBooks.length === 1) {
@@ -85,8 +87,8 @@ export class BooksTableComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this._destroy.next(null);
-    this._destroy.complete();
+    this._destroy$.next(null);
+    this._destroy$.complete();
   }
 
   private _setUrlParams(): void {
@@ -104,7 +106,7 @@ export class BooksTableComponent implements OnInit, OnDestroy {
   private _listenQueryParams(): void {
     this._activatedRoute.queryParams
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe(
         (queryParam: any) => {
@@ -134,9 +136,9 @@ export class BooksTableComponent implements OnInit, OnDestroy {
   }
 
   private _listenUrlParams(): void {
-    this._booksService.allBooksChanged
+    this._booksService.booksChanged$
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe(() => {
         this._setUrlParams();

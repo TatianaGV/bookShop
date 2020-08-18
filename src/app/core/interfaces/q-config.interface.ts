@@ -1,6 +1,6 @@
 import { RansackType } from '../helpers/ransack';
 
-export interface IconfigRansack {
+export interface IConfigRansack {
   title?: RansackType.Cont;
   price?: [RansackType.Gteq, RansackType.Lteq] | RansackType.Gteq | RansackType.Lteq;
   writingDate?: RansackType.Eq;

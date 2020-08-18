@@ -1,10 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { BooksServices } from '../../services/books.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IDataBook, IDataBookComplete } from '../../../core/interfaces/books.interface';
-import { IBookCreation } from '../../../core/interfaces/book-form.interface';
+import { IDataBookComplete } from '../../../core/interfaces/books.interface';
 
 @Component({
   selector: 'app-books-edit-page',
@@ -33,26 +32,21 @@ export class BooksEditPageComponent implements OnInit {
       .book;
   }
 
-  public updateBook(item: IDataBook): void {
-    this._booksService
-      .createBook(item);
-  }
-
   public submit(): void {
     if (this.booksForm.invalid) {
       return;
     }
-    const bookFormData: IBookCreation = {
-      title: this.booksForm.value.title,
-      description: this.booksForm.value.description,
-      price: this.booksForm.value.price,
-      author: this.booksForm.value.author,
-      genres: this.booksForm.value.genres,
-      writingDate: this.booksForm.value.writingDate,
-      releaseDate: this.booksForm.value.releaseDate,
-    };
-   //const book = prepareObjBeforeCreate(bookFormData);
-    //this.updateBook(book);
+    // const bookFormData: IBookCreation = {
+    //   title: this.booksForm.value.title,
+    //   description: this.booksForm.value.description,
+    //   price: this.booksForm.value.price,
+    //   author: this.booksForm.value.author,
+    //   genres: this.booksForm.value.genres,
+    //   writingDate: this.booksForm.value.writingDate,
+    //   releaseDate: this.booksForm.value.releaseDate,
+    // };
+   // const book = prepareObjBeforeCreate(bookFormData);
+    // this.updateBook(book);
     this._route
       .navigate(['/books']);
   }

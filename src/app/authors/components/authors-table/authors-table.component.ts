@@ -4,12 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { IDataAuthor } from '../../../core/interfaces/authors.interface';
 import { IMetaData } from '../../../core/interfaces/meta.interface';
 import { AuthorsServices } from '../../services/authors.service';
 import { AuthorsConfirmDialogComponent } from '../authors-confirm-dialog/authors-confirm-dialog.component';
-import { ReplaySubject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class AuthorsTableComponent implements OnInit, OnDestroy {
     'menu',
   ];
 
-  private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+  private _destroy$ = new ReplaySubject<any>(1);
 
   constructor(
     public dialog: MatDialog,
@@ -66,7 +67,7 @@ export class AuthorsTableComponent implements OnInit, OnDestroy {
     dialogRef
       .afterClosed()
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((result) => {
         if (result) {
@@ -82,8 +83,8 @@ export class AuthorsTableComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this._destroy.next(null);
-    this._destroy.complete();
+    this._destroy$.next(null);
+    this._destroy$.complete();
   }
 
   private _setUrlParams(): void {
@@ -101,14 +102,12 @@ export class AuthorsTableComponent implements OnInit, OnDestroy {
   private _listenQueryParams(): void {
     this._activatedRoute.queryParams
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((queryParam: any) => {
         const page = queryParam['page'];
         const limit = queryParam['limit'];
-        debugger;
         if (page !== undefined && limit !== undefined) {
-          console.log('listen', this.metaData);
           if (+page !== this.metaData.page || +limit !== this.metaData.limit) {
             this._authorsService.changeMeta(
               {
@@ -121,9 +120,9 @@ export class AuthorsTableComponent implements OnInit, OnDestroy {
   }
 
   private _listenUrlParams(): void {
-    this._authorsService.allAuthorsChanged
+    this._authorsService.authorsChanged$
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe(() => {
         this._setUrlParams();
@@ -134,7 +133,7 @@ export class AuthorsTableComponent implements OnInit, OnDestroy {
   private _checkResolve(): void {
     this._activatedRoute.data
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((resp) => {
         const {
@@ -143,8 +142,6 @@ export class AuthorsTableComponent implements OnInit, OnDestroy {
             meta,
           },
         } = resp;
-        debugger;
-        console.log('resolver', meta);
         this._authorsService.changeMeta(meta, true);
         Object.assign(this._authorsService.allAuthors, authors);
       });

@@ -1,13 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject, Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { IMetaData } from '../../core/interfaces/meta.interface';
 import { BooksDataServices, IBooksResponse } from '../../core/data/books.data';
 import { IDataBook, IDataBookComplete } from '../../core/interfaces/books.interface';
-import { toRansack, RansackType, prepareMetaForRansack } from '../../core/helpers/ransack';
+import { toRansack, prepareMetaForRansack } from '../../core/helpers/ransack';
 
 
 @Injectable()
@@ -16,28 +15,31 @@ export class BooksServices implements OnDestroy {
   public meta: IMetaData = {};
   public allBooks: IDataBook[] = [];
   public book: IDataBookComplete;
-  public allBooksChanged = new Subject<any>();
+
   public config = {};
 
-  private _destroy = new ReplaySubject<void>(1);
+  private _destroy$ = new ReplaySubject<void>(1);
+  private _allBooksChanged$ = new Subject<any>();
+
+  public get booksChanged$(): Observable<any> {
+    return this._allBooksChanged$;
+  }
 
   constructor(
-    private _activatedRoute: ActivatedRoute,
-    private _route: Router,
     private _booksService: BooksDataServices,
   ) {
   }
 
   public ngOnDestroy(): void {
-    this._destroy.next();
-    this._destroy.complete();
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   public createBook(book: IDataBook): void {
     this._booksService
       .createBook(book)
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe();
   }
@@ -53,12 +55,12 @@ export class BooksServices implements OnDestroy {
     this._booksService
       .getAllBooks(q)
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((response: IBooksResponse) => {
         Object.assign(this.meta, response.meta);
         this.allBooks = response.books;
-        this.allBooksChanged.next();
+        this._allBooksChanged$.next();
       });
   }
 
@@ -66,7 +68,7 @@ export class BooksServices implements OnDestroy {
     this._booksService
       .deleteBook(id)
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe(() => {
         this.getAllBooks();
@@ -77,7 +79,7 @@ export class BooksServices implements OnDestroy {
     this._booksService
       .getBookById(id)
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((response: IDataBookComplete) => {
         this.book = response;
@@ -86,7 +88,6 @@ export class BooksServices implements OnDestroy {
 
   public changeMeta(meta: IMetaData): void {
     Object.assign(this.meta, meta);
-    console.log(this.meta);
     this.getAllBooks();
   }
 

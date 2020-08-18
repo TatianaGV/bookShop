@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { IBookCreation } from '../../../core/interfaces/book-form.interface';
 import { IDataBook } from '../../../core/interfaces/books.interface';
 import { BooksServices } from '../../services/books.service';
-import { GenresServices } from '../../../core/services/genres.service';
-import { Router } from '@angular/router';
 import { prepareObjBeforeCreate } from '../../../core/helpers/prepare-object.helper';
 
 
@@ -20,7 +19,6 @@ export class BooksCreatePageComponent implements OnInit {
 
   constructor(
     private _route: Router,
-    private _genresService: GenresServices,
     private _booksService: BooksServices,
     ) {
   }

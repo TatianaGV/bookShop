@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+
 import { IAuthorFilter } from '../../../core/interfaces/author-filter.interface';
-import { AuthorsServices } from '../../services/authors.service';
-import { IMetaData } from '../../../core/interfaces/meta.interface';
 
 @Component({
   selector: 'app-authors-filter',
@@ -17,8 +16,6 @@ export class AuthorsFilterComponent implements OnInit {
 
   constructor(
     private _activatedRoute: ActivatedRoute,
-    private _route: Router,
-    private _authorsService: AuthorsServices,
   ) { }
 
   public ngOnInit(): void {
@@ -43,16 +40,6 @@ export class AuthorsFilterComponent implements OnInit {
       first_name: this.filterForm.value.firstName,
       last_name: this.filterForm.value.lastName,
     };
-
-  }
-
-  private _setUrlParams(): void {
-    this._route.navigate([], {
-      relativeTo: this._activatedRoute,
-      queryParams: this.queryParams,
-      queryParamsHandling: 'merge',
-      replaceUrl: true,
-    });
   }
 
   private _initForm(): void {

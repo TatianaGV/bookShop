@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { IUserAuth } from '../../core/interfaces/user-auth.interface';
+
 import { BehaviorSubject, Observable } from 'rxjs';
+
+import { IUserAuth } from '../../core/interfaces/user-auth.interface';
 
 const users: IUserAuth[] = [
   {
@@ -12,7 +14,7 @@ const users: IUserAuth[] = [
 @Injectable()
 export class AuthService {
 
-  public isLogin = new BehaviorSubject<boolean>(this._hasToken());
+  private _isLogin$ = new BehaviorSubject<boolean>(this._hasToken());
 
   constructor() {}
 
@@ -25,7 +27,6 @@ export class AuthService {
         this._saveUser(user.login);
         subscriber.next();
       } else {
-        debugger;
         subscriber.error('error auth');
       }
       subscriber.complete();
@@ -34,16 +35,16 @@ export class AuthService {
 
   public logout() : void {
     localStorage.removeItem('user');
-    this.isLogin.next(false);
+    this._isLogin$.next(false);
   }
 
   public isLoggedIn() : Observable<boolean> {
-    return this.isLogin.asObservable();
+    return this._isLogin$.asObservable();
   }
 
   private _saveUser(login: string) : void {
     localStorage.setItem('user', login);
-    this.isLogin.next(true);
+    this._isLogin$.next(true);
   }
 
   private _hasToken() : boolean {

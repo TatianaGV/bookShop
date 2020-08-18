@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
 @Component({
   selector: 'app-authors-panels',
   templateUrl: './authors-panels.component.html',

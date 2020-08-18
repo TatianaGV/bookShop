@@ -1,20 +1,20 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import {
   FormGroup,
   FormControl,
   Validators,
   FormBuilder, AbstractControl,
 } from '@angular/forms';
-
-import { IGenresResponse, GenresDataServices } from '../../../core/data/genres.data';
-import { IBookFilter, IBookFilterUrlParams } from '../../../core/interfaces/book-filter.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BooksServices } from '../../services/books.service';
-import { ReplaySubject, forkJoin } from 'rxjs';
-import { takeUntil, debounceTime, take } from 'rxjs/operators';
-import {parseDate, preparingDateFromUrl} from '../../../core/helpers/data.helpers';
-import { GenresServices } from '../../../core/services/genres.service';
+
 import { MatFormFieldAppearance } from '@angular/material/form-field';
+
+import { ReplaySubject } from 'rxjs';
+import { takeUntil, debounceTime } from 'rxjs/operators';
+
+import { IBookFilter, IBookFilterUrlParams } from '../../../core/interfaces/book-filter.interface';
+import { BooksServices } from '../../services/books.service';
+import { parseDate, preparingDateFromUrl } from '../../../core/helpers/data.helpers';
 
 
 @Component({
@@ -39,7 +39,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
 
   public appearanceStandard: MatFormFieldAppearance = 'standard';
 
-  private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+  private _destroy$ = new ReplaySubject<any>(1);
   private _priceGroup: FormGroup;
 
   private _min = 0;
@@ -49,7 +49,6 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
     private _fb: FormBuilder,
     private _activatedRoute: ActivatedRoute,
     private _route: Router,
-    private _genresDateService: GenresDataServices,
     private _booksService: BooksServices,
   ) { }
 
@@ -115,8 +114,8 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this._destroy.next(null);
-    this._destroy.complete();
+    this._destroy$.next(null);
+    this._destroy$.complete();
   }
 
   private _setUrlParams(): void {
@@ -165,7 +164,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
     this.priceToControl.valueChanges
       .pipe(
         debounceTime(500),
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((value: number) => {
         if (value === null) {
@@ -184,7 +183,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
     this.priceFromControl.valueChanges
       .pipe(
         debounceTime(500),
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((value: number) => {
         if (value === null) {
@@ -202,7 +201,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   private _subWritingDateControl(): void {
     this.writingDateControl?.valueChanges
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((value: string) => {
         if (value === null) {
@@ -216,7 +215,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   private _subReleaseDateControl(): void {
     this.releaseDateControl?.valueChanges
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((value: string) => {
         if (value === null) {

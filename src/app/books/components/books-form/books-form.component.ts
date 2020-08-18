@@ -2,18 +2,14 @@ import { Component, OnInit, ViewChild, ElementRef, Input, OnDestroy, HostListene
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 
 import { MatAutocomplete } from '@angular/material/autocomplete';
+import { MatFormFieldAppearance } from '@angular/material/form-field';
 
 import { Observable, fromEvent, ReplaySubject } from 'rxjs';
 import { startWith, map, takeUntil } from 'rxjs/operators';
 
-
 import { IDataAuthor } from '../../../core/interfaces/authors.interface';
 import { IDataGenre } from '../../../core/interfaces/genres.interface';
-import { AuthorsServices } from '../../../authors/services/authors.service';
-import { GenresServices } from '../../../core/services/genres.service';
-import { BooksServices } from '../../services/books.service';
 import { IDataBookComplete } from '../../../core/interfaces/books.interface';
-import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { AuthorsDataServices } from '../../../core/data/authors.data';
 
 @Component({
@@ -68,12 +64,10 @@ export class BooksFormComponent implements OnInit, OnDestroy {
 
   public appearanceFill: MatFormFieldAppearance = 'fill';
 
-  private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+  private _destroy$ = new ReplaySubject<any>(1);
 
   constructor(
     private _authorService: AuthorsDataServices,
-    private _genresService: GenresServices,
-    private _booksService: BooksServices,
   ) { }
 
   // valueChanges ?
@@ -109,8 +103,8 @@ export class BooksFormComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this._destroy.next(null);
-    this._destroy.complete();
+    this._destroy$.next(null);
+    this._destroy$.complete();
   }
 
   private _initForm(): void {
@@ -172,7 +166,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
   private _filterInput(): void {
     fromEvent(this.priceInput.nativeElement, 'keydown')
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((e: KeyboardEvent) => {
         if (e.code === 'KeyE' || e.code === 'Minus') {
@@ -195,7 +189,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
   private _subWritingDateControl(): void {
     this.writingDateControl?.valueChanges
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((value: string) => {
         if (value === null) {
@@ -209,7 +203,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
   private _subReleaseDateControl(): void {
     this.releaseDateControl?.valueChanges
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((value: string) => {
         if (value === null) {
@@ -221,10 +215,9 @@ export class BooksFormComponent implements OnInit, OnDestroy {
   }
 
   private _getAuthors(): void {
-    debugger;
     this._authorService.getAllAuthors({ limit: 100 })
       .pipe(
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe((response) => {
         this.allAuthors = response.authors;

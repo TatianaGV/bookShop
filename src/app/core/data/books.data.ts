@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { environment } from '../../../environments/environment';
 import { IDataBook, IDataBookComplete } from '../interfaces/books.interface';
 import { IMetaData } from '../interfaces/meta.interface';
 

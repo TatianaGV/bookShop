@@ -2,7 +2,7 @@ import { snakeCase } from 'lodash-es';
 
 import { IMetaData } from '../interfaces/meta.interface';
 import { IRansackMeta } from '../interfaces/ransack-meta.interface';
-import { IconfigRansack } from '../interfaces/q-config.interface';
+import { IConfigRansack } from '../interfaces/q-config.interface';
 
 
 export enum RansackType {
@@ -15,7 +15,6 @@ export enum RansackType {
 
 export function toRansack(obj: any, type: { [key: string]: RansackType | RansackType[] }): any {
   const result = { ...obj };
-  debugger;
   Object.keys(type)
     .forEach((key) => {
       if (result[key]) {
@@ -47,13 +46,11 @@ export function toRansack(obj: any, type: { [key: string]: RansackType | Ransack
         }
       }
     });
-  console.log('ransack');
 
   return result;
 }
 
 function prepareQueryKey(elem: any, transformedKey: any): string {
-  debugger;
   switch (elem) {
     case RansackType.Cont: {
       return`q[${transformedKey}_cont]`;
@@ -79,9 +76,8 @@ function prepareQueryKey(elem: any, transformedKey: any): string {
 
 
 export function prepareMetaForRansack(meta: IMetaData): any {
-  debugger;
   let result: IRansackMeta = {};
-  let config: IconfigRansack;
+  let config: IConfigRansack;
 
   config = {
     title: RansackType.Cont,

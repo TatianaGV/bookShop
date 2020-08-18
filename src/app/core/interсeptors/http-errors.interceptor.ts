@@ -7,13 +7,13 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { MatDialog } from '@angular/material/dialog';
 
 import { throwError, Observable } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 
 import { ErrorsDialogComponent } from '../../libs/errors-dialog/errors-dialog.component';
-
 import { IDialogData } from '../interfaces/errors-dialog.interface';
 
 @Injectable()
