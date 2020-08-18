@@ -23,14 +23,23 @@ const routes: Routes = [
           .then((m) => m.BooksModule),
       },
       { path: 'login',
-        loadChildren: () => import('./profile/profile.module')
-          .then((m) => m.ProfileModule),
+        loadChildren: () => import('./login/login.module')
+          .then((m) => m.LoginModule),
       },
       { path: 'registration',
         loadChildren: () => import('./registration/registration.module')
           .then((m) => m.RegistrationModule),
       },
+      { path: 'account',
+        loadChildren: () => import('./account/account.module')
+          .then((m) => m.AccountModule),
+      },
     ],
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./not-found/not-found.module')
+      .then((m) => m.NotFoundModule),
   },
 ];
 

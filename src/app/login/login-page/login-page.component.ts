@@ -1,16 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth-page',
-  templateUrl: './auth-page.component.html',
-  styleUrls: ['./auth-page.component.scss'],
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.scss'],
 })
-export class AuthPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit {
 
   public authPageForm: FormGroup;
 
-  constructor() { }
+  constructor(
+    private _router: Router,
+    private _authService: AuthService,
+  ) { }
 
   public ngOnInit(): void {
     this._initForm();
@@ -20,13 +25,18 @@ export class AuthPageComponent implements OnInit {
     if (this.authPageForm.invalid) {
       return;
     }
+    debugger;
 
     const user = {
       login: this.authPageForm.value.login,
       password: this.authPageForm.value.password,
     };
 
-    console.log(user);
+    this._authService.login(user)
+      .subscribe(() => {
+        this._router.navigate(['/', 'account']).then();
+      });
+
   }
 
   private _initForm(): void {
