@@ -25,7 +25,11 @@ export class RegistrationService implements OnDestroy {
         takeUntil(this._destroy$),
       )
       .subscribe(() => {
-        this._route.navigate(['/', 'login']);
+        this._route.navigate(['/', 'login'], {
+          queryParams: {
+            email: user.email,
+          },
+        });
       });
   }
 

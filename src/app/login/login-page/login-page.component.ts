@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { takeUntil } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
@@ -15,16 +15,26 @@ import { AuthService } from '../services/auth.service';
 export class LoginPageComponent implements OnInit, OnDestroy {
 
   public authPageForm: FormGroup;
+  public autofocusPassword = false;
 
   private _destroy$ = new ReplaySubject<any>(1);
 
   constructor(
     private _router: Router,
+    private _activatedRoute: ActivatedRoute,
     private _authService: AuthService,
   ) { }
 
   public ngOnInit(): void {
     this._initForm();
+
+    const email = this._activatedRoute.snapshot.queryParamMap.get('email');
+    if (email) {
+      this.autofocusPassword = true;
+      this.authPageForm.patchValue({
+        email,
+      });
+    }
   }
 
   public submit(): void {
@@ -52,7 +62,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   private _initForm(): void {
     this.authPageForm = new FormGroup({
-      login: new FormControl(null, [
+      email: new FormControl(null, [
         Validators.required,
         Validators.minLength(3),
       ]),

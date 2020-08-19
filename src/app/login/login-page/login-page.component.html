@@ -10,15 +10,15 @@
       <mat-form-field appearance="fill">
         <mat-label>Login</mat-label>
         <input type="text"
-               name="login"
                matInput
-               formControlName="login"
+               autofocus
+               formControlName="email"
                required>
-        <mat-error *ngIf="authPageForm.get('login').invalid && (authPageForm.get('login').dirty || authPageForm.get('login').touched)">
-          <span *ngIf="authPageForm.get('login').errors?.required">
+        <mat-error *ngIf="authPageForm.get('email').invalid && (authPageForm.get('email').dirty || authPageForm.get('email').touched)">
+          <span *ngIf="authPageForm.get('email').errors?.required">
             Input the login
           </span>
-          <span *ngIf="authPageForm.get('login').errors?.minlength">
+          <span *ngIf="authPageForm.get('email').errors?.minlength">
             The login name is too small
           </span>
         </mat-error>
@@ -26,7 +26,6 @@
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
         <input type="password"
-               name="password"
                matInput
                formControlName="password"
                required>
