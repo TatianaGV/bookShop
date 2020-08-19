@@ -7,10 +7,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 import { RegistrationComponent } from './registration/registration.component';
 import { RegistrationRoutingModule } from './registration.routing-module';
-import { MatButtonModule } from '@angular/material/button';
+import { RegistrationService } from './services/registration.service';
 
 
 @NgModule({
@@ -28,6 +29,9 @@ import { MatButtonModule } from '@angular/material/button';
     FormsModule,
     MatInputModule,
     MatButtonModule,
+  ],
+  providers: [
+    RegistrationService,
   ],
 })
 export class RegistrationModule { }

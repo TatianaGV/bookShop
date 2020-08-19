@@ -4,6 +4,8 @@ import { FormGroup, FormControl, Validators, FormBuilder, AbstractControl } from
 import {
   confirmValidation, patternValidator,
 } from '../../core/helpers/password-validation.helpers';
+import { IRegistrationUser } from '../../core/interfaces/registration.interface';
+import { RegistrationService } from '../services/registration.service';
 
 @Component({
   selector: 'app-registration',
@@ -20,6 +22,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
+    private _registrationService: RegistrationService,
   ) { }
 
   public get passwordControl(): AbstractControl {
@@ -32,6 +35,21 @@ export class RegistrationComponent implements OnInit {
 
   public ngOnInit(): void {
     this._initForm();
+  }
+
+  public submit(): void {
+    if (this.registrationForm.invalid) {
+      return;
+    }
+    const user: IRegistrationUser = {
+      first_name: this.registrationForm.value.firstName,
+      last_name: this.registrationForm.value.lastName,
+      email: this.registrationForm.value.email,
+      password: this._passwordGroup.value.password,
+      password_confirmation: this._passwordGroup.value.confirmPassword,
+    };
+
+    this._registrationService.registrationUser(user);
   }
 
   private _initForm(): void {

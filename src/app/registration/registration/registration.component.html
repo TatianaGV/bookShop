@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <h2 class="title"> Registration </h2>
-    <form class="registration-page" [formGroup]="registrationForm">
+    <form class="registration-page" [formGroup]="registrationForm" (ngSubmit)="submit()">
       <!-- First name -->
       <mat-form-field appearance="standard">
         <mat-label>First Name</mat-label>
@@ -66,7 +66,7 @@
                   [attr.aria-pressed]="passwordHide">
             <mat-icon>{{passwordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
-          <mat-error *ngIf="passwordControl.invalid">
+          <mat-error *ngIf="passwordControl.invalid && (passwordControl.dirty || passwordControl.touched)">
             <span *ngIf="passwordControl.errors?.required">
               Input the password
             </span>
