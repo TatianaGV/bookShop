@@ -1,0 +1,40 @@
+.registration-page {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+
+  .submit-registration {
+    margin: 16px 0;
+    cursor: pointer;
+    border: none;
+    background-color: #Ff5678;
+    color: #fdf7f6;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    padding: 14px 24px;
+    outline: none;
+  }
+
+  .submit-registration:hover {
+    background-color: #ED5170;
+  }
+
+  .password-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.mat-card {
+  width: 30%;
+  margin: auto;
+}
+
+.title {
+  text-align: center;
+}
+
