@@ -6,6 +6,7 @@ import { AuthService } from '../login/services/auth.service';
 
 import { AccountRoutingModule } from './account-routing.module';
 import { PersonalAccountComponent } from './personal-account/personal-account.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -15,10 +16,10 @@ import { PersonalAccountComponent } from './personal-account/personal-account.co
   imports: [
     CommonModule,
     AccountRoutingModule,
+    MatButtonModule,
   ],
   providers: [
     AuthGuard,
-    AuthService,
   ],
 })
 export class AccountModule { }
