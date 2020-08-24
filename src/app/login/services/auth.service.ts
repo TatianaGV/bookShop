@@ -6,12 +6,14 @@ import { IUserAuth } from '../../core/interfaces/user-auth.interface';
 
 const users: IUserAuth[] = [
   {
-    login: 'gulyakina.tv@gmail.com',
+    email: 'gulyakina.tv@gmail.com',
     password: '123456',
   },
 ];
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
 
   private _isLogin$ = new BehaviorSubject<boolean>(this._hasToken());
@@ -21,10 +23,10 @@ export class AuthService {
   public login(user: IUserAuth): Observable<any> {
     return new Observable<any>((subscriber) => {
       const res = users
-        .find((userCredo: IUserAuth) => (userCredo.login === user.login
+        .find((userCredo: IUserAuth) => (userCredo.email === user.email
           && userCredo.password === user.password));
       if (res) {
-        this._saveUser(user.login);
+        this._saveUser(user.email);
         subscriber.next();
       } else {
         subscriber.error('error auth');

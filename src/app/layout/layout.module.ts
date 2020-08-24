@@ -9,6 +9,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { AuthService } from '../login/services/auth.service';
 
 
 @NgModule({

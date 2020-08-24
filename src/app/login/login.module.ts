@@ -10,7 +10,6 @@ import { MatInputModule } from '@angular/material/input';
 
 import { LoginPageComponent } from './login-page/login-page.component';
 import { LoginRoutingModule } from './login-routing.module';
-import { AuthService } from './services/auth.service';
 import { LoginMainPageComponent } from './login-main-page/login-main-page.component';
 
 @NgModule({
@@ -28,9 +27,6 @@ import { LoginMainPageComponent } from './login-main-page/login-main-page.compon
     ReactiveFormsModule,
     FormsModule,
     MatInputModule,
-  ],
-  providers: [
-    AuthService,
   ],
 })
 export class LoginModule { }

@@ -42,7 +42,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       return;
     }
     const user = {
-      login: this.authPageForm.value.login,
+      email: this.authPageForm.value.email,
       password: this.authPageForm.value.password,
     };
 
