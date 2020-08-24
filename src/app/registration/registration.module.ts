@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RegistrationComponent } from './registration/registration.component';
 import { RegistrationRoutingModule } from './registration.routing-module';
 import { RegistrationService } from './services/registration.service';
+import { PasswordModule } from '../libs/password/password.module';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { RegistrationService } from './services/registration.service';
     FormsModule,
     MatInputModule,
     MatButtonModule,
+    PasswordModule,
   ],
   providers: [
     RegistrationService,

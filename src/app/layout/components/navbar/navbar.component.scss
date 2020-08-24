@@ -41,9 +41,18 @@
 
   .menu-log {
     font-size: 18px;
+    margin-right: 24px;
     color: black;
     display: inline-block;
     cursor: pointer;
     text-decoration: none;
+  }
+
+  .navbar-btn {
+    margin-right: 12px;
+  }
+
+  .mat-raised-button.mat-primary{
+    background-color: #Ff5678;
   }
 }

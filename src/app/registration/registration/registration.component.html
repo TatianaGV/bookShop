@@ -53,19 +53,10 @@
       <div class="password-container" formGroupName="password">
         <!-- password -->
         <mat-form-field appearance="standard">
-          <mat-label>Password</mat-label>
-          <input matInput
-                 [type]="passwordHide ? 'password' : 'text'"
-                 formControlName="password"
-                 required>
-          <button mat-icon-button
-                  matSuffix
-                  type="button"
-                  (click)="passwordHide = !passwordHide"
-                  [attr.aria-label]="'Hide password'"
-                  [attr.aria-pressed]="passwordHide">
-            <mat-icon>{{passwordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
+          <app-password
+            formControlName="password"
+            placeholder="Password">
+          </app-password>
           <mat-error *ngIf="passwordControl.invalid && (passwordControl.dirty || passwordControl.touched)">
             <span *ngIf="passwordControl.errors?.required">
               Input the password

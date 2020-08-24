@@ -15,9 +15,8 @@ import { RegistrationService } from '../services/registration.service';
 export class RegistrationComponent implements OnInit {
 
   public registrationForm: FormGroup;
-  public passwordHide = true;
   public confirmPasswordHide = true;
-
+  public passwordHide = true;
   private _passwordGroup: FormGroup;
 
   constructor(

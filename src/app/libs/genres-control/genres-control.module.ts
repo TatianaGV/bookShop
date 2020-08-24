@@ -23,14 +23,11 @@ import { GenresCustomControlComponent } from './genres/genres-custom-control.com
     MatInputModule,
     FormsModule,
   ],
-  declarations: [GenresCustomControlComponent],
+  declarations: [
+    GenresCustomControlComponent,
+  ],
   exports: [
     GenresCustomControlComponent,
   ],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => GenresCustomControlComponent),
-    multi: true,
-  }],
 })
 export class GenresControlModule { }
