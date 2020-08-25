@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
 
 import { RegistrationDataService } from '../../core/data/registration.data';
-import { IRegistrationUser } from '../../core/interfaces/registration.interface';
+import { IRegistrationUser } from '../../core/interfaces';
 
 @Injectable()
 export class RegistrationService implements OnDestroy {

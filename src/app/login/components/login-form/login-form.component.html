@@ -1,0 +1,40 @@
+<form class="page-auth"
+      [formGroup]="loginForm"
+      (ngSubmit)="submit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Login</mat-label>
+    <input type="text"
+           matInput
+           autofocus
+           formControlName="email"
+           required>
+    <mat-error *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+      <span *ngIf="loginForm.get('email').errors?.required">
+        Input the login
+      </span>
+      <span *ngIf="loginForm.get('email').errors?.minlength">
+        The login name is too small
+      </span>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input type="password"
+           matInput
+           formControlName="password"
+           required>
+    <mat-error *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+      <span *ngIf="loginForm.get('password').errors?.required">
+        Input the password
+      </span>
+      <span *ngIf="loginForm.get('password').errors?.minlength">
+        The password is too small
+      </span>
+    </mat-error>
+  </mat-form-field>
+  <button
+    class="submit"
+    type="submit"
+  >Log in</button>
+</form>
+

@@ -1,0 +1,26 @@
+<div class="page">
+<div class="pic-container">
+  <img src="../../../../assets/pic/1.svg"
+       alt="no pic"
+       class="pic-auth">
+</div>
+
+<mat-card>
+  <mat-card-content>
+    <h2 class="title"> Sign in </h2>
+    <app-login-form
+      [loginForm]="authPageForm"
+      (formSubmit)="formSubmit($event)">
+    </app-login-form>
+    <a class="restore-pwd"> Forgot the password? </a>
+    <div class="registration">
+      <span class="registration-message">Don`t have an account yet?</span>
+      <a [routerLink]="['/registration']"
+         class="registration-ref">
+        Sign up
+      </a>
+    </div>
+  </mat-card-content>
+</mat-card>
+</div>
+

@@ -76,19 +76,11 @@
         </mat-form-field>
         <!-- confirm password -->
         <mat-form-field appearance="standard">
-          <mat-label>Confirm password</mat-label>
-          <input [type]="confirmPasswordHide ? 'password' : 'text'"
-                 matInput
-                 formControlName="confirmPassword">
-          <button mat-icon-button
-                  matSuffix
-                  type="button"
-                  (click)="confirmPasswordHide = !confirmPasswordHide"
-                  [attr.aria-label]="'Hide password'"
-                  [attr.aria-pressed]="confirmPasswordHide">
-            <mat-icon>{{confirmPasswordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-          <mat-error *ngIf="confirmPasswordControl.invalid">
+          <app-password
+            formControlName="confirmPassword"
+            placeholder="Confirm password">
+          </app-password>
+          <mat-error>
             <span>
               Incorrect password
             </span>

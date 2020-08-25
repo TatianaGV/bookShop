@@ -11,14 +11,14 @@
     </a>
   </div>
   <button mat-icon-button
-          *ngIf="logged | async"
+          *ngIf="logged$ | async"
           [routerLink]="['/account']"
           class="menu-log">
     <mat-icon>how_to_reg</mat-icon>
   </button>
   <button mat-button
           [routerLink]="['/login']"
-          *ngIf="!(logged | async)"
+          *ngIf="(logged$ | async) === false"
           class="navbar-btn">
           Sign in
   </button>

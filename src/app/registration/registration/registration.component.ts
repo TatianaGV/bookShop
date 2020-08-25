@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators, FormBuilder, AbstractControl } from
 import {
   confirmValidation, patternValidator,
 } from '../../core/helpers/password-validation.helpers';
-import { IRegistrationUser } from '../../core/interfaces/registration.interface';
+import { IRegistrationUser } from '../../core/interfaces';
 import { RegistrationService } from '../services/registration.service';
 
 @Component({
@@ -15,8 +15,7 @@ import { RegistrationService } from '../services/registration.service';
 export class RegistrationComponent implements OnInit {
 
   public registrationForm: FormGroup;
-  public confirmPasswordHide = true;
-  public passwordHide = true;
+
   private _passwordGroup: FormGroup;
 
   constructor(

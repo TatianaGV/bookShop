@@ -8,14 +8,16 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
-import { LoginPageComponent } from './login-page/login-page.component';
+import { LoginContainer } from './containers/login';
 import { LoginRoutingModule } from './login-routing.module';
-import { LoginMainPageComponent } from './login-main-page/login-main-page.component';
+import { LoginView } from './views/login';
+import { LoginFormComponent } from './components/login-form';
 
 @NgModule({
   declarations: [
-    LoginPageComponent,
-    LoginMainPageComponent,
+    LoginContainer,
+    LoginView,
+    LoginFormComponent,
   ],
   imports: [
     CommonModule,
