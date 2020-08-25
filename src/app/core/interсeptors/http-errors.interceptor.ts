@@ -14,7 +14,7 @@ import { throwError, Observable } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 
 import { ErrorsDialogComponent } from '../../libs/errors-dialog/errors-dialog.component';
-import { IDialogData } from '../interfaces/errors-dialog.interface';
+import { IDialogData } from '../interfaces';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

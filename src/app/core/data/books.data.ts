@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { IDataBook, IDataBookComplete } from '../interfaces/books.interface';
-import { IMetaData } from '../interfaces/meta.interface';
+import { IDataBook, IDataBookComplete, IMetaData } from '../interfaces';
 
 export interface IBooksResponse {
   books: IDataBook[];

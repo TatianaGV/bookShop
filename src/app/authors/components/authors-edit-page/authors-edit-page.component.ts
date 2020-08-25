@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthorsServices } from '../../services/authors.service';
-import { IDataAuthor } from '../../../core/interfaces/authors.interface';
+import { IDataAuthor } from '../../../core/interfaces';
 
 @Component({
   selector: 'app-authors-edit-page',

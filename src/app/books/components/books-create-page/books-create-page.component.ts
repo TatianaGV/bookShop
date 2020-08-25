@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { IBookCreation } from '../../../core/interfaces/book-form.interface';
-import { IDataBook } from '../../../core/interfaces/books.interface';
+import { IBookCreation, IDataBook } from '../../../core/interfaces';
 import { BooksServices } from '../../services/books.service';
 import { prepareObjBeforeCreate } from '../../../core/helpers/prepare-object.helper';
 

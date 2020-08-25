@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { IDataAuthor } from '../../../core/interfaces/authors.interface';
+import { IDataAuthor } from '../../../core/interfaces';
 
 @Component({
   selector: 'app-authors-form',

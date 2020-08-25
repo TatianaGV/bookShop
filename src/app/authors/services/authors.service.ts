@@ -3,8 +3,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { ReplaySubject, Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { IDataAuthor } from '../../core/interfaces/authors.interface';
-import { IMetaData } from '../../core/interfaces/meta.interface';
+import { IDataAuthor, IMetaData } from '../../core/interfaces';
 import { AuthorsDataServices } from '../../core/data/authors.data';
 
 

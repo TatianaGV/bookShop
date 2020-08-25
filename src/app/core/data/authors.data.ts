@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { IDataAuthor } from '../interfaces/authors.interface';
-import { IMetaData } from '../interfaces/meta.interface';
+import { IDataAuthor, IMetaData } from '../interfaces';
 
 
 export interface IAuthorsResponse {

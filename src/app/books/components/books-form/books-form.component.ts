@@ -7,9 +7,7 @@ import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { Observable, fromEvent, ReplaySubject } from 'rxjs';
 import { startWith, map, takeUntil } from 'rxjs/operators';
 
-import { IDataAuthor } from '../../../core/interfaces/authors.interface';
-import { IDataGenre } from '../../../core/interfaces/genres.interface';
-import { IDataBookComplete } from '../../../core/interfaces/books.interface';
+import { IDataAuthor, IDataGenre, IDataBookComplete } from '../../../core/interfaces';
 import { AuthorsDataServices } from '../../../core/data/authors.data';
 
 @Component({

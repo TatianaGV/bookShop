@@ -3,8 +3,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { IMetaData } from '../interfaces/meta.interface';
-import { IDataGenre } from '../interfaces/genres.interface';
+import { IMetaData, IDataGenre } from '../interfaces';
 import { GenresDataServices, IGenresResponse } from '../data/genres.data';
 
 

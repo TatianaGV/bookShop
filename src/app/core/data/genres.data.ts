@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { IMetaData } from '../interfaces/meta.interface';
-import { IDataGenre } from '../interfaces/genres.interface';
+import { IMetaData, IDataGenre } from '../interfaces';
 
 
 export interface IGenresResponse {

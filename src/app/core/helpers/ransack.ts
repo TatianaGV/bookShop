@@ -1,9 +1,6 @@
 import { snakeCase } from 'lodash-es';
 
-import { IMetaData } from '../interfaces/meta.interface';
-import { IRansackMeta } from '../interfaces/ransack-meta.interface';
-import { IConfigRansack } from '../interfaces/q-config.interface';
-
+import { IMetaData, IRansackMeta, IConfigRansack } from '../interfaces';
 
 export enum RansackType {
   Cont ,

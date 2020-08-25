@@ -7,8 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { IDataAuthor } from '../../../core/interfaces/authors.interface';
-import { IMetaData } from '../../../core/interfaces/meta.interface';
+import { IDataAuthor, IMetaData } from '../../../core/interfaces';
 import { AuthorsServices } from '../../services/authors.service';
 import { AuthorsConfirmDialogComponent } from '../authors-confirm-dialog/authors-confirm-dialog.component';
 

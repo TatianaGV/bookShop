@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { BooksServices } from '../../services/books.service';
-import { IDataBookComplete } from '../../../core/interfaces/books.interface';
+import { IDataBookComplete } from '../../../core/interfaces';
 
 @Component({
   selector: 'app-books-edit-page',

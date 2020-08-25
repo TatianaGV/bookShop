@@ -21,7 +21,7 @@ import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { forkJoin, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { IDataGenre } from '../../../core/interfaces/genres.interface';
+import { IDataGenre } from '../../../core/interfaces';
 import { GenresServices } from '../../../core/services/genres.service';
 import { GenresDataServices } from '../../../core/data/genres.data';
 

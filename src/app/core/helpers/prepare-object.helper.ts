@@ -1,5 +1,4 @@
-import { IBookCreation } from '../interfaces/book-form.interface';
-import { IDataBook } from '../interfaces/books.interface';
+import { IBookCreation, IDataBook } from '../interfaces';
 
 export function prepareObjBeforeCreate(book: IBookCreation): IDataBook {
   return {

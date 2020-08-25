@@ -3,9 +3,8 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { ReplaySubject, Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { IMetaData } from '../../core/interfaces/meta.interface';
 import { BooksDataServices, IBooksResponse } from '../../core/data/books.data';
-import { IDataBook, IDataBookComplete } from '../../core/interfaces/books.interface';
+import { IDataBook, IDataBookComplete, IMetaData } from '../../core/interfaces';
 import { toRansack, prepareMetaForRansack } from '../../core/helpers/ransack';
 
 

@@ -7,8 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
 
-import { IDataBook } from '../../../core/interfaces/books.interface';
-import { IMetaData } from '../../../core/interfaces/meta.interface';
+import { IDataBook, IMetaData } from '../../../core/interfaces';
 import { BooksServices } from '../../services/books.service';
 import { BooksConfirmDialogComponent } from '../books-confirm-dialog/books-confirm-dialog.component';
 

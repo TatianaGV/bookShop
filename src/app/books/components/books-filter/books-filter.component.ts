@@ -3,7 +3,8 @@ import {
   FormGroup,
   FormControl,
   Validators,
-  FormBuilder, AbstractControl,
+  FormBuilder,
+  AbstractControl,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -12,7 +13,7 @@ import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 
-import { IBookFilter, IBookFilterUrlParams } from '../../../core/interfaces/book-filter.interface';
+import { IBookFilter, IBookFilterUrlParams } from '../../../core/interfaces';
 import { BooksServices } from '../../services/books.service';
 import { parseDate, preparingDateFromUrl } from '../../../core/helpers/data.helpers';
 
