@@ -11,14 +11,16 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { PasswordModule } from '../libs/password/password.module';
 
-import { RegistrationComponent } from './registration/registration.component';
+import { RegistrationContainer } from './containers/registration/registration.container';
 import { RegistrationRoutingModule } from './registration.routing-module';
 import { RegistrationService } from './services/registration.service';
+import { RegistrationFormComponent } from './components/registration-form';
 
 
 @NgModule({
   declarations: [
-    RegistrationComponent,
+    RegistrationContainer,
+    RegistrationFormComponent,
   ],
   imports: [
     CommonModule,
