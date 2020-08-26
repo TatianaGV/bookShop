@@ -1,21 +1,16 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import {
   FormGroup,
-  FormControl,
   Validators,
-  FormBuilder,
   AbstractControl,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatFormFieldAppearance } from '@angular/material/form-field';
 
 import { ReplaySubject } from 'rxjs';
-import { takeUntil, debounceTime } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
-import { IBookFilter, IBookFilterUrlParams } from '../../../core/interfaces';
-import { BooksServices } from '../../services/books.service';
-import { parseDate, preparingDateFromUrl } from '../../../core/helpers/data.helpers';
+import { IBookFilter } from '../../../core/interfaces';
 
 
 @Component({
@@ -25,14 +20,19 @@ import { parseDate, preparingDateFromUrl } from '../../../core/helpers/data.help
 })
 export class BooksFilterComponent implements OnInit, OnDestroy {
 
+  @Input()
+  public booksFilterForm: FormGroup;
+
+  @Input()
+  public priceGroupForm: FormGroup;
+
+  @Output()
+  public readonly filterSubmit = new EventEmitter<IBookFilter>();
+
   @ViewChild('genresInput')
   public genresInput: ElementRef<HTMLInputElement>;
 
-  public booksForm: FormGroup;
-  public priceValidator = '^\\d+(?:[.,]\\d{1,2})*$';
-
   public filterParams: IBookFilter;
-  public queryParams: IBookFilterUrlParams;
 
   public maxDateWriting = new Date(new Date().setDate(new Date().getDate() - 1));
   public maxDateRelease = new Date(new Date().setDate(new Date().getDate() - 1));
@@ -40,78 +40,34 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
 
   public appearanceStandard: MatFormFieldAppearance = 'standard';
 
-  private _destroy$ = new ReplaySubject<any>(1);
-  private _priceGroup: FormGroup;
-
   private _min = 0;
   private _max: number;
 
-  constructor(
-    private _fb: FormBuilder,
-    private _activatedRoute: ActivatedRoute,
-    private _route: Router,
-    private _booksService: BooksServices,
-  ) { }
+  private _destroy$ = new ReplaySubject<any>(1);
+
+  constructor() { }
 
   public get priceToControl(): AbstractControl {
-    return this._priceGroup.get('to');
+    return this.priceGroupForm?.get('to');
   }
 
   public get priceFromControl(): AbstractControl {
-    return this._priceGroup.get('from');
+    return this.priceGroupForm?.get('from');
   }
 
   public get writingDateControl(): AbstractControl {
-    return this.booksForm.get('writingDate');
+    return this.booksFilterForm?.get('writingDate');
   }
 
   public get releaseDateControl(): AbstractControl {
-    return this.booksForm.get('releaseDate');
+    return this.booksFilterForm?.get('releaseDate');
   }
 
   public ngOnInit(): void {
-    this._initForm();
-    this._getParamsFromUrl();
-  }
-
-  public submit(): void {
-    if (this.booksForm.invalid) {
-      return;
-    }
-
-    const writingDate = this.booksForm.value.writingDate ?
-      parseDate(this.booksForm.value.writingDate) :
-      null;
-
-    const releaseDate = this.booksForm.value.releaseDate
-      ? parseDate(this.booksForm.value.releaseDate)
-      : null;
-
-    if (this.booksForm.value.title === '') {
-      this.booksForm.value.title = null;
-    }
-
-    this.filterParams = {
-      page: 1,
-      title: this.booksForm.value.title,
-      genres: this.booksForm.value.genres?.map((genre) => genre.id),
-      priceFrom: this.booksForm.value.price.from,
-      priceTo: this.booksForm.value.price.to,
-      writingDate: this.booksForm.value.writingDate,
-      releaseDate: this.booksForm.value.releaseDate,
-    };
-
-    this.queryParams = {
-      title: this.booksForm.value.title,
-      genres: this.booksForm.value.genres?.map((genre) => genre.id),
-      priceFrom: this.booksForm.value.price.from,
-      priceTo: this.booksForm.value.price.to,
-      writingDate,
-      releaseDate,
-    };
-
-    this._setUrlParams();
-    this._booksService.changeMeta(this.filterParams);
+    this._subPriceToControl();
+    this._subPriceFromControl();
+    this._subWritingDateControl();
+    this._subReleaseDateControl();
   }
 
   public ngOnDestroy(): void {
@@ -119,50 +75,30 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  private _setUrlParams(): void {
-    this._route.navigate([], {
-      relativeTo: this._activatedRoute,
-      queryParams: this.queryParams,
-      queryParamsHandling: 'merge',
-      replaceUrl: true,
-    });
-  }
+  public submit(): void {
+    if (this.booksFilterForm.invalid) {
+      return;
+    }
 
-  private _initForm(): void {
-    this._priceGroup = this._fb.group(
-      {
-        from: new FormControl('', [
-          Validators.min(0),
-          Validators.pattern(this.priceValidator),
-        ]),
-        to: new FormControl('', [
-          Validators.min(0),
-          Validators.pattern(this.priceValidator),
-        ]),
-      });
+    if (this.booksFilterForm.value.title === '') {
+      this.booksFilterForm.value.title = null;
+    }
 
+    this.filterParams = {
+      page: 1,
+      title: this.booksFilterForm.value.title,
+      genres: this.booksFilterForm.value.genres?.map((genre) => genre.id),
+      priceFrom: this.booksFilterForm.value.price.from,
+      priceTo: this.booksFilterForm.value.price.to,
+      writingDate: this.booksFilterForm.value.writingDate,
+      releaseDate: this.booksFilterForm.value.releaseDate,
+    };
 
-    this.booksForm = this._fb.group({
-      title: new FormControl('', [
-        Validators.minLength(3),
-      ]),
-      genres: new FormControl(null, [
-      ]),
-      price: this._priceGroup,
-      writingDate: new FormControl('', [
-      ]),
-      releaseDate: new FormControl('', [
-      ]),
-    });
-
-    this._subPriceToControl();
-    this._subPriceFromControl();
-    this._subWritingDateControl();
-    this._subReleaseDateControl();
+    this.filterSubmit.emit(this.filterParams);
   }
 
   private _subPriceToControl(): void {
-    this.priceToControl.valueChanges
+    this.priceToControl?.valueChanges
       .pipe(
         debounceTime(500),
         takeUntil(this._destroy$),
@@ -181,7 +117,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   }
 
   private _subPriceFromControl(): void {
-    this.priceFromControl.valueChanges
+    this.priceFromControl?.valueChanges
       .pipe(
         debounceTime(500),
         takeUntil(this._destroy$),
@@ -225,56 +161,6 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
           this.maxDateWriting = new Date(value);
         }
       });
-  }
-
-  private _getParamsFromUrl(): void {
-    const params: IBookFilter = {};
-
-    const writingDataUrl = this._activatedRoute.snapshot.queryParamMap.get('writingDate');
-    const writingDataParse = writingDataUrl ?
-      preparingDateFromUrl(writingDataUrl) :
-      null;
-    if (writingDataParse) {
-      params.writingDate = writingDataParse;
-    }
-
-    const releaseDataUrl = this._activatedRoute.snapshot.queryParamMap.get('releaseDate');
-    const releaseDataParse = releaseDataUrl ?
-      preparingDateFromUrl(releaseDataUrl) :
-      null;
-    if (releaseDataParse) {
-      params.releaseDate = releaseDataParse;
-    }
-
-    const priceToUrl = this._activatedRoute.snapshot.queryParamMap.get('priceTo');
-    if (priceToUrl) {
-      params.priceTo = +priceToUrl;
-    }
-
-    const priceFromUrl = this._activatedRoute.snapshot.queryParamMap.get('priceFrom');
-    if (priceFromUrl) {
-      params.priceFrom = +priceFromUrl;
-    }
-
-    const titleUrl = this._activatedRoute.snapshot.queryParamMap.get('title');
-    if (titleUrl) {
-      params.title = titleUrl;
-    }
-
-    this._fillFilterFieldFromUrl(params);
-  }
-
-  private _fillFilterFieldFromUrl(params: IBookFilter): void {
-    this._priceGroup.patchValue({
-      to: params.priceTo,
-      from: params.priceFrom,
-    });
-
-    this.booksForm.patchValue({
-      title: params.title,
-      writingDate: params.writingDate,
-      releaseDate: params.releaseDate,
-    });
   }
 
 }

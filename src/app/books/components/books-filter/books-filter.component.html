@@ -1,4 +1,7 @@
-<form class="books-filter-panel" [formGroup]="booksForm" (ngSubmit)="submit()">
+<form
+  class="books-filter-panel"
+  [formGroup]="booksFilterForm"
+  (ngSubmit)="submit()">
   <div class="title-genres">
     <!-- title -->
     <mat-form-field appearance="standard">
@@ -9,7 +12,7 @@
              matInput
              formControlName="title">
       <mat-error>
-        <span *ngIf="booksForm.get('title').errors?.minlength">
+        <span *ngIf="booksFilterForm.get('title').errors?.minlength">
           The title is too small
         </span>
       </mat-error>
@@ -61,7 +64,10 @@
         [max]="maxDateWriting"
         [matDatepicker]="picker"
         formControlName="writingDate">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="picker">
+      </mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <mat-form-field appearance="standard">
@@ -73,7 +79,10 @@
         [min]="minDateRelease"
         [matDatepicker]="picker1"
         formControlName="releaseDate">
-      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="picker1">
+      </mat-datepicker-toggle>
       <mat-datepicker #picker1></mat-datepicker>
     </mat-form-field>
   </div>

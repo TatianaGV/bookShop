@@ -33,6 +33,8 @@ import { BooksEditPageComponent } from './components/books-edit-page/books-edit-
 import { BooksFormComponent } from './components/books-form/books-form.component';
 import { BooksConfirmDialogComponent } from './components/books-confirm-dialog/books-confirm-dialog.component';
 import { BooksServices } from './services/books.service';
+import { FilterView } from './views/filter';
+import { FilterContainer } from './container/filter';
 
 
 @NgModule({
@@ -45,6 +47,8 @@ import { BooksServices } from './services/books.service';
     BooksEditPageComponent,
     BooksFormComponent,
     BooksConfirmDialogComponent,
+    FilterView,
+    FilterContainer,
   ],
   imports: [
     CommonModule,
