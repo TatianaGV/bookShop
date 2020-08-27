@@ -1,5 +1,6 @@
 interface IBookParent {
   page?: number;
+  limit?: number;
   title?: string;
   priceFrom?: number;
   priceTo?: number;

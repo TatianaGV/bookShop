@@ -35,6 +35,8 @@ import { BooksConfirmDialogComponent } from './components/books-confirm-dialog/b
 import { BooksServices } from './services/books.service';
 import { FilterView } from './views/filter';
 import { FilterContainer } from './container/filter';
+import { TableView } from './views/table/table';
+import { TableContainer } from './container/table/table';
 
 
 @NgModule({
@@ -49,6 +51,8 @@ import { FilterContainer } from './container/filter';
     BooksConfirmDialogComponent,
     FilterView,
     FilterContainer,
+    TableView,
+    TableContainer,
   ],
   imports: [
     CommonModule,

@@ -24,3 +24,13 @@ export function parseDate(datePickerValue: string): string {
 
   return `${day}-${month}-${year}`;
 }
+
+export function getDateFromUrl(date: string): Date {
+  if (date) {
+    const arrDate = date.split('-');
+    date = `${arrDate[1]}-${arrDate[0]}-${arrDate[2]}`;
+    const msecDate = Date.parse(date);
+
+    return new Date(msecDate);
+  }
+}

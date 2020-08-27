@@ -1,4 +1,13 @@
-import { Component, ViewChild, ElementRef, OnDestroy, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import {
   FormGroup,
   Validators,
@@ -48,7 +57,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
   constructor() { }
 
   public get priceToControl(): AbstractControl {
-    return this.priceGroupForm?.get('to');
+    return this.priceGroupForm.get('to');
   }
 
   public get priceFromControl(): AbstractControl {
