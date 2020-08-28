@@ -34,7 +34,7 @@ export class BooksServices implements OnDestroy {
     this._destroy$.complete();
   }
 
-  public createBook(book: IDataBook): void {
+  public createBook(book: FormData): void {
     this._booksService
       .createBook(book)
       .pipe(

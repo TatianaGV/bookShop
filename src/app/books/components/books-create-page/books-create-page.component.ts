@@ -15,6 +15,7 @@ import { prepareObjBeforeCreate } from '../../../core/helpers/prepare-object.hel
 export class BooksCreatePageComponent implements OnInit {
 
   public booksForm: FormGroup;
+  public image: File | null;
 
   constructor(
     private _route: Router,
@@ -26,9 +27,9 @@ export class BooksCreatePageComponent implements OnInit {
     this.booksForm = new FormGroup({});
   }
 
-  public createBook(item: IDataBook): void {
+  public createBook(book: FormData): void {
     this._booksService
-      .createBook(item);
+      .createBook(book);
   }
 
   public submit(): void {
@@ -36,6 +37,7 @@ export class BooksCreatePageComponent implements OnInit {
     if (this.booksForm.invalid) {
       return;
     }
+    debugger;
     const bookFormData: IBookCreation = {
       title: this.booksForm.value.title,
       description: this.booksForm.value.description,
@@ -44,10 +46,15 @@ export class BooksCreatePageComponent implements OnInit {
       genres: this.booksForm.value.genres,
       writingDate: this.booksForm.value.writingDate,
       releaseDate: this.booksForm.value.releaseDate,
+      image: this.image,
     };
     const book = prepareObjBeforeCreate(bookFormData);
     this.createBook(book);
     this._route.navigate(['/books']);
+  }
+
+  public getImage(image: File): void {
+    this.image = image;
   }
 
 }

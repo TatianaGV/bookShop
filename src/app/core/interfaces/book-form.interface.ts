@@ -9,4 +9,5 @@ export interface IBookCreation {
   price?: number;
   writingDate?: string;
   releaseDate?: string;
+  image?: File;
 }

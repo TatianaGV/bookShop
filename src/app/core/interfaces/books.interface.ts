@@ -10,6 +10,7 @@ export interface IDataBook {
   genres: IDataGenre[];
   writing_date: string;
   release_date: string;
+  image?: File;
 }
 
 export interface IDataBookComplete extends IDataBook {

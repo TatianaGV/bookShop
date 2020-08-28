@@ -1,4 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, OnDestroy, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Input,
+  OnDestroy,
+  HostListener,
+  Output, EventEmitter
+} from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 
 import { MatAutocomplete } from '@angular/material/autocomplete';
@@ -7,7 +16,7 @@ import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { Observable, fromEvent, ReplaySubject } from 'rxjs';
 import { startWith, map, takeUntil } from 'rxjs/operators';
 
-import { IDataAuthor, IDataGenre, IDataBookComplete } from '../../../core/interfaces';
+import { IDataAuthor, IDataGenre, IDataBookComplete, IBookFilter } from '../../../core/interfaces';
 import { AuthorsDataServices } from '../../../core/data/authors.data';
 
 @Component({
@@ -27,6 +36,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
         description: book.description,
         writingDate: book.writing_date,
         releaseDate: book.release_date,
+        image: book.image,
       });
       this.selectableGenres = book.genres;
     }
@@ -34,6 +44,9 @@ export class BooksFormComponent implements OnInit, OnDestroy {
 
   @Input()
   public booksForm: FormGroup;
+
+  @Output()
+  public readonly addedImage = new EventEmitter<File>();
 
   @ViewChild('genresInput')
   public genresInput: ElementRef<HTMLInputElement>;
@@ -52,8 +65,6 @@ export class BooksFormComponent implements OnInit, OnDestroy {
   public filteredOptions$: Observable<IDataAuthor[]>;
   public selectableGenres: IDataGenre[] = [];
   public src = 'assets/pic/agenda.png';
-  public file: File | null;
-
   public allAuthors: IDataAuthor[] = [];
 
   public maxDateWriting = new Date(new Date().setDate(new Date().getDate() - 1));
@@ -77,7 +88,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
     };
     if (file && file.type.match('image.*')) {
       fileReader.readAsDataURL(file);
-      this.file = file;
+      this.addedImage.emit(file);
     }
   }
 
@@ -106,7 +117,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
   }
 
   private _initForm(): void {
-    this.booksForm.addControl('photo', new FormControl(null));
+    this.booksForm.addControl('image', new FormControl(null));
 
     this.booksForm.addControl('title', new FormControl(null, [
       Validators.required,

@@ -30,12 +30,12 @@ export class BooksDataServices {
   }
 
   public createBook(
-    book: IDataBook,
-  ): Observable<IDataBook> {
+    bookFormData: FormData,
+  ): Observable<FormData> {
     return this._http
-      .post<IDataBook>(
-        `/authors/${book.author_id}/books`,
-        book,
+      .post<FormData>(
+        '/authors/1/books',
+        bookFormData,
       );
   }
 
