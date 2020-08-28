@@ -26,8 +26,11 @@ export class BooksTableComponent implements OnDestroy {
   public readonly changePaginator = new EventEmitter<IBookFilter>();
 
 
+  public path = 'http://gulyakina.kubesh.ru';
+  public alt = 'assets/pic/agenda.png';
   public displayedColumns: string[] = [
     'id',
+    'image',
     'description',
     'authorId',
     'title',
@@ -51,6 +54,7 @@ export class BooksTableComponent implements OnDestroy {
   public get metaData(): IMetaData {
     return this._booksService.meta;
   }
+
 
   public ngOnDestroy(): void {
     this._destroy$.next(null);

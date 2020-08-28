@@ -28,6 +28,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
 
   @Input()
   public set book(book: IDataBookComplete) {
+    debugger;
     if (book) {
       this.booksForm.patchValue({
         title: book.title,
@@ -36,9 +37,11 @@ export class BooksFormComponent implements OnInit, OnDestroy {
         description: book.description,
         writingDate: book.writing_date,
         releaseDate: book.release_date,
-        image: book.image,
       });
       this.selectableGenres = book.genres;
+      if (book.image) {
+        this.src = this.path + book.image;
+      }
     }
   }
 
@@ -62,6 +65,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
 
   public priceValidator = '^\\d+(?:[.,]\\d{1,2})*$';
 
+  public path = 'http://gulyakina.kubesh.ru';
   public filteredOptions$: Observable<IDataAuthor[]>;
   public selectableGenres: IDataGenre[] = [];
   public src = 'assets/pic/agenda.png';
