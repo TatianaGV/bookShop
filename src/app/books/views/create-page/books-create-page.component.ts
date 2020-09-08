@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -8,7 +8,6 @@ import { prepareObjBeforeCreate } from '../../../core/helpers/prepare-object.hel
 
 
 @Component({
-  selector: 'app-books-create-item',
   templateUrl: './books-create-page.component.html',
   styleUrls: ['./books-create-page.component.scss'],
 })

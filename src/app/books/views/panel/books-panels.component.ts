@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'app-books-panels',
   templateUrl: './books-panels.component.html',
   styleUrls: ['./books-panels.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooksPanelsComponent implements OnInit {
 

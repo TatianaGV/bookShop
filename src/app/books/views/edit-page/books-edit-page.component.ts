@@ -7,7 +7,6 @@ import { IDataBookComplete, IBookCreation } from '../../../core/interfaces';
 import { prepareObjBeforeCreate } from '../../../core/helpers/prepare-object.helper';
 
 @Component({
-  selector: 'app-books-edit-page',
   templateUrl: './books-edit-page.component.html',
   styleUrls: ['./books-edit-page.component.scss'],
 })

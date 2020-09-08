@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { BooksPageComponent } from './components/books-page/books-page.component';
-import { BooksCreatePageComponent } from './components/books-create-page/books-create-page.component';
-import { BooksPanelsComponent } from './components/books-panels/books-panels.component';
-import { BooksEditPageComponent } from './components/books-edit-page/books-edit-page.component';
+import { BooksPageComponent } from './views/main-page/books-page.component';
+import { BooksCreatePageComponent } from './views/create-page/books-create-page.component';
+import { BooksPanelsComponent } from './views/panel/books-panels.component';
+import { BooksEditPageComponent } from './views/edit-page/books-edit-page.component';
 
 
 const routes: Routes = [

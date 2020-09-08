@@ -28,7 +28,6 @@ export class BooksFormComponent implements OnInit, OnDestroy {
 
   @Input()
   public set book(book: IDataBookComplete) {
-    debugger;
     if (book) {
       this.booksForm.patchValue({
         title: book.title,

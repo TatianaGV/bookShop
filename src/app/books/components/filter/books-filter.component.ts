@@ -23,7 +23,6 @@ import { IBookFilter } from '../../../core/interfaces';
   selector: 'app-books-filter',
   templateUrl: './books-filter.component.html',
   styleUrls: ['./books-filter.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooksFilterComponent implements OnInit, OnDestroy {
 

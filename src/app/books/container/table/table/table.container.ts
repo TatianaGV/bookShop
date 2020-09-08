@@ -14,7 +14,7 @@ import { ReplaySubject } from 'rxjs';
 
 import { IBookFilter, IMetaData, IDataBook } from '../../../../core/interfaces';
 import { BooksServices } from '../../../services/books.service';
-import { BooksConfirmDialogComponent } from '../../../components/books-confirm-dialog/books-confirm-dialog.component';
+import { BooksConfirmDialogComponent } from '../../../components/confirm-dialog/books-confirm-dialog.component';
 
 @Component({
   selector: 'app-table',
