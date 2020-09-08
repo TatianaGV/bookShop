@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
 
-import { IBookFilter } from '../../../../core/interfaces';
-import { getDateFromUrl } from '../../../../core/helpers/data.helpers';
+import { IBookFilter } from '../../../core/interfaces';
+import { getDateFromUrl } from '../../../core/helpers/data.helpers';
 
 @Component({
   selector: 'app-table-view',

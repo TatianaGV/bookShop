@@ -58,11 +58,12 @@ export class BooksDataServices {
   }
 
   public updateBookById(
-    book: IDataBookComplete,
+    book: FormData,
+    id: number,
   ): Observable<IDataBookComplete> {
     return this._http
       .put<IDataBookComplete>(
-        `/books/${book.id}`,
+        `/books/${id}`,
         book,
       );
   }

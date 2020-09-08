@@ -16,7 +16,7 @@ import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { Observable, fromEvent, ReplaySubject } from 'rxjs';
 import { startWith, map, takeUntil } from 'rxjs/operators';
 
-import { IDataAuthor, IDataGenre, IDataBookComplete, IBookFilter } from '../../../core/interfaces';
+import { IDataAuthor, IDataGenre, IDataBookComplete } from '../../../core/interfaces';
 import { AuthorsDataServices } from '../../../core/data/authors.data';
 
 @Component({
@@ -84,7 +84,8 @@ export class BooksFormComponent implements OnInit, OnDestroy {
   ) { }
 
   // valueChanges ?
-  @HostListener('change', ['$event.target.files']) public previewImage(event: FileList): void {
+  @HostListener('change', ['$event.target.files'])
+  public previewImage(event: FileList): void {
     const file = event && event.item(0);
     const fileReader = new FileReader();
     fileReader.onloadend = (e) => {

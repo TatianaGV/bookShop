@@ -7,12 +7,9 @@ import {
   OnInit,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import {
-  FormGroup,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
+import { FormGroup, Validators, AbstractControl, } from '@angular/forms';
 
 import { MatFormFieldAppearance } from '@angular/material/form-field';
 
@@ -26,6 +23,7 @@ import { IBookFilter } from '../../../core/interfaces';
   selector: 'app-books-filter',
   templateUrl: './books-filter.component.html',
   styleUrls: ['./books-filter.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooksFilterComponent implements OnInit, OnDestroy {
 
@@ -89,18 +87,20 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.booksFilterForm.value.title === '') {
-      this.booksFilterForm.value.title = null;
+    const formValue = this.booksFilterForm.value;
+
+    if (formValue.title === '') {
+      formValue.title = null;
     }
 
     this.filterParams = {
       page: 1,
-      title: this.booksFilterForm.value.title,
-      genres: this.booksFilterForm.value.genres?.map((genre) => genre.id),
-      priceFrom: this.booksFilterForm.value.price.from,
-      priceTo: this.booksFilterForm.value.price.to,
-      writingDate: this.booksFilterForm.value.writingDate,
-      releaseDate: this.booksFilterForm.value.releaseDate,
+      title: formValue.title,
+      genres: formValue.genres?.map((genre) => genre.id),
+      priceFrom: formValue.price.from,
+      priceTo: formValue.price.to,
+      writingDate: formValue.writingDate,
+      releaseDate: formValue.releaseDate,
     };
 
     this.filterSubmit.emit(this.filterParams);

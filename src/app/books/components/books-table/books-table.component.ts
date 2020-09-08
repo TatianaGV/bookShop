@@ -1,4 +1,11 @@
-import { Component, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  Output,
+  EventEmitter,
+  Input,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
 import { PageEvent } from '@angular/material/paginator';
 
@@ -12,6 +19,7 @@ import { BooksServices } from '../../services/books.service';
   selector: 'app-books-table',
   templateUrl: './books-table.component.html',
   styleUrls: ['./books-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class BooksTableComponent implements OnDestroy {
@@ -24,7 +32,6 @@ export class BooksTableComponent implements OnDestroy {
 
   @Output()
   public readonly changePaginator = new EventEmitter<IBookFilter>();
-
 
   public path = 'http://gulyakina.kubesh.ru';
   public alt = 'assets/pic/agenda.png';
