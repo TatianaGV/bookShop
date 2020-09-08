@@ -17,9 +17,9 @@ import {
   IMetaData,
   IDataBook,
   IBookFilterUrlParams
-} from '../../../../core/interfaces';
-import { BooksServices } from '../../../services/books.service';
-import { BooksConfirmDialogComponent } from '../../../components/confirm-dialog/books-confirm-dialog.component';
+} from '../../../core/interfaces';
+import { BooksServices } from '../../services/books.service';
+import { BooksConfirmDialogComponent } from '../../components/confirm-dialog/books-confirm-dialog.component';
 
 @Component({
   selector: 'app-table',

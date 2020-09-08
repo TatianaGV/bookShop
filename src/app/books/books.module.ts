@@ -34,7 +34,7 @@ import { BooksFormComponent } from './components/form/books-form.component';
 import { BooksConfirmDialogComponent } from './components/confirm-dialog/books-confirm-dialog.component';
 import { BooksServices } from './services/books.service';
 import { FilterContainer } from './container/filter';
-import { TableContainer } from './container/table/table';
+import { TableContainer } from './container/table';
 
 
 @NgModule({
