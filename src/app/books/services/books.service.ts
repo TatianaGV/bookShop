@@ -86,15 +86,12 @@ export class BooksServices implements OnDestroy {
   }
 
   public updateBook(book: FormData, id: number): void {
-    debugger;
     this._booksService
       .updateBookById(book, id)
       .pipe(
         takeUntil(this._destroy$),
       )
-      .subscribe((resp) => {
-        console.log(resp);
-      });
+      .subscribe((resp) => {});
   }
 
   public changeMeta(meta: IMetaData): void {

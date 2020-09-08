@@ -12,7 +12,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { takeUntil, filter } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
 
-import { IBookFilter, IMetaData, IDataBook } from '../../../../core/interfaces';
+import {
+  IBookFilter,
+  IMetaData,
+  IDataBook,
+  IBookFilterUrlParams
+} from '../../../../core/interfaces';
 import { BooksServices } from '../../../services/books.service';
 import { BooksConfirmDialogComponent } from '../../../components/confirm-dialog/books-confirm-dialog.component';
 
@@ -32,7 +37,7 @@ export class TableContainer implements OnInit, OnDestroy {
   }
 
   @Output()
-  public readonly booksChanged = new EventEmitter<IBookFilter>();
+  public readonly booksChanged = new EventEmitter<IBookFilterUrlParams>();
 
   public loadedData = false;
 

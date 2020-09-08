@@ -33,9 +33,7 @@ import { BooksEditPageComponent } from './views/edit-page/books-edit-page.compon
 import { BooksFormComponent } from './components/form/books-form.component';
 import { BooksConfirmDialogComponent } from './components/confirm-dialog/books-confirm-dialog.component';
 import { BooksServices } from './services/books.service';
-import { FilterView } from './views/filter';
 import { FilterContainer } from './container/filter';
-import { TableView } from './views/table';
 import { TableContainer } from './container/table/table';
 
 
@@ -49,9 +47,7 @@ import { TableContainer } from './container/table/table';
     BooksEditPageComponent,
     BooksFormComponent,
     BooksConfirmDialogComponent,
-    FilterView,
     FilterContainer,
-    TableView,
     TableContainer,
   ],
   imports: [

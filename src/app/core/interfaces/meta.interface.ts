@@ -6,7 +6,7 @@ export interface IMetaData {
   page?: number;
   limit?: number;
   title?: string;
-  genres?: IDataGenre[] | number[];
+  genres?: IDataGenre[] | number[] | string[];
   priceFrom?: number;
   priceTo?: number;
   writingDate?: Date;

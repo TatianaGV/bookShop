@@ -4,7 +4,7 @@ interface IBookParent {
   title?: string;
   priceFrom?: number;
   priceTo?: number;
-  genres?: number[];
+  genres?: number[] | string[];
 }
 
 export interface IBookFilter extends IBookParent {
