@@ -28,18 +28,19 @@ export class BooksFormComponent implements OnInit, OnDestroy {
 
   @Input()
   public set book(book: IDataBookComplete) {
+    debugger;
     if (book) {
       this.booksForm.patchValue({
         title: book.title,
         price: book.price,
         author: book.author,
+        genres: book.genres,
         description: book.description,
         writingDate: book.writing_date,
         releaseDate: book.release_date,
       });
-      this.selectableGenres = book.genres;
       if (book.image) {
-        this.src = this.path + book.image;
+        this.picturePlaceHolder = this.path + book.image;
       }
     }
   }
@@ -66,9 +67,9 @@ export class BooksFormComponent implements OnInit, OnDestroy {
 
   public path = 'http://gulyakina.kubesh.ru';
   public filteredOptions$: Observable<IDataAuthor[]>;
-  public selectableGenres: IDataGenre[] = [];
-  public src = 'assets/pic/agenda.png';
   public allAuthors: IDataAuthor[] = [];
+
+  public picturePlaceHolder = 'assets/pic/agenda.png';
 
   public maxDateWriting = new Date(new Date().setDate(new Date().getDate() - 1));
   public maxDateRelease = new Date(new Date().setDate(new Date().getDate() - 1));
@@ -88,7 +89,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
     const file = event && event.item(0);
     const fileReader = new FileReader();
     fileReader.onloadend = (e) => {
-      this.src = <string>e.target.result;
+      this.picturePlaceHolder = <string>e.target.result;
     };
     if (file && file.type.match('image.*')) {
       fileReader.readAsDataURL(file);

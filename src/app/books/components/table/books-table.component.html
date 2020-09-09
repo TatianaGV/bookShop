@@ -74,11 +74,15 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item [routerLink]="['/books', element.id]">
+        <button
+          mat-menu-item
+          [routerLink]="['/books', element.id]">
           <mat-icon>create</mat-icon>
           <span>Edit</span>
         </button>
-        <button mat-menu-item (click)="confirmDeleting(element.id)">
+        <button
+          mat-menu-item
+          (click)="confirmDeleting(element.id)">
           <mat-icon>delete</mat-icon>
           <span>Delete</span>
         </button>

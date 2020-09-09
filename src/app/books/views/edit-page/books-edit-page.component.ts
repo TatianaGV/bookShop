@@ -25,8 +25,7 @@ export class BooksEditPageComponent implements OnInit {
   public ngOnInit(): void {
     this.booksForm = new FormGroup({});
     this._id = this._activatedRoute.snapshot.paramMap.get('id');
-    this._booksService
-      .getBookById(+this._id);
+    this._booksService.getBookById(+this._id);
   }
 
   public get book(): IDataBookComplete {
@@ -35,6 +34,8 @@ export class BooksEditPageComponent implements OnInit {
   }
 
   public submit(): void {
+    console.log(this.booksForm);
+    debugger;
     if (this.booksForm.invalid) {
       return;
     }
@@ -49,7 +50,6 @@ export class BooksEditPageComponent implements OnInit {
       writingDate: this.booksForm.value.writingDate,
       releaseDate: this.booksForm.value.releaseDate,
     };
-    debugger;
     const book = prepareObjBeforeCreate(bookFormData);
     this._booksService.updateBook(book, +this._id);
     this._route

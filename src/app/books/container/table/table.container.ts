@@ -93,7 +93,7 @@ export class TableContainer implements OnInit, OnDestroy {
   }
 
   private _listenBookChange(): void {
-    this._booksService.booksChanged$
+    this._booksService.allBooksChanged$
       .pipe(
         takeUntil(this._destroy$),
       )

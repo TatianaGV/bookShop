@@ -21,9 +21,10 @@ import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { forkJoin, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { IDataGenre } from '../../../core/interfaces';
+import { IDataGenre, IDataBook, IDataBookComplete } from '../../../core/interfaces';
 import { GenresServices } from '../../../core/services/genres.service';
 import { GenresDataServices } from '../../../core/data/genres.data';
+import { BooksServices } from '../../../books/services/books.service';
 
 
 @Component({
@@ -32,6 +33,11 @@ import { GenresDataServices } from '../../../core/data/genres.data';
   styleUrls: ['./genres-custom-control.component.scss'],
 })
 export class GenresCustomControlComponent implements OnInit, ControlValueAccessor, OnDestroy {
+
+  public get book(): IDataBookComplete {
+    return this._booksService
+      .book;
+  }
 
   @ViewChild('genresInput', { static: true })
   public genresInput: ElementRef<HTMLInputElement>;
@@ -54,6 +60,7 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
     private _activatedRoute: ActivatedRoute,
     private _genresService: GenresServices,
     private _genresDateService: GenresDataServices,
+    private _booksService: BooksServices,
   ) {
     if (this.genresNgControl != null) {
       this.genresNgControl.valueAccessor = this;
@@ -65,6 +72,7 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
     this.inputControl = this.genresNgControl.control;
     this.inputControl.setValidators(validators ? validators : null);
     this.inputControl.updateValueAndValidity();
+    this._bookChanged();
 
     const genres = this._activatedRoute.snapshot.queryParamMap.getAll('genres');
     if (genres.length !== 0) {
@@ -129,6 +137,19 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
   public ngOnDestroy(): void {
     this._destroy$.next(null);
     this._destroy$.complete();
+  }
+
+  private _bookChanged(): void {
+    this._booksService
+      .bookChanged$
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe(() => {
+        const data = this._booksService.book;
+        this.selectedGenres.push(...data.genres);
+        this.inputControl.setValue(this.selectedGenres);
+      });
   }
 
 }

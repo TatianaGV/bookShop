@@ -19,9 +19,14 @@ export class BooksServices implements OnDestroy {
 
   private _destroy$ = new ReplaySubject<void>(1);
   private _allBooksChanged$ = new Subject<any>();
+  private _bookChanged$ = new Subject<any>();
 
-  public get booksChanged$(): Observable<any> {
+  public get allBooksChanged$(): Observable<any> {
     return this._allBooksChanged$;
+  }
+
+  public get bookChanged$(): Observable<any> {
+    return this._bookChanged$;
   }
 
   constructor(
@@ -81,7 +86,9 @@ export class BooksServices implements OnDestroy {
         takeUntil(this._destroy$),
       )
       .subscribe((response: IDataBookComplete) => {
+        debugger;
         this.book = response;
+        this._bookChanged$.next();
       });
   }
 
