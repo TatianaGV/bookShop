@@ -21,7 +21,7 @@ import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { forkJoin, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { IDataGenre, IDataBook, IDataBookComplete } from '../../../core/interfaces';
+import { IDataGenre } from '../../../core/interfaces';
 import { GenresServices } from '../../../core/services/genres.service';
 import { GenresDataServices } from '../../../core/data/genres.data';
 import { BooksServices } from '../../../books/services/books.service';
@@ -33,11 +33,6 @@ import { BooksServices } from '../../../books/services/books.service';
   styleUrls: ['./genres-custom-control.component.scss'],
 })
 export class GenresCustomControlComponent implements OnInit, ControlValueAccessor, OnDestroy {
-
-  public get book(): IDataBookComplete {
-    return this._booksService
-      .book;
-  }
 
   @ViewChild('genresInput', { static: true })
   public genresInput: ElementRef<HTMLInputElement>;
@@ -68,33 +63,13 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
   }
 
   public ngOnInit(): void {
-    const validators = this.genresNgControl.control.validator;
-    this.inputControl = this.genresNgControl.control;
-    this.inputControl.setValidators(validators ? validators : null);
-    this.inputControl.updateValueAndValidity();
+    this._settingControl();
     this._bookChanged();
-
-    const genres = this._activatedRoute.snapshot.queryParamMap.getAll('genres');
-    if (genres.length !== 0) {
-      this.loaded = true;
-      const arr = genres
-        .map((id) => this._genresDateService.getGenresById(+id));
-
-      forkJoin(arr)
-        .pipe(
-          takeUntil(this._destroy$),
-        )
-        .subscribe((result) => {
-          this.loaded = false;
-          this.selectedGenres.push(...result);
-          this.inputControl.setValue(this.selectedGenres);
-        });
-    }
+    this._listenQueryParams();
   }
 
   public get allGenres(): IDataGenre[] {
-    return this._genresService
-      .allGenres;
+    return this._genresService.allGenres;
   }
 
   public writeValue(val: any): void {}
@@ -150,6 +125,32 @@ export class GenresCustomControlComponent implements OnInit, ControlValueAccesso
         this.selectedGenres.push(...data.genres);
         this.inputControl.setValue(this.selectedGenres);
       });
+  }
+
+  private _listenQueryParams(): void {
+    const genres = this._activatedRoute.snapshot.queryParamMap.getAll('genres');
+    if (genres.length !== 0) {
+      this.loaded = true;
+      const arr = genres
+        .map((id) => this._genresDateService.getGenresById(+id));
+
+      forkJoin(arr)
+        .pipe(
+          takeUntil(this._destroy$),
+        )
+        .subscribe((result) => {
+          this.loaded = false;
+          this.selectedGenres.push(...result);
+          this.inputControl.setValue(this.selectedGenres);
+        });
+    }
+  }
+
+  private _settingControl(): void {
+    const validators = this.genresNgControl.control.validator;
+    this.inputControl = this.genresNgControl.control;
+    this.inputControl.setValidators(validators ? validators : null);
+    this.inputControl.updateValueAndValidity();
   }
 
 }

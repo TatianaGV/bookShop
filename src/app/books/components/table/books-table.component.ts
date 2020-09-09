@@ -4,7 +4,6 @@ import {
   Output,
   EventEmitter,
   Input,
-  ChangeDetectionStrategy
 } from '@angular/core';
 
 import { PageEvent } from '@angular/material/paginator';

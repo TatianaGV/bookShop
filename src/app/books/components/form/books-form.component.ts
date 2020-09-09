@@ -16,7 +16,7 @@ import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { Observable, fromEvent, ReplaySubject } from 'rxjs';
 import { startWith, map, takeUntil } from 'rxjs/operators';
 
-import { IDataAuthor, IDataGenre, IDataBookComplete } from '../../../core/interfaces';
+import { IDataAuthor, IDataBookComplete } from '../../../core/interfaces';
 import { AuthorsDataServices } from '../../../core/data/authors.data';
 
 @Component({
@@ -28,7 +28,6 @@ export class BooksFormComponent implements OnInit, OnDestroy {
 
   @Input()
   public set book(book: IDataBookComplete) {
-    debugger;
     if (book) {
       this.booksForm.patchValue({
         title: book.title,
@@ -40,7 +39,8 @@ export class BooksFormComponent implements OnInit, OnDestroy {
         releaseDate: book.release_date,
       });
       if (book.image) {
-        this.picturePlaceHolder = this.path + book.image;
+        debugger;
+        this.bookPicture = this.path + book.image;
       }
     }
   }
@@ -69,7 +69,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
   public filteredOptions$: Observable<IDataAuthor[]>;
   public allAuthors: IDataAuthor[] = [];
 
-  public picturePlaceHolder = 'assets/pic/agenda.png';
+  public bookPicture = 'assets/pic/agenda.png';
 
   public maxDateWriting = new Date(new Date().setDate(new Date().getDate() - 1));
   public maxDateRelease = new Date(new Date().setDate(new Date().getDate() - 1));
@@ -89,7 +89,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
     const file = event && event.item(0);
     const fileReader = new FileReader();
     fileReader.onloadend = (e) => {
-      this.picturePlaceHolder = <string>e.target.result;
+      this.bookPicture = <string>e.target.result;
     };
     if (file && file.type.match('image.*')) {
       fileReader.readAsDataURL(file);

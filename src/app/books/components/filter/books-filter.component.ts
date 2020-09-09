@@ -7,7 +7,6 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormGroup, Validators, AbstractControl, } from '@angular/forms';
 

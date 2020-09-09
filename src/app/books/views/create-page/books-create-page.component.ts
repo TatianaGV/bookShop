@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -36,7 +36,6 @@ export class BooksCreatePageComponent implements OnInit {
     if (this.booksForm.invalid) {
       return;
     }
-    debugger;
     const bookFormData: IBookCreation = {
       title: this.booksForm.value.title,
       description: this.booksForm.value.description,

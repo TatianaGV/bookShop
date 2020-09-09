@@ -86,7 +86,6 @@ export class BooksServices implements OnDestroy {
         takeUntil(this._destroy$),
       )
       .subscribe((response: IDataBookComplete) => {
-        debugger;
         this.book = response;
         this._bookChanged$.next();
       });

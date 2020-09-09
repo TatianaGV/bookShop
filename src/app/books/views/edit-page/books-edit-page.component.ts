@@ -13,6 +13,7 @@ import { prepareObjBeforeCreate } from '../../../core/helpers/prepare-object.hel
 export class BooksEditPageComponent implements OnInit {
 
   public booksForm: FormGroup;
+  public image: File | null;
 
   private _id: string;
 
@@ -34,12 +35,11 @@ export class BooksEditPageComponent implements OnInit {
   }
 
   public submit(): void {
-    console.log(this.booksForm);
-    debugger;
     if (this.booksForm.invalid) {
       return;
     }
 
+    debugger;
     const bookFormData: IBookCreation = {
       id: this.booksForm.value.id,
       title: this.booksForm.value.title,
@@ -49,11 +49,11 @@ export class BooksEditPageComponent implements OnInit {
       genres: this.booksForm.value.genres,
       writingDate: this.booksForm.value.writingDate,
       releaseDate: this.booksForm.value.releaseDate,
+      image: this.image,
     };
     const book = prepareObjBeforeCreate(bookFormData);
     this._booksService.updateBook(book, +this._id);
-    this._route
-      .navigate(['/books']);
+    this._route.navigate(['/books']);
   }
 
   public clear(): void {
@@ -68,7 +68,13 @@ export class BooksEditPageComponent implements OnInit {
       description: this.book.description,
       writingDate: this.book.writing_date,
       releaseDate: this.book.release_date,
+      image: this.image,
     });
+  }
+
+  public getImage(image: File): void {
+    debugger;
+    this.image = image;
   }
 
 }
