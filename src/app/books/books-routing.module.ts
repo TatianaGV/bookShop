@@ -10,21 +10,15 @@ import { BooksEditPageComponent } from './views/edit-page/books-edit-page.compon
 const routes: Routes = [
   {
     path: '',
-    component: BooksPageComponent,
-    children: [
-      {
-        path: '',
-        component: BooksPanelsComponent,
-      },
-      {
-        path: 'create',
-        component: BooksCreatePageComponent,
-      },
-      {
-        path: ':id',
-        component: BooksEditPageComponent,
-      },
-    ],
+    component: BooksPanelsComponent,
+  },
+  {
+    path: 'create',
+    component: BooksCreatePageComponent,
+  },
+  {
+    path: ':id',
+    component: BooksEditPageComponent,
   },
 ];
 

@@ -26,14 +26,14 @@
            matInput
            formControlName="title"
            required>
-    <mat-error *ngIf="booksForm.get('title').invalid && (booksForm.get('title').dirty || booksForm.get('title').touched)">
-      <span *ngIf="booksForm.get('title').errors?.required">
+    <mat-error *ngIf="titleControl.invalid && (titleControl.dirty || titleControl.touched)">
+      <span *ngIf="titleControl.errors?.required">
          Input the title
       </span>
-      <span *ngIf="booksForm.get('title').errors?.minlength">
+      <span *ngIf="titleControl.errors?.minlength">
         The title is too small
       </span>
-      <span *ngIf="booksForm.get('title').errors?.maxlength">
+      <span *ngIf="titleControl.errors?.maxlength">
         The title is too big
       </span>
     </mat-error>
@@ -55,11 +55,11 @@
         </mat-option>
       </mat-autocomplete>
       <mat-error
-        *ngIf="booksForm.get('author').invalid && (booksForm.get('author').dirty || booksForm.get('author').touched)">
-        <span *ngIf="booksForm.get('author').errors?.required">
+        *ngIf="authorControl.invalid && (authorControl.dirty || authorControl.touched)">
+        <span *ngIf="authorControl.errors?.required">
           Select the author
         </span>
-        <span *ngIf="booksForm.get('author').errors?.maxlength">
+        <span *ngIf="authorControl.errors?.maxlength">
           The author is too big
         </span>
       </mat-error>
@@ -82,14 +82,14 @@
       formControlName="description"
       required>
       </textarea>
-    <mat-error *ngIf="booksForm.get('genres').invalid && (booksForm.get('genres').dirty || booksForm.get('genres').touched)">
-      <span *ngIf="booksForm.get('description').errors?.required">
+    <mat-error *ngIf="descriptionControl.invalid && (descriptionControl.dirty || descriptionControl.touched)">
+      <span *ngIf="descriptionControl.errors?.required">
         Input the description
       </span>
-      <span *ngIf="booksForm.get('description').errors?.minlength">
+      <span *ngIf="descriptionControl.errors?.minlength">
         The description is too small
       </span>
-      <span *ngIf="booksForm.get('description').errors?.maxlength">
+      <span *ngIf="descriptionControl.errors?.maxlength">
         The description is too big
       </span>
     </mat-error>
@@ -105,11 +105,11 @@
         #priceInput
         formControlName="price"
         required>
-      <mat-error *ngIf="booksForm.get('price').invalid && (booksForm.get('price').dirty || booksForm.get('price').touched)">
-        <span *ngIf="booksForm.get('price').errors?.required">
+      <mat-error *ngIf="priceControl.invalid && (priceControl.dirty || priceControl.touched)">
+        <span *ngIf="priceControl.errors?.required">
           Input the price
         </span>
-        <span *ngIf="booksForm.get('price').errors?.pattern">
+        <span *ngIf="priceControl.errors?.pattern">
           Incorrect price
         </span>
       </mat-error>
@@ -122,14 +122,14 @@
       <input
         name="date"
         matInput
-        [matDatepicker]="picker"
+        [matDatepicker]="writingDatePicker"
         [max]="maxDateWriting"
         formControlName="writingDate"
         required>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <mat-error *ngIf="booksForm.get('writingDate').invalid && (booksForm.get('writingDate').dirty || booksForm.get('writingDate').touched)">
-        <span *ngIf="booksForm.get('writingDate').errors?.required">
+      <mat-datepicker-toggle matSuffix [for]="writingDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #writingDatePicker></mat-datepicker>
+      <mat-error *ngIf="writingDateControl.invalid && (writingDateControl.dirty || writingDateControl.touched)">
+        <span *ngIf="writingDateControl.errors?.required">
           Input the date of writing a book
         </span>
       </mat-error>
@@ -139,15 +139,15 @@
       <input
         name="date"
         matInput
-        [matDatepicker]="picker1"
+        [matDatepicker]="releaseDatePicker"
         [max]="maxDateRelease"
         [min]="minDateRelease"
         formControlName="releaseDate"
         required>
-      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-      <mat-datepicker #picker1></mat-datepicker>
-      <mat-error *ngIf="booksForm.get('releaseDate').invalid && (booksForm.get('releaseDate').dirty || booksForm.get('releaseDate').touched)">
-        <span *ngIf="booksForm.get('releaseDate').errors?.required">
+      <mat-datepicker-toggle matSuffix [for]="releaseDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #releaseDatePicker></mat-datepicker>
+      <mat-error *ngIf="releaseDateControl.invalid && (releaseDateControl.dirty || releaseDateControl.touched)">
+        <span *ngIf="releaseDateControl.errors?.required">
           Input the date of release a book
         </span>
       </mat-error>

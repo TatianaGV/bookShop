@@ -39,7 +39,6 @@ export class BooksFormComponent implements OnInit, OnDestroy {
         releaseDate: book.release_date,
       });
       if (book.image) {
-        debugger;
         this.bookPicture = this.path + book.image;
       }
     }
@@ -105,6 +104,22 @@ export class BooksFormComponent implements OnInit, OnDestroy {
     return this.booksForm.get('releaseDate');
   }
 
+  public get priceControl(): AbstractControl {
+    return this.booksForm.get('price');
+  }
+
+  public get descriptionControl(): AbstractControl {
+    return this.booksForm.get('description');
+  }
+
+  public get authorControl(): AbstractControl {
+    return this.booksForm.get('author');
+  }
+
+  public get titleControl(): AbstractControl {
+    return this.booksForm.get('title');
+  }
+
   public ngOnInit(): void {
     this._getAuthors();
     this._initForm();
@@ -160,8 +175,8 @@ export class BooksFormComponent implements OnInit, OnDestroy {
 
     this.booksForm.updateValueAndValidity();
 
-    this._subWritingDateControl();
-    this._subReleaseDateControl();
+    this._listenWritingDateControl();
+    this._listenReleaseDateControl();
   }
 
   private _filter(value: string | IDataAuthor): IDataAuthor[] {
@@ -200,7 +215,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
       );
   }
 
-  private _subWritingDateControl(): void {
+  private _listenWritingDateControl(): void {
     this.writingDateControl?.valueChanges
       .pipe(
         takeUntil(this._destroy$),
@@ -214,7 +229,7 @@ export class BooksFormComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _subReleaseDateControl(): void {
+  private _listenReleaseDateControl(): void {
     this.releaseDateControl?.valueChanges
       .pipe(
         takeUntil(this._destroy$),

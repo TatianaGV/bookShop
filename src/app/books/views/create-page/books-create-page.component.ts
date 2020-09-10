@@ -1,20 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { IBookCreation } from '../../../core/interfaces';
 import { BooksServices } from '../../services/books.service';
-import { prepareObjBeforeCreate } from '../../../core/helpers/prepare-object.helper';
+import { dataBookToFormData } from '../../../core/helpers/prepare-object.helper';
+import { takeUntil } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
+import { error } from '@angular/compiler/src/util';
 
 
 @Component({
   templateUrl: './books-create-page.component.html',
   styleUrls: ['./books-create-page.component.scss'],
 })
-export class BooksCreatePageComponent implements OnInit {
+export class BooksCreatePageComponent implements OnInit, OnDestroy {
 
   public booksForm: FormGroup;
   public image: File | null;
+
+  private _destroy$ = new ReplaySubject<void>(1);
 
   constructor(
     private _route: Router,
@@ -26,9 +31,24 @@ export class BooksCreatePageComponent implements OnInit {
     this.booksForm = new FormGroup({});
   }
 
+  public ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
   public createBook(book: FormData): void {
     this._booksService
-      .createBook(book);
+      .createBook(book)
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((resp) => {
+        if (resp) {
+          this._route.navigate(['/books']);
+        } else {
+          throw error('Error Save');
+        }
+      });
   }
 
   public submit(): void {
@@ -46,9 +66,8 @@ export class BooksCreatePageComponent implements OnInit {
       releaseDate: this.booksForm.value.releaseDate,
       image: this.image,
     };
-    const book = prepareObjBeforeCreate(bookFormData);
+    const book = dataBookToFormData(bookFormData);
     this.createBook(book);
-    this._route.navigate(['/books']);
   }
 
   public getImage(image: File): void {

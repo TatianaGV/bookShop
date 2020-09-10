@@ -35,6 +35,8 @@ import { BooksConfirmDialogComponent } from './components/confirm-dialog/books-c
 import { BooksServices } from './services/books.service';
 import { FilterContainer } from './container/filter';
 import { TableContainer } from './container/table';
+import { CreatePageComponent } from './container/create-page/create-page.component';
+import { EditPageComponent } from './container/edit-page/edit-page.component';
 
 
 @NgModule({
@@ -49,6 +51,8 @@ import { TableContainer } from './container/table';
     BooksConfirmDialogComponent,
     FilterContainer,
     TableContainer,
+    CreatePageComponent,
+    EditPageComponent,
   ],
   imports: [
     CommonModule,

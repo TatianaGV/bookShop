@@ -39,13 +39,9 @@ export class BooksServices implements OnDestroy {
     this._destroy$.complete();
   }
 
-  public createBook(book: FormData): void {
-    this._booksService
-      .createBook(book)
-      .pipe(
-        takeUntil(this._destroy$),
-      )
-      .subscribe();
+  public createBook(book: FormData): Observable<any> {
+    return this._booksService
+      .createBook(book);
   }
 
   public getAllBooks(): void {
@@ -91,13 +87,11 @@ export class BooksServices implements OnDestroy {
       });
   }
 
-  public updateBook(book: FormData, id: number): void {
-    this._booksService
-      .updateBookById(book, id)
-      .pipe(
-        takeUntil(this._destroy$),
-      )
-      .subscribe((resp) => {});
+  public updateBook(book: FormData, id: number): Observable<FormData> {
+    debugger;
+
+    return this._booksService
+      .updateBookById(book, id);
   }
 
   public changeMeta(meta: IMetaData): void {

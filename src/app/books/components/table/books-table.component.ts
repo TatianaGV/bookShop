@@ -19,7 +19,6 @@ import { BooksServices } from '../../services/books.service';
   templateUrl: './books-table.component.html',
   styleUrls: ['./books-table.component.scss'],
 })
-
 export class BooksTableComponent implements OnDestroy {
 
   @Input()

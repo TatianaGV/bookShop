@@ -68,11 +68,15 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
     return this.booksFilterForm?.get('releaseDate');
   }
 
+  public get titleControl(): AbstractControl {
+    return this.booksFilterForm?.get('title');
+  }
+
   public ngOnInit(): void {
-    this._subPriceToControl();
-    this._subPriceFromControl();
-    this._subWritingDateControl();
-    this._subReleaseDateControl();
+    this._listenPriceToControl();
+    this._listenPriceFromControl();
+    this._listenWritingDateControl();
+    this._listenReleaseDateControl();
   }
 
   public ngOnDestroy(): void {
@@ -104,7 +108,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
     this.filterSubmit.emit(this.filterParams);
   }
 
-  private _subPriceToControl(): void {
+  private _listenPriceToControl(): void {
     this.priceToControl?.valueChanges
       .pipe(
         debounceTime(500),
@@ -123,7 +127,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _subPriceFromControl(): void {
+  private _listenPriceFromControl(): void {
     this.priceFromControl?.valueChanges
       .pipe(
         debounceTime(500),
@@ -142,7 +146,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _subWritingDateControl(): void {
+  private _listenWritingDateControl(): void {
     this.writingDateControl?.valueChanges
       .pipe(
         takeUntil(this._destroy$),
@@ -156,7 +160,7 @@ export class BooksFilterComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _subReleaseDateControl(): void {
+  private _listenReleaseDateControl(): void {
     this.releaseDateControl?.valueChanges
       .pipe(
         takeUntil(this._destroy$),

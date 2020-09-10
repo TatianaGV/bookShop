@@ -1,6 +1,6 @@
 import { IBookCreation } from '../interfaces';
 
-export function prepareObjBeforeCreate(book: IBookCreation): FormData {
+export function dataBookToFormData(book: IBookCreation): FormData {
   const formData = new FormData();
   formData.append('description', book.description);
   formData.append('title', book.title);

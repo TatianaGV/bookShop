@@ -12,7 +12,7 @@
              matInput
              formControlName="title">
       <mat-error>
-        <span *ngIf="booksFilterForm.get('title').errors?.minlength">
+        <span *ngIf="titleControl.errors?.minlength">
           The title is too small
         </span>
       </mat-error>
@@ -62,13 +62,13 @@
         name="date"
         matInput
         [max]="maxDateWriting"
-        [matDatepicker]="picker"
+        [matDatepicker]="writingDatePicker"
         formControlName="writingDate">
       <mat-datepicker-toggle
         matSuffix
-        [for]="picker">
+        [for]="writingDatePicker">
       </mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <mat-datepicker #writingDatePicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Release Date</mat-label>
@@ -77,13 +77,13 @@
         matInput
         [max]="maxDateRelease"
         [min]="minDateRelease"
-        [matDatepicker]="picker1"
+        [matDatepicker]="releaseDatePicker"
         formControlName="releaseDate">
       <mat-datepicker-toggle
         matSuffix
-        [for]="picker1">
+        [for]="releaseDatePicker">
       </mat-datepicker-toggle>
-      <mat-datepicker #picker1></mat-datepicker>
+      <mat-datepicker #releaseDatePicker></mat-datepicker>
     </mat-form-field>
   </div>
   <div class="form-btn-search">

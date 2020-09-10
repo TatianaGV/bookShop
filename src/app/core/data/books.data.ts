@@ -60,9 +60,9 @@ export class BooksDataServices {
   public updateBookById(
     book: FormData,
     id: number,
-  ): Observable<IDataBookComplete> {
+  ): Observable<FormData> {
     return this._http
-      .put<IDataBookComplete>(
+      .put<FormData>(
         `/books/${id}`,
         book,
       );

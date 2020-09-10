@@ -2,7 +2,8 @@
   <mat-card-content>
     <h2 class="title">Edit book</h2>
     <app-books-form
-      *ngIf="booksForm" [booksForm]="booksForm"
+      *ngIf="booksForm"
+      [booksForm]="booksForm"
       [book]="book"
       (addedImage)="getImage($event)">
     </app-books-form>

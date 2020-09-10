@@ -1,20 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { BooksServices } from '../../services/books.service';
 import { IDataBookComplete, IBookCreation } from '../../../core/interfaces';
-import { prepareObjBeforeCreate } from '../../../core/helpers/prepare-object.helper';
+import { dataBookToFormData } from '../../../core/helpers/prepare-object.helper';
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { error } from '@angular/compiler/src/util';
 
 @Component({
   templateUrl: './books-edit-page.component.html',
   styleUrls: ['./books-edit-page.component.scss'],
 })
-export class BooksEditPageComponent implements OnInit {
+export class BooksEditPageComponent implements OnInit, OnDestroy {
+
+  public get book(): IDataBookComplete {
+    return this._booksService
+      .book;
+  }
 
   public booksForm: FormGroup;
   public image: File | null;
 
+  private _destroy$ = new ReplaySubject<void>(1);
   private _id: string;
 
   constructor(
@@ -29,9 +38,9 @@ export class BooksEditPageComponent implements OnInit {
     this._booksService.getBookById(+this._id);
   }
 
-  public get book(): IDataBookComplete {
-    return this._booksService
-      .book;
+  public ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   public submit(): void {
@@ -39,7 +48,6 @@ export class BooksEditPageComponent implements OnInit {
       return;
     }
 
-    debugger;
     const bookFormData: IBookCreation = {
       id: this.booksForm.value.id,
       title: this.booksForm.value.title,
@@ -51,9 +59,8 @@ export class BooksEditPageComponent implements OnInit {
       releaseDate: this.booksForm.value.releaseDate,
       image: this.image,
     };
-    const book = prepareObjBeforeCreate(bookFormData);
-    this._booksService.updateBook(book, +this._id);
-    this._route.navigate(['/books']);
+    const book = dataBookToFormData(bookFormData);
+    this._updateBook(book);
   }
 
   public clear(): void {
@@ -73,8 +80,22 @@ export class BooksEditPageComponent implements OnInit {
   }
 
   public getImage(image: File): void {
-    debugger;
     this.image = image;
+  }
+
+  private _updateBook(book: FormData): void {
+    this._booksService
+      .updateBook(book, +this._id)
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((resp) => {
+        if (resp) {
+          this._route.navigate(['/books']);
+        } else {
+          throw error('Error update');
+        }
+      });
   }
 
 }
