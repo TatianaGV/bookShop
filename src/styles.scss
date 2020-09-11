@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;900&display=swap');
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
+
+@import '~ngx-toastr/toastr';
+
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
 
 * {
   box-sizing: border-box;
@@ -65,4 +68,12 @@ button {
 .form-btn-save {
   width: 80%;
   margin: auto;
+}
+
+.toast-success {
+  background-color: #0DAE7D !important;
+}
+
+.toast-error{
+  background-color: #B52A38 !important;
 }

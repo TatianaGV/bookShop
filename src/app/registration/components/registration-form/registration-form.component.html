@@ -6,7 +6,7 @@
            matInput
            formControlName="firstName"
            required>
-    <mat-error *ngIf="registrationForm.get('firstName').invalid && (registrationForm.get('firstName').dirty || registrationForm.get('firstName').touched)">
+    <mat-error>
           <span *ngIf="registrationForm.get('firstName').errors?.required">
             Input the first name
           </span>
@@ -22,7 +22,7 @@
            matInput
            formControlName="lastName"
            required>
-    <mat-error *ngIf="registrationForm.get('lastName').invalid && (registrationForm.get('lastName').dirty || registrationForm.get('lastName').touched)">
+    <mat-error>
           <span *ngIf="registrationForm.get('lastName').errors?.required">
             Input the last name
           </span>
@@ -38,11 +38,11 @@
            matInput
            formControlName="email"
            required>
-    <mat-error *ngIf="registrationForm.get('email').invalid && (registrationForm.get('email').dirty || registrationForm.get('email').touched)">
-          <span *ngIf="registrationForm.get('email').errors?.required">
+    <mat-error>
+          <span *ngIf="emailControl.hasError('required')">
             Input the email
           </span>
-      <span *ngIf="registrationForm.get('email').errors?.email">
+      <span *ngIf="emailControl.hasError('email')">
             Incorrect email
           </span>
     </mat-error>
@@ -54,8 +54,8 @@
         formControlName="password"
         placeholder="Password">
       </app-password>
-      <mat-error *ngIf="passwordControl.invalid && (passwordControl.dirty || passwordControl.touched)">
-            <span *ngIf="passwordControl.errors?.required">
+      <mat-error>
+            <span *ngIf="passwordControl.hasError('required')">
               Input the password
             </span>
         <span *ngIf="passwordControl.hasError('minlength')">
@@ -77,7 +77,7 @@
         formControlName="confirmPassword"
         placeholder="Confirm password">
       </app-password>
-      <mat-error *ngIf="confirmPasswordControl.invalid && (confirmPasswordControl.dirty || confirmPasswordControl.touched)">
+      <mat-error>
             <span>
               Incorrect password
             </span>

@@ -18,6 +18,14 @@ import { IRegistrationUser } from '../../../core/interfaces';
 })
 export class RegistrationFormComponent {
 
+  public get passwordControl(): AbstractControl {
+    return this.passwordGroupForm.get('password');
+  }
+
+  public get emailControl(): AbstractControl {
+    return this.registrationForm.get('email');
+  }
+
   @Input()
   public registrationForm: FormGroup;
 
@@ -29,24 +37,18 @@ export class RegistrationFormComponent {
 
   constructor() { }
 
-  public get passwordControl(): AbstractControl {
-    return this.passwordGroupForm.get('password');
-  }
-
-  public get confirmPasswordControl(): AbstractControl {
-    return this.passwordGroupForm.get('confirmPassword');
-  }
-
   public submit(): void {
     if (this.registrationForm.invalid) {
       return;
     }
+    const formValue = this.registrationForm.value;
+
     const user: IRegistrationUser = {
-      first_name: this.registrationForm.value.firstName,
-      last_name: this.registrationForm.value.lastName,
-      email: this.registrationForm.value.email,
-      password: this.passwordGroupForm.value.password,
-      password_confirmation: this.passwordGroupForm.value.confirmPassword,
+      first_name: formValue.firstName,
+      last_name: formValue.lastName,
+      email: formValue.email,
+      password: formValue.password,
+      password_confirmation: formValue.confirmPassword,
     };
 
     this.formSubmit.emit(user);

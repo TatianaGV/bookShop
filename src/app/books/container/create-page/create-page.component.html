@@ -1,1 +1,15 @@
-<p>create-page works!</p>
+<mat-card>
+  <mat-card-content>
+    <h2 class="title">Сreate new book</h2>
+    <app-books-form
+      *ngIf="booksForm"
+      [booksForm]="booksForm"
+      (addedImage)="setImage($event)">
+      <button
+        class="submit-btn"
+        type="submit"
+        (click)="submit()"
+      >Save</button>
+    </app-books-form>
+  </mat-card-content>
+</mat-card>

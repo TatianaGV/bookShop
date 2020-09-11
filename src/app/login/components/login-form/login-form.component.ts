@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, AbstractControl } from '@angular/forms';
 
 import { IUserAuth } from '../../../core/interfaces';
 
@@ -16,6 +16,14 @@ import { IUserAuth } from '../../../core/interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent {
+
+  public get emailControl(): AbstractControl {
+    return this.loginForm.get('email');
+  }
+
+  public get passwordControl(): AbstractControl {
+    return this.loginForm.get('password');
+  }
 
   @Input()
   public loginForm: FormGroup;

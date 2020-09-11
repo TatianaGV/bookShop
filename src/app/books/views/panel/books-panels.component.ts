@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { IBookFilter, IBookFilterUrlParams } from '../../../core/interfaces';
-import { preparingDateFromUrl } from '../../../core/helpers/data.helpers';
+import { parseDateFromUrl } from '../../../core/helpers/data.helpers';
 
 @Component({
   templateUrl: './books-panels.component.html',
@@ -37,7 +37,7 @@ export class BooksPanelsComponent implements OnInit {
   private _getParamsFromUrl(): void {
     const writingDataUrl = this._activatedRoute.snapshot.queryParamMap.get('writingDate');
     const writingDataParse = writingDataUrl ?
-      preparingDateFromUrl(writingDataUrl) :
+      parseDateFromUrl(writingDataUrl) :
       null;
     if (writingDataParse) {
       this.queryParams.writingDate = writingDataParse;
@@ -45,7 +45,7 @@ export class BooksPanelsComponent implements OnInit {
 
     const releaseDataUrl = this._activatedRoute.snapshot.queryParamMap.get('releaseDate');
     const releaseDataParse = releaseDataUrl ?
-      preparingDateFromUrl(releaseDataUrl) :
+      parseDateFromUrl(releaseDataUrl) :
       null;
     if (releaseDataParse) {
       this.queryParams.releaseDate = releaseDataParse;

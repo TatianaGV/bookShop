@@ -8,11 +8,11 @@
            autofocus
            formControlName="email"
            required>
-    <mat-error *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)">
-      <span *ngIf="loginForm.get('email').errors?.required">
+    <mat-error>
+      <span *ngIf="emailControl.hasError('required')">
         Input the login
       </span>
-      <span *ngIf="loginForm.get('email').errors?.minlength">
+      <span *ngIf="emailControl.hasError('minlength')">
         The login name is too small
       </span>
     </mat-error>
@@ -23,11 +23,11 @@
            matInput
            formControlName="password"
            required>
-    <mat-error *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)">
-      <span *ngIf="loginForm.get('password').errors?.required">
+    <mat-error>
+      <span *ngIf="passwordControl.hasError('required')">
         Input the password
       </span>
-      <span *ngIf="loginForm.get('password').errors?.minlength">
+      <span *ngIf="passwordControl.hasError('minlength')">
         The password is too small
       </span>
     </mat-error>

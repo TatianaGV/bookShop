@@ -6,6 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './interсeptors/http-errors.interceptor';
 import { UrlReplaceInterceptor } from './interсeptors/url-replace.interceptor';
 import { CamelCaseInterceptor } from './interсeptors/camel-case.interceptor';
+import { ToastrModule } from 'ngx-toastr';
 
 registerLocaleData(localeRu);
 
@@ -20,6 +21,7 @@ const INTERCEPTOR_PROVIDERS: Provider = [
   imports: [
     CommonModule,
     HttpClientModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     {

@@ -26,7 +26,7 @@
            matInput
            formControlName="title"
            required>
-    <mat-error *ngIf="titleControl.invalid && (titleControl.dirty || titleControl.touched)">
+    <mat-error>
       <span *ngIf="titleControl.errors?.required">
          Input the title
       </span>
@@ -54,9 +54,8 @@
           {{author.first_name}} {{author.last_name}}
         </mat-option>
       </mat-autocomplete>
-      <mat-error
-        *ngIf="authorControl.invalid && (authorControl.dirty || authorControl.touched)">
-        <span *ngIf="authorControl.errors?.required">
+      <mat-error>
+        <span *ngIf="authorControl.hasError('required')">
           Select the author
         </span>
         <span *ngIf="authorControl.errors?.maxlength">
@@ -82,7 +81,7 @@
       formControlName="description"
       required>
       </textarea>
-    <mat-error *ngIf="descriptionControl.invalid && (descriptionControl.dirty || descriptionControl.touched)">
+    <mat-error>
       <span *ngIf="descriptionControl.errors?.required">
         Input the description
       </span>
@@ -105,7 +104,7 @@
         #priceInput
         formControlName="price"
         required>
-      <mat-error *ngIf="priceControl.invalid && (priceControl.dirty || priceControl.touched)">
+      <mat-error>
         <span *ngIf="priceControl.errors?.required">
           Input the price
         </span>
@@ -128,7 +127,7 @@
         required>
       <mat-datepicker-toggle matSuffix [for]="writingDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #writingDatePicker></mat-datepicker>
-      <mat-error *ngIf="writingDateControl.invalid && (writingDateControl.dirty || writingDateControl.touched)">
+      <mat-error>
         <span *ngIf="writingDateControl.errors?.required">
           Input the date of writing a book
         </span>
@@ -146,11 +145,13 @@
         required>
       <mat-datepicker-toggle matSuffix [for]="releaseDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #releaseDatePicker></mat-datepicker>
-      <mat-error *ngIf="releaseDateControl.invalid && (releaseDateControl.dirty || releaseDateControl.touched)">
+      <mat-error>
         <span *ngIf="releaseDateControl.errors?.required">
           Input the date of release a book
         </span>
       </mat-error>
     </mat-form-field>
   </div>
+
+  <ng-content></ng-content>
 </form>

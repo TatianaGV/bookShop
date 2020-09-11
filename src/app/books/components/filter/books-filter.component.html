@@ -34,7 +34,7 @@
         name="price-book"
         matInput
         formControlName="from">
-      <mat-error *ngIf="priceFromControl.invalid">
+      <mat-error>
         <span *ngIf="priceFromControl.errors?.min || priceFromControl.errors?.max || priceFromControl.errors?.pattern">
           Incorrect price
         </span>
@@ -47,7 +47,7 @@
         name="price-book"
         matInput
         formControlName="to">
-      <mat-error *ngIf="priceToControl.invalid">
+      <mat-error>
         <span *ngIf="priceToControl.errors?.min || priceToControl.errors?.pattern">
           Incorrect price
         </span>
