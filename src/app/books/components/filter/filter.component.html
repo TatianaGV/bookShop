@@ -75,6 +75,11 @@
         [for]="writingDatePicker">
       </mat-datepicker-toggle>
       <mat-datepicker #writingDatePicker></mat-datepicker>
+      <mat-error>
+        <span *ngIf="writingDateControl.hasError('dataCheck')">
+          Writing date should be earlier than release date
+        </span>
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Release Date</mat-label>
@@ -90,6 +95,11 @@
         [for]="releaseDatePicker">
       </mat-datepicker-toggle>
       <mat-datepicker #releaseDatePicker></mat-datepicker>
+      <mat-error>
+        <span *ngIf="releaseDateControl.hasError('dataCheck')">
+          Release date should be later than writing date
+        </span>
+      </mat-error>
     </mat-form-field>
   </div>
   <div class="form-btn-search">
