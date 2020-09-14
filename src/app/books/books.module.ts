@@ -27,7 +27,7 @@ import { BooksPageComponent } from './views/main-page/books-page.component';
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksPanelsComponent } from './views/panel/books-panels.component';
 import { BooksTableComponent } from './components/table/books-table.component';
-import { BooksFilterComponent } from './components/filter/books-filter.component';
+import { BooksFilterComponent } from './components/filter/filter.component';
 import { BooksCreatePageComponent } from './views/create-page/books-create-page.component';
 import { BooksEditPageComponent } from './views/edit-page/books-edit-page.component';
 import { BooksFormComponent } from './components/form/books-form.component';

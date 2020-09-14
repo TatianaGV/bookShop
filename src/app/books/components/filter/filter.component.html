@@ -35,7 +35,7 @@
         matInput
         formControlName="from">
       <mat-error>
-        <span *ngIf="priceFromControl.errors?.min || priceFromControl.errors?.max || priceFromControl.errors?.pattern">
+        <span *ngIf="price">
           Incorrect price
         </span>
       </mat-error>

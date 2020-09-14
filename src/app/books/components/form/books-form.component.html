@@ -27,13 +27,13 @@
            formControlName="title"
            required>
     <mat-error>
-      <span *ngIf="titleControl.errors?.required">
+      <span *ngIf="titleControl.hasError('required')">
          Input the title
       </span>
-      <span *ngIf="titleControl.errors?.minlength">
+      <span *ngIf="titleControl.hasError('minlength')">
         The title is too small
       </span>
-      <span *ngIf="titleControl.errors?.maxlength">
+      <span *ngIf="titleControl.hasError('maxlength')">
         The title is too big
       </span>
     </mat-error>
@@ -58,7 +58,7 @@
         <span *ngIf="authorControl.hasError('required')">
           Select the author
         </span>
-        <span *ngIf="authorControl.errors?.maxlength">
+        <span *ngIf="authorControl.hasError('maxlength')">
           The author is too big
         </span>
       </mat-error>
@@ -82,13 +82,13 @@
       required>
       </textarea>
     <mat-error>
-      <span *ngIf="descriptionControl.errors?.required">
+      <span *ngIf="descriptionControl.hasError('required')">
         Input the description
       </span>
-      <span *ngIf="descriptionControl.errors?.minlength">
+      <span *ngIf="descriptionControl.hasError('minlength')">
         The description is too small
       </span>
-      <span *ngIf="descriptionControl.errors?.maxlength">
+      <span *ngIf="descriptionControl.hasError('maxlength')">
         The description is too big
       </span>
     </mat-error>
@@ -105,10 +105,10 @@
         formControlName="price"
         required>
       <mat-error>
-        <span *ngIf="priceControl.errors?.required">
+        <span *ngIf="priceControl.hasError('required')">
           Input the price
         </span>
-        <span *ngIf="priceControl.errors?.pattern">
+        <span *ngIf="priceControl.hasError('pattern')">
           Incorrect price
         </span>
       </mat-error>
@@ -125,7 +125,10 @@
         [max]="maxDateWriting"
         formControlName="writingDate"
         required>
-      <mat-datepicker-toggle matSuffix [for]="writingDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="writingDatePicker">
+      </mat-datepicker-toggle>
       <mat-datepicker #writingDatePicker></mat-datepicker>
       <mat-error>
         <span *ngIf="writingDateControl.errors?.required">
@@ -143,7 +146,10 @@
         [min]="minDateRelease"
         formControlName="releaseDate"
         required>
-      <mat-datepicker-toggle matSuffix [for]="releaseDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="releaseDatePicker">
+      </mat-datepicker-toggle>
       <mat-datepicker #releaseDatePicker></mat-datepicker>
       <mat-error>
         <span *ngIf="releaseDateControl.errors?.required">
@@ -152,6 +158,6 @@
       </mat-error>
     </mat-form-field>
   </div>
-
+<!--  Button content form create and edit form -->
   <ng-content></ng-content>
 </form>
