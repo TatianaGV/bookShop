@@ -5,11 +5,13 @@
       *ngIf="booksForm"
       [booksForm]="booksForm"
       (addedImage)="setImage($event)">
-      <button
-        class="submit-btn"
-        type="submit"
-        (click)="submit()"
-      >Save</button>
+      <div>
+        <button
+          class="submit-btn"
+          type="submit"
+          (click)="submit()"
+        >Save</button>
+      </div>
     </app-books-form>
   </mat-card-content>
 </mat-card>

@@ -7,19 +7,19 @@
       [book]="book"
       (addedImage)="setImage($event)">
     </app-books-form>
+    <div class="form-btn-save">
+      <button
+        class="submit-btn"
+        (click)="clear()"
+      >Clear</button>
+      <button
+        class="submit-btn"
+        (click)="reset()"
+      >Reset</button>
+      <button
+        class="submit-btn"
+        (click)="submit()"
+      >Save</button>
+    </div>
   </mat-card-content>
-  <div class="form-btn-save">
-    <button
-      class="submit-btn"
-      (click)="clear()"
-    >Clear</button>
-    <button
-      class="submit-btn"
-      (click)="reset()"
-    >Reset</button>
-    <button
-      class="submit-btn"
-      (click)="submit()"
-    >Save</button>
-  </div>
 </mat-card>
