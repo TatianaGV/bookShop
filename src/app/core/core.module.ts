@@ -3,10 +3,11 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { ToastrModule } from 'ngx-toastr';
+
 import { ErrorInterceptor } from './interсeptors/http-errors.interceptor';
 import { UrlReplaceInterceptor } from './interсeptors/url-replace.interceptor';
 import { CamelCaseInterceptor } from './interсeptors/camel-case.interceptor';
-import { ToastrModule } from 'ngx-toastr';
 
 registerLocaleData(localeRu);
 

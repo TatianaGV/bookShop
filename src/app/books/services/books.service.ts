@@ -88,8 +88,6 @@ export class BooksServices implements OnDestroy {
   }
 
   public updateBook(book: FormData, id: number): Observable<FormData> {
-    debugger;
-
     return this._booksService
       .updateBookById(book, id);
   }

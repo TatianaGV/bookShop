@@ -12,7 +12,7 @@
              matInput
              formControlName="title">
       <mat-error>
-        <span *ngIf="titleControl.errors?.minlength">
+        <span *ngIf="titleControl.hasError('minlength')">
           The title is too small
         </span>
       </mat-error>
@@ -35,8 +35,11 @@
         matInput
         formControlName="from">
       <mat-error>
-        <span *ngIf="price">
-          Incorrect price
+        <span *ngIf="priceFromControl.hasError('priceCheck')">
+          Price From should be bigger than Price To
+        </span>
+        <span *ngIf="priceFromControl.hasError('pattern')">
+          Incorrect price pattern
         </span>
       </mat-error>
     </mat-form-field>
@@ -48,14 +51,17 @@
         matInput
         formControlName="to">
       <mat-error>
-        <span *ngIf="priceToControl.errors?.min || priceToControl.errors?.pattern">
-          Incorrect price
+        <span *ngIf="priceToControl.hasError('priceCheck')">
+          Price To should be smaller than Price From
+        </span>
+        <span *ngIf="priceToControl.hasError('pattern')">
+          Incorrect price pattern
         </span>
       </mat-error>
     </mat-form-field>
   </div>
   <!-- date -->
-  <div class="date-container">
+  <div class="date-container" formGroupName="data">
     <mat-form-field appearance="standard">
       <mat-label>Writing Date</mat-label>
       <input
