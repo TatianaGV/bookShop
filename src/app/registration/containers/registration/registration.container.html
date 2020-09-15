@@ -1,10 +1,6 @@
-<mat-card>
-  <mat-card-content>
-    <h2 class="title"> Registration </h2>
-    <app-registration-form
-      [registrationForm]="registrationForm"
-      [passwordGroupForm]="passwordGroup"
-      (formSubmit)="formSubmit($event)">
-    </app-registration-form>
-  </mat-card-content>
-</mat-card>
+<app-registration-form
+  [registrationForm]="registrationForm"
+  [passwordGroupForm]="passwordGroup"
+  (formSubmit)="formSubmit($event)">
+</app-registration-form>
+

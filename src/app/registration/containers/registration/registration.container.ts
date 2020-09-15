@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 import {
@@ -14,8 +14,9 @@ import { RegistrationService } from '../../services/registration.service';
   styleUrls: ['./registration.container.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegistrationContainer {
+export class RegistrationContainer implements OnInit {
 
+  @Input()
   public registrationForm: FormGroup;
 
   public passwordGroup: FormGroup;
@@ -24,6 +25,9 @@ export class RegistrationContainer {
     private _fb: FormBuilder,
     private _registrationService: RegistrationService,
   ) {
+  }
+
+  public ngOnInit(): void {
     this._initForm();
   }
 

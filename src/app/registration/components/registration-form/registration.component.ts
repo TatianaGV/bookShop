@@ -12,8 +12,8 @@ import { IRegistrationUser } from '../../../core/interfaces';
 
 @Component({
   selector: 'app-registration-form',
-  templateUrl: './registration-form.component.html',
-  styleUrls: ['./registration-form.component.scss'],
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationFormComponent {

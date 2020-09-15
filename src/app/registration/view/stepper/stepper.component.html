@@ -1,0 +1,40 @@
+<mat-card>
+  <mat-horizontal-stepper labelPosition="bottom" #stepper>
+    <mat-step [stepControl]="registrationForm">
+      <form [formGroup]="registrationForm">
+        <ng-template matStepLabel>Personal info</ng-template>
+          <app-registration
+            [registrationForm]="registrationForm">
+            <!--            (formSubmit)="formSubmit($event)">-->
+          </app-registration>
+        <div>
+          <button mat-button matStepperNext class="submit">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="addressForm">
+      <form [formGroup]="addressForm">
+        <ng-template matStepLabel>Address</ng-template>
+        <!--        <mat-form-field>-->
+        <!--          <mat-label>Address</mat-label>-->
+        <!--          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"-->
+        <!--                 required>-->
+        <!--        </mat-form-field>-->
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext class="submit">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="billingInfo">
+      <form [formGroup]="billingInfo">
+        <ng-template matStepLabel>Billing info</ng-template>
+        <!--      <p>You are now done.</p>-->
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-card>

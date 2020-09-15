@@ -7,10 +7,10 @@
            formControlName="firstName"
            required>
     <mat-error>
-          <span *ngIf="registrationForm.get('firstName').errors?.required">
+          <span *ngIf="registrationForm.get('firstName').hasError('required')">
             Input the first name
           </span>
-      <span *ngIf="registrationForm.get('firstName').errors?.minlength">
+      <span *ngIf="registrationForm.get('firstName').hasError('minlength')">
             The name is too small
           </span>
     </mat-error>
@@ -23,10 +23,10 @@
            formControlName="lastName"
            required>
     <mat-error>
-          <span *ngIf="registrationForm.get('lastName').errors?.required">
+          <span *ngIf="registrationForm.get('lastName').hasError('required')">
             Input the last name
           </span>
-      <span *ngIf="registrationForm.get('lastName').errors?.minlength">
+      <span *ngIf="registrationForm.get('lastName').hasError('minlength')">
             The last name is too small
           </span>
     </mat-error>

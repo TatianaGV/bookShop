@@ -22,7 +22,6 @@ export class CamelCaseInterceptor implements HttpInterceptor {
     return next.handle(req)
       .pipe(
         map((event: HttpEvent<any>) => {
-          debugger;
           if (event instanceof HttpResponse) {
             return event;
           }

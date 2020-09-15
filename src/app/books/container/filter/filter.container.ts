@@ -29,6 +29,11 @@ export class FilterContainer {
       writingDate: value?.writingDate,
       releaseDate: value?.releaseDate,
     });
+
+    this.dataGroup.patchValue({
+      writingDate: value?.writingDate,
+      releaseDate: value?.releaseDate,
+    });
   }
 
   @Output()

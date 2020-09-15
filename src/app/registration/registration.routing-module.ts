@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { RegistrationContainer } from './containers/registration';
+import { StepperComponent } from './view/stepper/stepper.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: RegistrationContainer,
+    component: StepperComponent,
   },
 ];
 

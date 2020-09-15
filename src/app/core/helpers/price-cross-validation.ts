@@ -4,12 +4,14 @@ export const priceCrossValidator: ValidatorFn = (control: FormGroup): Validation
   const priceToControl = control.get('to');
   const priceFromControl = control.get('from');
 
-  const checkControls = priceToControl.value < priceFromControl.value;
-  if (checkControls) {
-    priceFromControl.setErrors({ priceCheck: true });
-    priceToControl.setErrors({ priceCheck: true });
-  }
+  if (priceFromControl.value && priceToControl.value) {
+    const checkControls = priceToControl.value > priceFromControl.value;
+    if (!checkControls) {
+      priceFromControl.setErrors({ priceCheck: true });
+      priceToControl.setErrors({ priceCheck: true });
+    }
 
-  return checkControls ? { priceCheck: true } : null;
+    return !checkControls ? { priceCheck: true } : null;
+  }
 };
 
