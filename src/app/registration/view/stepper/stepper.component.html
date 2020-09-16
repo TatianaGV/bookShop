@@ -3,6 +3,7 @@
     <mat-step [stepControl]="registrationForm">
       <form [formGroup]="registrationForm">
         <ng-template matStepLabel>Personal info</ng-template>
+<!--        container -->
           <app-registration
             [registrationForm]="registrationForm">
             <!--            (formSubmit)="formSubmit($event)">-->
@@ -15,6 +16,7 @@
     <mat-step [stepControl]="addressForm">
       <form [formGroup]="addressForm">
         <ng-template matStepLabel>Address</ng-template>
+<!--        container -->
         <app-address-container
           [addressForm]="addressForm">
         </app-address-container>
@@ -24,13 +26,15 @@
         </div>
       </form>
     </mat-step>
-    <mat-step [stepControl]="billingInfo">
-      <form [formGroup]="billingInfo">
+    <mat-step [stepControl]="billingForm">
+      <form [formGroup]="billingForm">
         <ng-template matStepLabel>Billing info</ng-template>
-        <!--      <p>You are now done.</p>-->
+<!--        container -->
+        <app-billing-container [billingForm]="billingForm">
+        </app-billing-container>
         <div class="registration-btn">
           <button mat-button matStepperPrevious>Back</button>
-          <button mat-button (click)="stepper.reset()">Reset</button>
+          <button mat-button matStepperNext class="submit">Sing up</button>
         </div>
       </form>
     </mat-step>

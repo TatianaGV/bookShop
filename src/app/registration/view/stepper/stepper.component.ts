@@ -9,7 +9,7 @@ export class StepperComponent implements OnInit {
 
   public registrationForm: FormGroup = new FormGroup({});
   public addressForm: FormGroup = new FormGroup({});
-  public billingInfo: FormGroup = new FormGroup({});
+  public billingForm: FormGroup = new FormGroup({});
 
   constructor(
     private _fb: FormBuilder,
@@ -22,7 +22,7 @@ export class StepperComponent implements OnInit {
     this.addressForm = this._fb.group({
       firstCtrl: ['', Validators.required],
     });
-    this.billingInfo = this._fb.group({
+    this.billingForm = this._fb.group({
       firstCtrl: ['', Validators.required],
     });
   }

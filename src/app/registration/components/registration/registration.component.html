@@ -1,6 +1,6 @@
 <form class="registration-page" [formGroup]="registrationForm" (ngSubmit)="submit()">
   <!-- First name -->
-  <mat-form-field appearance="standard">
+  <mat-form-field appearance="outline">
     <mat-label>First Name</mat-label>
     <input type="text"
            matInput
@@ -16,7 +16,7 @@
     </mat-error>
   </mat-form-field>
   <!-- Last name -->
-  <mat-form-field appearance="standard">
+  <mat-form-field appearance="outline">
     <mat-label>Last Name</mat-label>
     <input type="text"
            matInput
@@ -32,7 +32,7 @@
     </mat-error>
   </mat-form-field>
   <!-- email name -->
-  <mat-form-field appearance="standard">
+  <mat-form-field appearance="outline">
     <mat-label>Email</mat-label>
     <input type="text"
            matInput
@@ -49,7 +49,7 @@
   </mat-form-field>
   <div class="password-container" formGroupName="password">
     <!-- password -->
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="outline">
       <app-password
         formControlName="password"
         placeholder="Password">
@@ -72,7 +72,7 @@
       </mat-error>
     </mat-form-field>
     <!-- confirm password -->
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="outline">
       <app-password
         formControlName="confirmPassword"
         placeholder="Confirm password">

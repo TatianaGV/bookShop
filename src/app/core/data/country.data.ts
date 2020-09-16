@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IMetaData } from '../interfaces';
+
 import { Observable } from 'rxjs';
-import { IGenresResponse } from './genres.data';
 
 @Injectable({
   providedIn: 'root',

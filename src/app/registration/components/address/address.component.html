@@ -1,6 +1,6 @@
 <form class="address-form" [formGroup]="addressForm" (ngSubmit)="submit()">
 <!--  country -->
-  <mat-form-field appearance="standard">
+  <mat-form-field appearance="outline">
     <mat-label>Country</mat-label>
     <input type="text"
            matInput
@@ -10,7 +10,7 @@
     </mat-error>
   </mat-form-field>
 <!--  city -->
-  <mat-form-field appearance="standard">
+  <mat-form-field appearance="outline">
     <mat-label>City</mat-label>
     <input type="text"
            matInput
@@ -21,7 +21,7 @@
   </mat-form-field>
 <!--  street -->
   <div class="address">
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="outline">
       <mat-label>Street</mat-label>
       <input type="text"
              matInput
@@ -31,7 +31,7 @@
       </mat-error>
     </mat-form-field>
     <!--  house -->
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="outline">
       <mat-label>House</mat-label>
       <input type="text"
              matInput
@@ -43,7 +43,7 @@
   </div>
   <div class="address">
     <!--  flat -->
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="outline">
       <mat-label>Flat</mat-label>
       <input type="text"
              matInput
@@ -53,7 +53,7 @@
       </mat-error>
     </mat-form-field>
     <!-- zip -->
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="outline">
       <mat-label>Zip</mat-label>
       <input type="text"
              matInput

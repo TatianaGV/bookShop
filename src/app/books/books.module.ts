@@ -23,7 +23,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerModule } from '../libs/spinner/spinner.module';
 import { GenresControlModule } from '../libs/genres-control/genres-control.module';
 
-import { BooksPageComponent } from './views/main-page/books-page.component';
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksPanelsComponent } from './views/panel/books-panels.component';
 import { BooksTableComponent } from './components/table/books-table.component';
@@ -41,7 +40,6 @@ import { EditPageComponent } from './container/edit-page/edit-page.component';
 
 @NgModule({
   declarations: [
-    BooksPageComponent,
     BooksPanelsComponent,
     BooksTableComponent,
     BooksFilterComponent,

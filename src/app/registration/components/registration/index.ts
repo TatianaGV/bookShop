@@ -1,2 +1,2 @@
-export { RegistrationFormComponent } from './registration.component';
+export { RegistrationComponent } from './registration.component';
 

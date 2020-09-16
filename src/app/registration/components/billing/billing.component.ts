@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-billing',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./billing.component.scss'],
 })
 export class BillingComponent implements OnInit {
+
+  @Input()
+  public billingForm: FormGroup;
 
   constructor() { }
 

@@ -15,22 +15,24 @@ import { PasswordModule } from '../libs/password/password.module';
 import { RegistrationContainer } from './containers/registration';
 import { RegistrationRoutingModule } from './registration.routing-module';
 import { RegistrationService } from './services/registration.service';
-import { RegistrationFormComponent } from './components/registration';
+import { RegistrationComponent } from './components/registration';
 import { StepperComponent } from './view/stepper/stepper.component';
 import { BillingComponent } from './components/billing';
 import { AddressComponent } from './components/address';
 import { AddressContainer } from './containers/address/address.container';
+import { BillingContainer } from './containers/billing/billing.container';
 
 
 @NgModule({
   declarations: [
-    RegistrationContainer,
-    RegistrationFormComponent,
+    RegistrationComponent,
     StepperComponent,
-    BillingComponent,
-    BillingComponent,
     AddressComponent,
+    BillingComponent,
     AddressContainer,
+    BillingContainer,
+    RegistrationContainer,
+
   ],
   imports: [
     CommonModule,

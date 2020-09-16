@@ -16,7 +16,7 @@ import { IRegistrationUser } from '../../../core/interfaces';
   styleUrls: ['./registration.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegistrationFormComponent {
+export class RegistrationComponent {
 
   public get passwordControl(): AbstractControl {
     return this.passwordGroupForm.get('password');
