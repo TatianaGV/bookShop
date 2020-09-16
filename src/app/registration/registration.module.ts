@@ -15,8 +15,11 @@ import { PasswordModule } from '../libs/password/password.module';
 import { RegistrationContainer } from './containers/registration';
 import { RegistrationRoutingModule } from './registration.routing-module';
 import { RegistrationService } from './services/registration.service';
-import { RegistrationFormComponent } from './components/registration-form';
+import { RegistrationFormComponent } from './components/registration';
 import { StepperComponent } from './view/stepper/stepper.component';
+import { BillingComponent } from './components/billing';
+import { AddressComponent } from './components/address';
+import { AddressContainer } from './containers/address/address.container';
 
 
 @NgModule({
@@ -24,6 +27,10 @@ import { StepperComponent } from './view/stepper/stepper.component';
     RegistrationContainer,
     RegistrationFormComponent,
     StepperComponent,
+    BillingComponent,
+    BillingComponent,
+    AddressComponent,
+    AddressContainer,
   ],
   imports: [
     CommonModule,

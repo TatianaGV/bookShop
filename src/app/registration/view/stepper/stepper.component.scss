@@ -6,3 +6,13 @@
 :host ::ng-deep .mat-step-icon-selected, .mat-step-icon-state-done {
   background-color: #Ff5678 !important;
 }
+
+.registration-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.next-btn {
+  display: flex;
+  justify-content: flex-end;
+}

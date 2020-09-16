@@ -1,0 +1,66 @@
+<form class="address-form" [formGroup]="addressForm" (ngSubmit)="submit()">
+<!--  country -->
+  <mat-form-field appearance="standard">
+    <mat-label>Country</mat-label>
+    <input type="text"
+           matInput
+           formControlName="country"
+           required>
+    <mat-error>
+    </mat-error>
+  </mat-form-field>
+<!--  city -->
+  <mat-form-field appearance="standard">
+    <mat-label>City</mat-label>
+    <input type="text"
+           matInput
+           formControlName="city"
+           required>
+    <mat-error>
+    </mat-error>
+  </mat-form-field>
+<!--  street -->
+  <div class="address">
+    <mat-form-field appearance="standard">
+      <mat-label>Street</mat-label>
+      <input type="text"
+             matInput
+             formControlName="street"
+             required>
+      <mat-error>
+      </mat-error>
+    </mat-form-field>
+    <!--  house -->
+    <mat-form-field appearance="standard">
+      <mat-label>House</mat-label>
+      <input type="text"
+             matInput
+             formControlName="house"
+             required>
+      <mat-error>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="address">
+    <!--  flat -->
+    <mat-form-field appearance="standard">
+      <mat-label>Flat</mat-label>
+      <input type="text"
+             matInput
+             formControlName="flat"
+             required>
+      <mat-error>
+      </mat-error>
+    </mat-form-field>
+    <!-- zip -->
+    <mat-form-field appearance="standard">
+      <mat-label>Zip</mat-label>
+      <input type="text"
+             matInput
+             formControlName="zip"
+             required>
+      <mat-error>
+      </mat-error>
+    </mat-form-field>
+  </div>
+</form>
