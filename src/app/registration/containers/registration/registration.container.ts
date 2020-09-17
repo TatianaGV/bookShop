@@ -1,4 +1,11 @@
-import { Component, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 import {
@@ -12,9 +19,9 @@ import { RegistrationService } from '../../services/registration.service';
   selector: 'app-registration',
   templateUrl: './registration.container.html',
   styleUrls: ['./registration.container.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegistrationContainer implements OnInit {
+export class RegistrationContainer implements OnInit, OnChanges {
+
 
   @Input()
   public registrationForm: FormGroup;
@@ -28,7 +35,12 @@ export class RegistrationContainer implements OnInit {
   }
 
   public ngOnInit(): void {
-    this._initForm();
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes) {
+      this._initForm();
+    }
   }
 
   public formSubmit(user: IRegistrationUser): void {
@@ -45,26 +57,16 @@ export class RegistrationContainer implements OnInit {
         patternValidator(/[a-z]/, { hasSmallCase: true }),
         patternValidator(/[@*#!?$%]/, { hasSpecialSymbol: true }),
       ]),
-      confirmPassword: new FormControl(null, []),
+      confirmPassword: new FormControl('', []),
     }, {
       validator: confirmValidation('password', 'confirmPassword'),
     });
 
-    this.registrationForm = this._fb.group({
-      firstName: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      lastName: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      email: new FormControl(null, [
-        Validators.required,
-        Validators.email,
-      ]),
-      password: this.passwordGroup,
-    });
+
+    this.registrationForm.addControl('firstName', new FormControl(null));
+    this.registrationForm.addControl('lastName', new FormControl(null));
+    this.registrationForm.addControl('email', new FormControl(null));
+    this.registrationForm.addControl('password', this.passwordGroup);
   }
 
 }

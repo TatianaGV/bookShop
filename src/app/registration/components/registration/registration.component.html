@@ -1,91 +1,93 @@
-<form class="registration-page" [formGroup]="registrationForm" (ngSubmit)="submit()">
-  <!-- First name -->
-  <mat-form-field appearance="outline">
-    <mat-label>First Name</mat-label>
-    <input type="text"
-           matInput
-           formControlName="firstName"
-           required>
-    <mat-error>
-          <span *ngIf="registrationForm.get('firstName').hasError('required')">
-            Input the first name
-          </span>
-      <span *ngIf="registrationForm.get('firstName').hasError('minlength')">
-            The name is too small
-          </span>
-    </mat-error>
-  </mat-form-field>
-  <!-- Last name -->
-  <mat-form-field appearance="outline">
-    <mat-label>Last Name</mat-label>
-    <input type="text"
-           matInput
-           formControlName="lastName"
-           required>
-    <mat-error>
-          <span *ngIf="registrationForm.get('lastName').hasError('required')">
-            Input the last name
-          </span>
-      <span *ngIf="registrationForm.get('lastName').hasError('minlength')">
-            The last name is too small
-          </span>
-    </mat-error>
-  </mat-form-field>
-  <!-- email name -->
-  <mat-form-field appearance="outline">
-    <mat-label>Email</mat-label>
-    <input type="text"
-           matInput
-           formControlName="email"
-           required>
-    <mat-error>
-          <span *ngIf="emailControl.hasError('required')">
-            Input the email
-          </span>
-      <span *ngIf="emailControl.hasError('email')">
-            Incorrect email
-          </span>
-    </mat-error>
-  </mat-form-field>
-  <div class="password-container" formGroupName="password">
-    <!-- password -->
+<ng-container *ngIf="registrationForm">
+  <form class="registration-page" [formGroup]="registrationForm" (ngSubmit)="submit()">
+    <!-- First name -->
     <mat-form-field appearance="outline">
-      <app-password
-        formControlName="password"
-        placeholder="Password">
-      </app-password>
+      <mat-label>First Name</mat-label>
+      <input type="text"
+             matInput
+             formControlName="firstName"
+             required>
       <mat-error>
-            <span *ngIf="passwordControl.hasError('required')">
-              Input the password
+            <span *ngIf="registrationForm.get('firstName').hasError('required')">
+              Input the first name
             </span>
-        <span *ngIf="passwordControl.hasError('minlength')">
-              Password is too small <br>
-            </span>
-        <span
-          *ngIf="passwordControl.hasError('hasNumber')
-                      || passwordControl.hasError('hasCapitalCase')
-                      || passwordControl.hasError('hasSmallCase')
-                      || passwordControl.hasError('hasSpecialSymbol')"
-        >
-              Must have at least one number, letter, special symbol
+        <span *ngIf="registrationForm.get('firstName').hasError('minlength')">
+              The name is too small
             </span>
       </mat-error>
     </mat-form-field>
-    <!-- confirm password -->
+    <!-- Last name -->
     <mat-form-field appearance="outline">
-      <app-password
-        formControlName="confirmPassword"
-        placeholder="Confirm password">
-      </app-password>
+      <mat-label>Last Name</mat-label>
+      <input type="text"
+             matInput
+             formControlName="lastName"
+             required>
       <mat-error>
-            <span>
-              Incorrect password
+            <span *ngIf="registrationForm.get('lastName').hasError('required')">
+              Input the last name
+            </span>
+        <span *ngIf="registrationForm.get('lastName').hasError('minlength')">
+              The last name is too small
             </span>
       </mat-error>
     </mat-form-field>
-  </div>
-<!--  <button-->
-<!--    class="submit-registration"-->
-<!--    type="submit"-->
-<!--  >Sign up</button>-->
-</form>
+    <!-- email name -->
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input type="text"
+             matInput
+             formControlName="email"
+             required>
+      <mat-error>
+            <span *ngIf="emailControl.hasError('required')">
+              Input the email
+            </span>
+        <span *ngIf="emailControl.hasError('email')">
+              Incorrect email
+            </span>
+      </mat-error>
+    </mat-form-field>
+    <div class="password-container" formGroupName="password">
+      <!-- password -->
+      <mat-form-field appearance="outline">
+        <app-password
+          formControlName="password"
+          placeholder="Password">
+        </app-password>
+        <mat-error>
+              <span *ngIf="passwordControl.hasError('required')">
+                Input the password
+              </span>
+          <span *ngIf="passwordControl.hasError('minlength')">
+                Password is too small <br>
+              </span>
+          <span
+            *ngIf="passwordControl.hasError('hasNumber')
+                        || passwordControl.hasError('hasCapitalCase')
+                        || passwordControl.hasError('hasSmallCase')
+                        || passwordControl.hasError('hasSpecialSymbol')"
+          >
+                Must have at least one number, letter, special symbol
+              </span>
+        </mat-error>
+      </mat-form-field>
+<!--       confirm password-->
+      <mat-form-field appearance="outline">
+        <app-password
+          formControlName="confirmPassword"
+          placeholder="Confirm password">
+        </app-password>
+        <mat-error>
+              <span>
+                Incorrect password
+              </span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  <!--  <button-->
+  <!--    class="submit-registration"-->
+  <!--    type="submit"-->
+  <!--  >Sign up</button>-->
+  </form>
+</ng-container>

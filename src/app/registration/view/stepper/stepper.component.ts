@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   templateUrl: './stepper.component.html',
@@ -7,24 +7,16 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class StepperComponent implements OnInit {
 
-  public registrationForm: FormGroup = new FormGroup({});
-  public addressForm: FormGroup = new FormGroup({});
-  public billingForm: FormGroup = new FormGroup({});
+  public registrationForm: FormGroup;
+  public addressForm: FormGroup;
+  public billingForm: FormGroup;
 
-  constructor(
-    private _fb: FormBuilder,
-  ) { }
+  constructor() {}
 
   public ngOnInit(): void {
-    this.registrationForm = this._fb.group({
-      firstCtrl: ['', Validators.required],
-    });
-    this.addressForm = this._fb.group({
-      firstCtrl: ['', Validators.required],
-    });
-    this.billingForm = this._fb.group({
-      firstCtrl: ['', Validators.required],
-    });
+    this.registrationForm = new FormGroup({});
+    this.addressForm = new FormGroup({});
+    this.billingForm = new FormGroup({});
   }
 
 }

@@ -16,4 +16,8 @@ export class BillingComponent implements OnInit {
   public ngOnInit(): void {
   }
 
+  public submit(): void {
+    console.log('cock1')
+  }
+
 }

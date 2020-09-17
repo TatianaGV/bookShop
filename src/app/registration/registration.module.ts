@@ -21,6 +21,9 @@ import { BillingComponent } from './components/billing';
 import { AddressComponent } from './components/address';
 import { AddressContainer } from './containers/address/address.container';
 import { BillingContainer } from './containers/billing/billing.container';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CountryService } from './services/country.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -32,7 +35,6 @@ import { BillingContainer } from './containers/billing/billing.container';
     AddressContainer,
     BillingContainer,
     RegistrationContainer,
-
   ],
   imports: [
     CommonModule,
@@ -47,9 +49,12 @@ import { BillingContainer } from './containers/billing/billing.container';
     MatButtonModule,
     PasswordModule,
     MatStepperModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     RegistrationService,
+    CountryService,
   ],
 })
 export class RegistrationModule { }

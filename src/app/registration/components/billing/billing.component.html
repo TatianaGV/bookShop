@@ -1,4 +1,4 @@
-<form class="billing-info" [formGroup]="billingForm">
+<form class="billing-info" *ngIf="billingForm" [formGroup]="billingForm" (ngSubmit)="submit()">
 <!--  number -->
   <mat-form-field appearance="outline">
     <mat-label>Number</mat-label>

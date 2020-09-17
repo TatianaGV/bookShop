@@ -18,9 +18,11 @@ export class UrlReplaceInterceptor implements HttpInterceptor {
                    next: HttpHandler,
   ): Observable<HttpEvent<any>> {
     debugger;
-    req = req.clone({
-      url: environment.apiUrl + req.url,
-    });
+    if (!req.url.startsWith('http://') && !req.url.startsWith('https://')) {
+      req = req.clone({
+        url: environment.apiUrl + req.url,
+      });
+    }
 
     return next.handle(req);
   }

@@ -5,7 +5,18 @@
     <input type="text"
            matInput
            formControlName="country"
-           required>
+           required
+           [matAutocomplete]="auto">
+    <mat-spinner
+      matSuffix
+      [diameter]="24"
+      *ngIf="loaded">
+    </mat-spinner>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayValue">
+      <mat-option *ngFor="let country of filteredCountry$ | async" [value]="country">
+        {{ country.name }}
+      </mat-option>
+    </mat-autocomplete>
     <mat-error>
     </mat-error>
   </mat-form-field>

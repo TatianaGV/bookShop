@@ -1,9 +1,8 @@
 import {
   Component,
-  ChangeDetectionStrategy,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
 } from '@angular/core';
 import { FormGroup, AbstractControl } from '@angular/forms';
 
@@ -14,7 +13,6 @@ import { IRegistrationUser } from '../../../core/interfaces';
   selector: 'app-registration-form',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationComponent {
 
@@ -35,7 +33,9 @@ export class RegistrationComponent {
   @Output()
   public readonly formSubmit = new EventEmitter<IRegistrationUser>();
 
-  constructor() { }
+  constructor() {
+    console.log('cockConst');
+  }
 
   public submit(): void {
     if (this.registrationForm.invalid) {

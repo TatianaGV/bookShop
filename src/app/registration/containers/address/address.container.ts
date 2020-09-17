@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
   selector: 'app-address-container',
   templateUrl: './address.container.html',
   styleUrls: ['./address.container.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddressContainer implements OnInit {
 
