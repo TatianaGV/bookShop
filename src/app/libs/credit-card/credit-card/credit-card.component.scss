@@ -17,12 +17,17 @@
     color: rgba(255, 255, 255, 0.48);
   }
 
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   .text-area {
     position: absolute;
     top: 24px;
     left: 24px;
     display: flex;
-    align-items: center;
 
     .text {
       color: #FFFFFF;
@@ -75,17 +80,19 @@
       position: absolute;
       top: 80px;
       left: 24px;
+      margin-top: 14px;
 
       .card-info {
         display: flex;
         justify-content: space-between;
 
         .card-owner {
-          width: 162px;
+          width: 170px;
           height: 32px;
           padding: 8px;
           background: rgba(0, 0, 0, 0.24);
           border-radius: 4px;
+          text-transform: uppercase;
         }
 
         .card-valid {
@@ -94,6 +101,7 @@
           padding: 8px;
           background: rgba(0, 0, 0, 0.24);
           border-radius: 4px;
+          text-align: center;
         }
       }
 
@@ -104,6 +112,8 @@
         background: rgba(0, 0, 0, 0.24);
         border-radius: 4px;
         margin-bottom: 16px;
+        text-align: center;
+        font-size: 18px;
       }
     }
   }
@@ -123,7 +133,7 @@
 
     .card-cvv {
       position: absolute;
-      top: 73px;
+      top: 87px;
       left: 247px;
       background: rgba(0, 0, 0, 0.24);
       border-radius: 4px;

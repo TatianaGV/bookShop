@@ -7,8 +7,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+
 import { CreditCardComponent } from './credit-card/credit-card.component';
 
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
   declarations: [
@@ -22,6 +25,7 @@ import { CreditCardComponent } from './credit-card/credit-card.component';
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxMaskModule.forRoot(),
   ],
   exports: [
     CreditCardComponent,

@@ -1,5 +1,5 @@
 <div class="container-card">
-  <form>
+  <form [formGroup]="billingForm">
     <div class="face-side card-size">
       <div class="shadow shadow-up"></div>
       <div class="shadow shadow-down"></div>
@@ -8,20 +8,27 @@
           Введите данные карты
         </h3>
         <div class="logo">
-          <img src="assets/pic/mastercard_logo.svg">
+          <img [src]="logoPicture">
         </div>
       </div>
       <div class="info-owner">
-        <input type="text" class="card-number" placeholder="IVAN IVANOV">
+        <input mask="0000 0000 0000 0000"
+               class="card-number"
+               placeholder="1234 1234 1234 1234"
+               formControlName="number">
         <div class="card-info">
-          <input type="text" class="card-owner" placeholder="1234 1234 1234 1234">
-          <input type="text" class="card-valid" placeholder="MM/YY">
+          <input class="card-owner"
+                 placeholder="IVAN IVANOV">
+          <input mask="00/00"
+                 class="card-valid"
+                 placeholder="MM/YY">
         </div>
       </div>
     </div>
     <div class="back-side card-size">
       <div class="black-line">
-        <input type="text" class="card-cvv" placeholder="cvv">
+        <input class="card-cvv"
+               placeholder="cvv">
       </div>
     </div>
   </form>
