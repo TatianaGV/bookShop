@@ -27,9 +27,11 @@
     <mat-step [stepControl]="billingForm">
       <ng-template matStepLabel>Billing info</ng-template>
 <!--        container -->
-      <app-billing-container
-       [billingForm]="billingForm">
-      </app-billing-container>
+<!--      <app-billing-container-->
+<!--       [billingForm]="billingForm">-->
+<!--      </app-billing-container>-->
+        <app-credit-card>
+        </app-credit-card>
 <!--      -->
       <div class="registration-btn">
         <button mat-button matStepperPrevious>Back</button>

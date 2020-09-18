@@ -9,8 +9,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { PasswordModule } from '../libs/password/password.module';
+import { CreditCardModule } from '../libs/credit-card/credit-card.module';
 
 import { RegistrationContainer } from './containers/registration';
 import { RegistrationRoutingModule } from './registration.routing-module';
@@ -21,9 +24,7 @@ import { BillingComponent } from './components/billing';
 import { AddressComponent } from './components/address';
 import { AddressContainer } from './containers/address/address.container';
 import { BillingContainer } from './containers/billing/billing.container';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CountryService } from './services/country.service';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatStepperModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
+    CreditCardModule,
   ],
   providers: [
     RegistrationService,
