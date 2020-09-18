@@ -1,0 +1,139 @@
+.container-card {
+  width: 407px;
+  height: 208px;
+  position: relative;
+  margin: 48px auto;
+
+  input {
+    outline: none;
+    border: none;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0.5px;
+    color: white;
+  }
+
+  input::placeholder {
+    color: rgba(255, 255, 255, 0.48);
+  }
+
+  .text-area {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    display: flex;
+    align-items: center;
+
+    .text {
+      color: #FFFFFF;
+      height: 16px;
+      font-size: 14px;
+      line-height: 16px;
+      opacity: 0.54;
+      margin-right: 61px;
+    }
+  }
+
+
+  .card-size {
+    width: 315px;
+    height: 200px;
+    border-radius: 30px;
+    position: absolute;
+  }
+
+  .face-side {
+    background: linear-gradient(167.6deg, #E42C66 -9.78%, #F55B46 107.04%);
+    top: 0;
+    z-index: 2;
+    overflow: hidden;
+
+    .shadow {
+      position: absolute;
+      background: #000000;
+      opacity: 0.08;
+      border-radius: 50%;
+    }
+
+    .shadow-up {
+      width: 221px;
+      height: 122px;
+      left: 165px;
+      top: -49px;
+    }
+
+    .shadow-down {
+      width: 205px;
+      height: 141px;
+      right: 170px;
+      top: 117px;
+    }
+
+    .info-owner {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 80px;
+      left: 24px;
+
+      .card-info {
+        display: flex;
+        justify-content: space-between;
+
+        .card-owner {
+          width: 162px;
+          height: 32px;
+          padding: 8px;
+          background: rgba(0, 0, 0, 0.24);
+          border-radius: 4px;
+        }
+
+        .card-valid {
+          width: 66px;
+          height: 32px;
+          padding: 8px;
+          background: rgba(0, 0, 0, 0.24);
+          border-radius: 4px;
+        }
+      }
+
+      .card-number {
+        width: 267px;
+        height: 32px;
+        padding: 8px;
+        background: rgba(0, 0, 0, 0.24);
+        border-radius: 4px;
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  .back-side {
+    background: linear-gradient(167.6deg, #B62452 -9.78%, #C24938 107.04%);
+    top: 24px;
+    left: 92px;
+
+    .black-line {
+      position: absolute;
+      top: 32px;
+      width: 315px;
+      height: 40px;
+      background: rgba(0, 0, 0, 0.48);
+    }
+
+    .card-cvv {
+      position: absolute;
+      top: 73px;
+      left: 247px;
+      background: rgba(0, 0, 0, 0.24);
+      border-radius: 4px;
+      padding: 8px;
+      width: 48px;
+      height: 32px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+  }
+
+}
+
