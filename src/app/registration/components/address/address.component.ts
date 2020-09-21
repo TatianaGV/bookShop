@@ -54,9 +54,8 @@ export class AddressComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this._destroy$),
       )
-      .subscribe((responce) => {
-        debugger;
-        this.allCountry = responce;
+      .subscribe((response) => {
+        this.allCountry = response;
         this._filterCountry();
       });
   }

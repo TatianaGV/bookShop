@@ -30,7 +30,6 @@ export class RegistrationContainer implements OnInit, OnChanges {
 
   constructor(
     private _fb: FormBuilder,
-    private _registrationService: RegistrationService,
   ) {
   }
 
@@ -42,10 +41,6 @@ export class RegistrationContainer implements OnInit, OnChanges {
       this._initForm();
     }
   }
-
-  // public formSubmit(user: IRegistrationUser): void {
-  //   this._registrationService.registrationUser(user);
-  // }
 
   private _initForm(): void {
     this.passwordGroup = this._fb.group({
