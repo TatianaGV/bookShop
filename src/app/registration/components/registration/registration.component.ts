@@ -35,21 +35,4 @@ export class RegistrationComponent {
 
   constructor() {}
 
-  public submit(): void {
-    if (this.registrationForm.invalid) {
-      return;
-    }
-    const formValue = this.registrationForm.value;
-
-    const user: IRegistrationUser = {
-      first_name: formValue.firstName,
-      last_name: formValue.lastName,
-      email: formValue.email,
-      password: formValue.password,
-      password_confirmation: formValue.confirmPassword,
-    };
-
-    this.formSubmit.emit(user);
-  }
-
 }

@@ -22,7 +22,6 @@ import { RegistrationService } from '../../services/registration.service';
 })
 export class RegistrationContainer implements OnInit, OnChanges {
 
-
   @Input()
   public registrationForm: FormGroup;
 

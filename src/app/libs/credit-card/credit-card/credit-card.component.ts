@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { fromEvent, ReplaySubject } from 'rxjs';
@@ -41,11 +41,19 @@ export class CreditCardComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
+  public setError(): void {
+    this.billingForm.get('number').setErrors({ serverError: { message: 'Show server error :)' } });
+  }
+
   private _initForm(): void {
-    this.billingForm.addControl('number', new FormControl(null));
-    this.billingForm.addControl('owner', new FormControl(null));
-    this.billingForm.addControl('valid', new FormControl(null));
-    this.billingForm.addControl('cvv', new FormControl(null));
+    this.billingForm.addControl('number', new FormControl(null,
+      [Validators.required]));
+    this.billingForm.addControl('owner', new FormControl(null,
+      [Validators.required]));
+    this.billingForm.addControl('valid', new FormControl(null,
+      [Validators.required]));
+    this.billingForm.addControl('cvv', new FormControl(null,
+      [Validators.required]));
   }
 
   private _listenNumberInput(): void {

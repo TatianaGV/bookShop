@@ -15,15 +15,18 @@
         <input mask="0000 0000 0000 0000"
                class="card-number"
                placeholder="1234 1234 1234 1234"
+               required
                formControlName="number">
         <div class="card-info">
           <input class="card-owner"
                  placeholder="IVAN IVANOV"
                  formControlName="owner"
+                 required
                  #owner>
           <input mask="00/00"
                  class="card-valid"
                  placeholder="MM/YY"
+                 required
                  formControlName="valid">
         </div>
       </div>
@@ -33,6 +36,7 @@
         <input class="card-cvv"
                mask="000"
                placeholder="cvv"
+               required
                formControlName="cvv">
       </div>
     </div>
