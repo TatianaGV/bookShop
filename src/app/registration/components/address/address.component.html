@@ -18,6 +18,9 @@
       </mat-option>
     </mat-autocomplete>
     <mat-error>
+      <span *ngIf="addressForm.get('country').hasError('required')">
+        Choose country
+      </span>
     </mat-error>
   </mat-form-field>
 <!--  city -->
@@ -28,6 +31,9 @@
            formControlName="city"
            required>
     <mat-error>
+      <span *ngIf="addressForm.get('city').hasError('required')">
+        Input city
+      </span>
     </mat-error>
   </mat-form-field>
 <!--  street -->
@@ -39,6 +45,9 @@
              formControlName="street"
              required>
       <mat-error>
+        <span *ngIf="addressForm.get('street').hasError('required')">
+          Input street
+        </span>
       </mat-error>
     </mat-form-field>
     <!--  house -->
@@ -49,6 +58,9 @@
              formControlName="house"
              required>
       <mat-error>
+        <span *ngIf="addressForm.get('house').hasError('required')">
+          Input house
+        </span>
       </mat-error>
     </mat-form-field>
   </div>
@@ -61,6 +73,9 @@
              formControlName="flat"
              required>
       <mat-error>
+        <span *ngIf="addressForm.get('flat').hasError('required')">
+          Input flat
+        </span>
       </mat-error>
     </mat-form-field>
     <!-- zip -->
@@ -71,6 +86,9 @@
              formControlName="zip"
              required>
       <mat-error>
+        <span *ngIf="addressForm.get('zip').hasError('required')">
+          Input ZIP
+        </span>
       </mat-error>
     </mat-form-field>
   </div>

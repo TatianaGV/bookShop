@@ -33,9 +33,7 @@ export class RegistrationComponent {
   @Output()
   public readonly formSubmit = new EventEmitter<IRegistrationUser>();
 
-  constructor() {
-    console.log('cockConst');
-  }
+  constructor() {}
 
   public submit(): void {
     if (this.registrationForm.invalid) {

@@ -47,7 +47,7 @@ button {
   outline: none;
 }
 
-.submit {
+.general-btn {
   cursor: pointer;
   border: none;
   background-color: #Ff5678;
@@ -61,7 +61,7 @@ button {
   outline: none;
 }
 
-.submit:hover,.submit-btn:hover, .find-book:hover {
+.general-btn:hover,.submit-btn:hover, .find-book:hover {
   background-color: #ED5170;
 }
 

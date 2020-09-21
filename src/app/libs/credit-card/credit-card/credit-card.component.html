@@ -18,17 +18,22 @@
                formControlName="number">
         <div class="card-info">
           <input class="card-owner"
-                 placeholder="IVAN IVANOV">
+                 placeholder="IVAN IVANOV"
+                 formControlName="owner"
+                 #owner>
           <input mask="00/00"
                  class="card-valid"
-                 placeholder="MM/YY">
+                 placeholder="MM/YY"
+                 formControlName="valid">
         </div>
       </div>
     </div>
     <div class="back-side card-size">
       <div class="black-line">
         <input class="card-cvv"
-               placeholder="cvv">
+               mask="000"
+               placeholder="cvv"
+               formControlName="cvv">
       </div>
     </div>
   </form>

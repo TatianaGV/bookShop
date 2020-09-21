@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -20,26 +20,12 @@ export class AddressContainer implements OnInit {
   }
 
   private _initForm(): void {
-    this.addressForm = this._fb.group({
-      country: new FormControl(null, [
-        Validators.required,
-      ]),
-      city: new FormControl(null, [
-        Validators.required,
-      ]),
-      street: new FormControl(null, [
-        Validators.required,
-      ]),
-      house: new FormControl(null, [
-        Validators.required,
-      ]),
-      flat: new FormControl(null, [
-        Validators.required,
-      ]),
-      zip: new FormControl(null, [
-        Validators.required,
-      ]),
-    });
+    this.addressForm.addControl('country', new FormControl(null));
+    this.addressForm.addControl('city', new FormControl(null));
+    this.addressForm.addControl('street', new FormControl(null));
+    this.addressForm.addControl('house', new FormControl(null));
+    this.addressForm.addControl('flat', new FormControl(null));
+    this.addressForm.addControl('zip', new FormControl(null));
   }
 
 }

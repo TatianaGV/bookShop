@@ -1,65 +1,81 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { take, debounceTime } from 'rxjs/operators';
+import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { fromEvent, ReplaySubject } from 'rxjs';
 
 @Component({
   selector: 'app-credit-card',
   templateUrl: './credit-card.component.html',
   styleUrls: ['./credit-card.component.scss'],
 })
-export class CreditCardComponent implements OnInit {
+export class CreditCardComponent implements OnInit, OnDestroy {
 
   public masterCard = ['5559', '5536', '5213'];
   public visa = ['4276', '4817'];
 
   public logoPicture = '';
 
-  // @ViewChild('cardNumber')
-  // public cardNumber: ElementRef<HTMLInputElement>;
+  @ViewChild('owner', { static: true })
+  public owner: ElementRef<HTMLInputElement>;
 
   @Input()
   public billingForm: FormGroup;
 
+  private _destroy$ = new ReplaySubject<any>();
+  private _reOwner = /^[a-zA-Z\s]+$/;
+
   constructor(
     private _fb: FormBuilder,
   ) {
-    this._initForm();
-    this._listenInputNumber();
   }
 
   public ngOnInit(): void {
+    this._initForm();
+    this._listenOwnerInput();
+    this._listenNumberInput();
+  }
+
+  public ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   private _initForm(): void {
-    this.billingForm = this._fb.group({
-      number: new FormControl(null, [
-        Validators.maxLength(16),
-      ]),
-      owner: new FormControl(null, []),
-      valid: new FormControl(null, []),
-      cvv: new FormControl(null, [
-        Validators.maxLength(3),
-      ]),
-    });
+    this.billingForm.addControl('number', new FormControl(null));
+    this.billingForm.addControl('owner', new FormControl(null));
+    this.billingForm.addControl('valid', new FormControl(null));
+    this.billingForm.addControl('cvv', new FormControl(null));
   }
 
-  private _listenInputNumber(): void {
-    this.billingForm
-      .get('number')
+  private _listenNumberInput(): void {
+    this.billingForm?.get('number')
       .valueChanges
       .pipe(
         debounceTime(500),
+        takeUntil(this._destroy$),
       )
       .subscribe((resp) => {
-        if (this.masterCard.indexOf(resp) !== -1) {
+        if (!resp) {
+          this.logoPicture = '';
+        } else if (this.masterCard.indexOf(resp) !== -1) {
           this.logoPicture = 'assets/pic/mastercard_logo.svg';
         } else {
           if (this.visa.indexOf(resp) !== -1) {
             this.logoPicture = 'assets/pic/visa.svg';
           }
         }
-        if (!resp) {
-          this.logoPicture = '';
+      });
+  }
+
+  private _listenOwnerInput(): void {
+    fromEvent(this.owner.nativeElement, 'keydown')
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((event: KeyboardEvent) => {
+        if (!event.key.match(this._reOwner)) {
+          event.preventDefault();
         }
       });
   }

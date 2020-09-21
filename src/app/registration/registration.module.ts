@@ -20,10 +20,8 @@ import { RegistrationRoutingModule } from './registration.routing-module';
 import { RegistrationService } from './services/registration.service';
 import { RegistrationComponent } from './components/registration';
 import { StepperComponent } from './view/stepper/stepper.component';
-import { BillingComponent } from './components/billing';
 import { AddressComponent } from './components/address';
 import { AddressContainer } from './containers/address/address.container';
-import { BillingContainer } from './containers/billing/billing.container';
 import { CountryService } from './services/country.service';
 
 
@@ -32,9 +30,7 @@ import { CountryService } from './services/country.service';
     RegistrationComponent,
     StepperComponent,
     AddressComponent,
-    BillingComponent,
     AddressContainer,
-    BillingContainer,
     RegistrationContainer,
   ],
   imports: [

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, AbstractControl } from '@angular/forms';
 
 import { ReplaySubject, Observable, of } from 'rxjs';
-import { takeUntil, startWith, map, debounce, debounceTime, switchMap, tap } from 'rxjs/operators';
+import { takeUntil, startWith, debounceTime, switchMap, tap } from 'rxjs/operators';
 
 import { CountryService } from '../../services/country.service';
 import { ICountry } from '../../../core/interfaces/country.interface';

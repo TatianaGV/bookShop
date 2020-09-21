@@ -43,9 +43,9 @@ export class RegistrationContainer implements OnInit, OnChanges {
     }
   }
 
-  public formSubmit(user: IRegistrationUser): void {
-    this._registrationService.registrationUser(user);
-  }
+  // public formSubmit(user: IRegistrationUser): void {
+  //   this._registrationService.registrationUser(user);
+  // }
 
   private _initForm(): void {
     this.passwordGroup = this._fb.group({
@@ -61,7 +61,6 @@ export class RegistrationContainer implements OnInit, OnChanges {
     }, {
       validator: confirmValidation('password', 'confirmPassword'),
     });
-
 
     this.registrationForm.addControl('firstName', new FormControl(null));
     this.registrationForm.addControl('lastName', new FormControl(null));

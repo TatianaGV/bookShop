@@ -1,42 +1,41 @@
-<mat-card>
-  <mat-horizontal-stepper labelPosition="bottom" #stepper>
-  <mat-step [stepControl]="registrationForm">
-    <ng-template matStepLabel>Personal info</ng-template>
-<!--        container -->
-      <app-registration
-        [registrationForm]="registrationForm">
-        <!--            (formSubmit)="formSubmit($event)">-->
-      </app-registration>
-<!--    -->
-    <div class="next-btn">
-      <button mat-button matStepperNext class="submit">Next</button>
-    </div>
-    </mat-step>
-    <mat-step [stepControl]="addressForm">
-      <ng-template matStepLabel>Address</ng-template>
-<!--        container -->
-      <app-address-container
-         [addressForm]="addressForm">
-      </app-address-container>
-<!--      -->
-      <div class="registration-btn">
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext class="submit">Next</button>
-      </div>
-    </mat-step>
-    <mat-step [stepControl]="billingForm">
-      <ng-template matStepLabel>Billing info</ng-template>
-<!--        container -->
-<!--      <app-billing-container-->
-<!--       [billingForm]="billingForm">-->
-<!--      </app-billing-container>-->
-        <app-credit-card>
+<form [formGroup]="generalForm" (ngSubmit)="submit()">
+  <mat-card>
+    <mat-horizontal-stepper labelPosition="bottom">
+      <mat-step [stepControl]="registrationForm">
+        <ng-template matStepLabel>Personal info</ng-template>
+        <!--        container -->
+        <app-registration
+          [registrationForm]="registrationForm">
+        </app-registration>
+        <!--    -->
+        <div class="next-btn">
+          <button mat-button matStepperNext class="general-btn">Next</button>
+        </div>
+      </mat-step>
+      <mat-step [stepControl]="addressForm">
+        <ng-template matStepLabel>Address</ng-template>
+        <!--        container -->
+        <app-address-container
+          [addressForm]="addressForm">
+        </app-address-container>
+        <!--      -->
+        <div class="registration-btn">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext class="general-btn">Next</button>
+        </div>
+      </mat-step>
+      <mat-step [stepControl]="billingForm">
+        <ng-template matStepLabel>Billing info</ng-template>
+        <!--      container -->
+        <app-credit-card
+          [billingForm]="billingForm">
         </app-credit-card>
-<!--      -->
-      <div class="registration-btn">
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext class="submit">Sing up</button>
-      </div>
-    </mat-step>
-  </mat-horizontal-stepper>
-</mat-card>
+        <!--      -->
+        <div class="registration-btn">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext class="general-btn" type="submit">Sing up</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card>
+</form>
