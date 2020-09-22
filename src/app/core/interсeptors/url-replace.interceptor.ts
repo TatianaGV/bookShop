@@ -17,7 +17,6 @@ export class UrlReplaceInterceptor implements HttpInterceptor {
   public intercept(req: HttpRequest<any>,
                    next: HttpHandler,
   ): Observable<HttpEvent<any>> {
-    debugger;
     if (!req.url.startsWith('http://') && !req.url.startsWith('https://')) {
       req = req.clone({
         url: environment.apiUrl + req.url,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 import { RegistrationService } from '../../services/registration.service';
 import { IRegistrationUser } from '../../../core/interfaces';
@@ -14,6 +14,7 @@ export class StepperComponent implements OnInit {
   public registrationForm: FormGroup;
   public addressForm: FormGroup;
   public billingForm: FormGroup;
+  public billingControl: FormControl;
 
   constructor(
     private _fb: FormBuilder,
@@ -24,15 +25,22 @@ export class StepperComponent implements OnInit {
     this.registrationForm = new FormGroup({});
     this.addressForm = new FormGroup({});
     this.billingForm = new FormGroup({});
+    this.billingControl = new FormControl();
 
     this.generalForm = this._fb.group({
       registrationForm: this.registrationForm,
       addressForm: this.addressForm,
-      billing: this.billingForm,
+      billingForm: this.billingControl,
     });
+
+    this.billingControl.valueChanges
+      .subscribe((value) => {
+        console.log(value);
+      });
   }
 
   public submit(): void {
+    debugger;
     const formValue = this.registrationForm.value;
     const user: IRegistrationUser = {
       first_name: formValue.firstName,
@@ -41,7 +49,7 @@ export class StepperComponent implements OnInit {
       password: formValue.password.password,
       password_confirmation: formValue.password.confirmPassword,
     };
-    if (this.registrationForm.valid && this.addressForm.valid && this.billingForm.valid) {
+    if (this.registrationForm.valid && this.addressForm.valid && this.billingControl.valid) {
       this._registrationUser(user);
     }
   }
