@@ -11,7 +11,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import {
   confirmValidation,
   patternValidator,
-} from '../../../core/helpers/password-validation.helpers';
+} from '../../../core/helpers/password-validation';
 import { IRegistrationUser } from '../../../core/interfaces';
 import { RegistrationService } from '../../services/registration.service';
 
@@ -58,7 +58,9 @@ export class RegistrationContainer implements OnInit, OnChanges {
 
     this.registrationForm.addControl('firstName', new FormControl(null));
     this.registrationForm.addControl('lastName', new FormControl(null));
-    this.registrationForm.addControl('email', new FormControl(null));
+    this.registrationForm.addControl('email', new FormControl(null, [
+      Validators.email,
+    ]));
     this.registrationForm.addControl('password', this.passwordGroup);
   }
 

@@ -69,7 +69,6 @@ export class AddressComponent implements OnInit, OnDestroy {
         debounceTime(1000),
         startWith(''),
         switchMap((value: string | null) => {
-          debugger;
           this.loaded = false;
           if (value) {
             if (typeof value === 'string') {

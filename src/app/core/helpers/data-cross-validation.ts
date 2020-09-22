@@ -1,7 +1,6 @@
 import { ValidatorFn, FormGroup, ValidationErrors } from '@angular/forms';
 
 export const dataCrossValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
-  debugger;
   const writingDateControl = control.get('writingDate');
   const releaseDateControl = control.get('releaseDate');
 

@@ -1,38 +1,59 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+  forwardRef, Output, EventEmitter
+} from '@angular/core';
+import {
+  FormGroup,
+  FormBuilder,
+  FormControl,
+  Validators,
+  ControlValueAccessor, NG_VALUE_ACCESSOR
+} from '@angular/forms';
 
-import { debounceTime, takeUntil } from 'rxjs/operators';
-import { fromEvent, ReplaySubject } from 'rxjs';
+import { debounceTime, takeUntil, debounce } from 'rxjs/operators';
+import { fromEvent, ReplaySubject, Observable } from 'rxjs';
+
+import { ICreditCard } from '../../../core/interfaces/credit-card.interface';
+import { dataCardValidator } from '../../../core/helpers/date-card-validation';
 
 @Component({
   selector: 'app-credit-card',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => CreditCardComponent),
+    multi: true,
+  }],
   templateUrl: './credit-card.component.html',
   styleUrls: ['./credit-card.component.scss'],
 })
-export class CreditCardComponent implements OnInit, OnDestroy {
+export class CreditCardComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
   public masterCard = ['5559', '5536', '5213'];
   public visa = ['4276', '4817'];
 
   public logoPicture = '';
-
-  @ViewChild('owner', { static: true })
-  public owner: ElementRef<HTMLInputElement>;
-
-  @Input()
   public billingForm: FormGroup;
 
+  @Input()
+  public disabled = false;
+
+  @Output()
+  public formChanged = new EventEmitter<ICreditCard>();
+
   private _destroy$ = new ReplaySubject<any>();
-  private _reOwner = /^[a-zA-Z\s]+$/;
 
   constructor(
     private _fb: FormBuilder,
-  ) {
-  }
+  ) {}
 
   public ngOnInit(): void {
     this._initForm();
-    this._listenOwnerInput();
+    this._listenForm();
     this._listenNumberInput();
   }
 
@@ -41,19 +62,62 @@ export class CreditCardComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public setError(): void {
-    this.billingForm.get('number').setErrors({ serverError: { message: 'Show server error :)' } });
+  public writeValue(value: any): void {
+    if (value) {
+      this.billingForm.patchValue({
+        number: value.number,
+        owner: value.owner,
+        valid: value.valid,
+        cvv: value.valid,
+      });
+    }
+  }
+
+  public onChange = (val: any) => {};
+
+  public onTouched = () => {};
+
+  public registerOnChange(fn: (val: any) => void): void {
+    this.onChange = fn;
+  }
+
+  public registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  public setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  public checkInput(e: KeyboardEvent): void {
+    const regex = /^[a-zA-Z\s]+$/;
+    if (!e.key.match(regex)) {
+      e.preventDefault();
+    }
+  }
+
+  private _onFormChange(): Observable<any> {
+    return this.billingForm.valueChanges;
   }
 
   private _initForm(): void {
-    this.billingForm.addControl('number', new FormControl(null,
-      [Validators.required]));
-    this.billingForm.addControl('owner', new FormControl(null,
-      [Validators.required]));
-    this.billingForm.addControl('valid', new FormControl(null,
-      [Validators.required]));
-    this.billingForm.addControl('cvv', new FormControl(null,
-      [Validators.required]));
+    this.billingForm = this._fb.group({
+      number: new FormControl(null, [
+        Validators.required,
+      ]),
+      owner: new FormControl(null, [
+        Validators.required,
+      ]),
+      valid: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(4),
+        dataCardValidator,
+      ]),
+      cvv: new FormControl(null, [
+        Validators.required,
+      ]),
+    });
   }
 
   private _listenNumberInput(): void {
@@ -76,15 +140,16 @@ export class CreditCardComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _listenOwnerInput(): void {
-    fromEvent(this.owner.nativeElement, 'keydown')
+
+  private _listenForm(): void {
+    this._onFormChange()
       .pipe(
+        debounceTime(200),
         takeUntil(this._destroy$),
       )
-      .subscribe((event: KeyboardEvent) => {
-        if (!event.key.match(this._reOwner)) {
-          event.preventDefault();
-        }
+      .subscribe((value) => {
+        this.onChange(value);
+        this.formChanged.emit(value);
       });
   }
 
