@@ -45,6 +45,12 @@ export class CreditCardComponent implements ControlValueAccessor, OnInit, OnDest
   @Output()
   public formChanged = new EventEmitter<ICreditCard>();
 
+  @Input()
+  public disabled = false;
+
+  @Output()
+  public formChanged = new EventEmitter<ICreditCard>();
+
   private _destroy$ = new ReplaySubject<any>();
 
   constructor(
