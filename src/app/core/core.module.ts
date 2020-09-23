@@ -4,6 +4,7 @@ import localeRu from '@angular/common/locales/ru';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { ToastrModule } from 'ngx-toastr';
+import { NgxMaskModule } from 'ngx-mask';
 
 import { ErrorInterceptor } from './interсeptors/http-errors.interceptor';
 import { UrlReplaceInterceptor } from './interсeptors/url-replace.interceptor';
@@ -23,6 +24,7 @@ const INTERCEPTOR_PROVIDERS: Provider = [
     CommonModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     {

@@ -1,6 +1,6 @@
 <form [formGroup]="generalForm" (ngSubmit)="submit()">
   <mat-card>
-    <mat-horizontal-stepper labelPosition="bottom">
+    <mat-horizontal-stepper labelPosition="bottom" [linear]="true">
       <mat-step [stepControl]="registrationForm">
         <ng-template matStepLabel>Personal info</ng-template>
         <!--        container -->

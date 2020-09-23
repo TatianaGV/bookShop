@@ -32,15 +32,9 @@ export class StepperComponent implements OnInit {
       addressForm: this.addressForm,
       billingForm: this.billingControl,
     });
-
-    this.billingControl.valueChanges
-      .subscribe((value) => {
-        console.log(value);
-      });
   }
 
   public submit(): void {
-    debugger;
     const formValue = this.registrationForm.value;
     const user: IRegistrationUser = {
       first_name: formValue.firstName,

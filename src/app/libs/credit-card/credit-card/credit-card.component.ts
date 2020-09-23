@@ -2,21 +2,20 @@ import {
   Component,
   OnInit,
   Input,
-  ViewChild,
-  ElementRef,
   OnDestroy,
-  forwardRef, Output, EventEmitter
+  forwardRef, Output, EventEmitter, ViewChild, ElementRef
 } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
   FormControl,
   Validators,
-  ControlValueAccessor, NG_VALUE_ACCESSOR
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 
-import { debounceTime, takeUntil, debounce } from 'rxjs/operators';
-import { fromEvent, ReplaySubject, Observable } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { ReplaySubject, Observable, fromEvent } from 'rxjs';
 
 import { ICreditCard } from '../../../core/interfaces/credit-card.interface';
 import { dataCardValidator } from '../../../core/helpers/date-card-validation';
@@ -39,11 +38,14 @@ export class CreditCardComponent implements ControlValueAccessor, OnInit, OnDest
   public logoPicture = '';
   public billingForm: FormGroup;
 
+  @ViewChild('owner', { static: true })
+  public owner: ElementRef<HTMLInputElement>;
+
   @Input()
   public disabled = false;
 
   @Output()
-  public formChanged = new EventEmitter<ICreditCard>();
+  public changed = new EventEmitter<ICreditCard>();
 
   private _destroy$ = new ReplaySubject<any>();
 
@@ -55,6 +57,7 @@ export class CreditCardComponent implements ControlValueAccessor, OnInit, OnDest
     this._initForm();
     this._listenForm();
     this._listenNumberInput();
+    this._listenOwnerInput();
   }
 
   public ngOnDestroy(): void {
@@ -62,22 +65,20 @@ export class CreditCardComponent implements ControlValueAccessor, OnInit, OnDest
     this._destroy$.complete();
   }
 
-  public writeValue(value: any): void {
-    if (value) {
-      this.billingForm.patchValue({
-        number: value.number,
-        owner: value.owner,
-        valid: value.valid,
-        cvv: value.valid,
-      });
-    }
+  public writeValue(value: ICreditCard | null): void {
+    this.billingForm.patchValue({
+      number: value?.number,
+      owner: value?.owner,
+      valid: value?.valid,
+      cvv: value?.valid,
+    });
   }
 
-  public onChange = (val: any) => {};
+  public onChange = (val: ICreditCard) => {};
 
   public onTouched = () => {};
 
-  public registerOnChange(fn: (val: any) => void): void {
+  public registerOnChange(fn: (val: ICreditCard | null) => void): void {
     this.onChange = fn;
   }
 
@@ -89,14 +90,28 @@ export class CreditCardComponent implements ControlValueAccessor, OnInit, OnDest
     this.disabled = isDisabled;
   }
 
-  public checkInput(e: KeyboardEvent): void {
+  // public checkInput(e: KeyboardEvent): void {
+  //   debugger
+  //   const regex = /^[a-zA-Z\s]+$/;
+  //   if (!e.key.match(regex)) {
+  //     e.preventDefault();
+  //   }
+  // }
+
+  private _listenOwnerInput(): void {
     const regex = /^[a-zA-Z\s]+$/;
-    if (!e.key.match(regex)) {
-      e.preventDefault();
-    }
+    fromEvent(this.owner.nativeElement, 'keydown')
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((event: KeyboardEvent) => {
+        if (!event.key.match(regex)) {
+          event.preventDefault();
+        }
+      });
   }
 
-  private _onFormChange(): Observable<any> {
+  private _onFormChange(): Observable<ICreditCard> {
     return this.billingForm.valueChanges;
   }
 
@@ -116,6 +131,8 @@ export class CreditCardComponent implements ControlValueAccessor, OnInit, OnDest
       ]),
       cvv: new FormControl(null, [
         Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(3),
       ]),
     });
   }
@@ -140,7 +157,6 @@ export class CreditCardComponent implements ControlValueAccessor, OnInit, OnDest
       });
   }
 
-
   private _listenForm(): void {
     this._onFormChange()
       .pipe(
@@ -149,7 +165,7 @@ export class CreditCardComponent implements ControlValueAccessor, OnInit, OnDest
       )
       .subscribe((value) => {
         this.onChange(value);
-        this.formChanged.emit(value);
+        this.changed.emit(value);
       });
   }
 
