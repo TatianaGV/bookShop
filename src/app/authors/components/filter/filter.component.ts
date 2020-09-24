@@ -6,8 +6,8 @@ import { IAuthorFilter } from '../../../core/interfaces';
 
 @Component({
   selector: 'app-authors-filter',
-  templateUrl: './authors-filter.component.html',
-  styleUrls: ['./authors-filter.component.scss'],
+  templateUrl: './filter.component.html',
+  styleUrls: ['./filter.component.scss'],
 })
 export class AuthorsFilterComponent implements OnInit {
 

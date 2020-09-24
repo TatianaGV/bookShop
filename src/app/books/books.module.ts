@@ -25,7 +25,7 @@ import { GenresControlModule } from '../libs/genres-control/genres-control.modul
 
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksPanelsComponent } from './views/panel/books-panels.view';
-import { BooksTableComponent } from './components/table/books-table.component';
+import { BooksTableComponent } from './components/table/table.component';
 import { BooksFilterComponent } from './components/filter/filter.component';
 import { BooksCreatePageComponent } from './views/create-page/books-create-page.view';
 import { BooksEditPageComponent } from './views/edit-page/books-edit-page.view';
@@ -34,8 +34,8 @@ import { BooksConfirmDialogComponent } from './components/confirm-dialog/books-c
 import { BooksServices } from './services/books.service';
 import { FilterContainer } from './container/filter';
 import { TableContainer } from './container/table';
-import { CreatePageComponent } from './container/create-page/create-page.component';
-import { EditPageComponent } from './container/edit-page/edit-page.component';
+import { CreatePageComponent } from './container/create-page/create-page.container';
+import { EditPageComponent } from './container/edit-page/edit-page.container';
 
 
 @NgModule({

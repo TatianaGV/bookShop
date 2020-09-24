@@ -32,8 +32,8 @@ import { dataCardValidator } from '../../../core/helpers/date-card-validation';
 })
 export class CreditCardComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
-  public masterCard = ['5559', '5536', '5213'];
-  public visa = ['4276', '4817'];
+  public masterCard = ['51', '52', '53', '54', '55'];
+  public visa = ['4'];
 
   public logoPicture = '';
   public billingForm: FormGroup;
@@ -89,14 +89,6 @@ export class CreditCardComponent implements ControlValueAccessor, OnInit, OnDest
   public setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
-
-  // public checkInput(e: KeyboardEvent): void {
-  //   debugger
-  //   const regex = /^[a-zA-Z\s]+$/;
-  //   if (!e.key.match(regex)) {
-  //     e.preventDefault();
-  //   }
-  // }
 
   private _listenOwnerInput(): void {
     const regex = /^[a-zA-Z\s]+$/;

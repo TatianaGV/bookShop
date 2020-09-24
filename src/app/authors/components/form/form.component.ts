@@ -5,8 +5,8 @@ import { IDataAuthor } from '../../../core/interfaces';
 
 @Component({
   selector: 'app-authors-form',
-  templateUrl: './authors-form.component.html',
-  styleUrls: ['./authors-form.component.scss'],
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.scss'],
 })
 export class AuthorsFormComponent implements OnInit {
 

@@ -14,8 +14,8 @@ import { BooksServices } from '../../services/books.service';
 
 @Component({
   selector: 'app-create-page',
-  templateUrl: './create-page.component.html',
-  styleUrls: ['./create-page.component.scss'],
+  templateUrl: './create-page.container.html',
+  styleUrls: ['./create-page.container.scss'],
 })
 export class CreatePageComponent implements OnInit, OnDestroy {
 

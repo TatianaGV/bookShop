@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-create-page',
   templateUrl: './create-page.view.html',
-  styleUrls: ['./create-page.view.scss'],
+  styleUrls: [],
 })
 export class CreatePageView implements OnInit {
 

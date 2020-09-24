@@ -7,8 +7,8 @@ import { IDataAuthor } from '../../../core/interfaces';
 
 @Component({
   selector: 'app-authors-edit-page',
-  templateUrl: './authors-edit-page.component.html',
-  styleUrls: ['./authors-edit-page.component.scss'],
+  templateUrl: './edit-page.component.html',
+  styleUrls: ['./edit-page.component.scss'],
 })
 export class AuthorsEditPageComponent implements OnInit {
 

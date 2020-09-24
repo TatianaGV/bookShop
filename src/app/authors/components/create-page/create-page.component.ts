@@ -7,8 +7,8 @@ import { AuthorsServices } from '../../services/authors.service';
 
 @Component({
   selector: 'app-authors-create-page',
-  templateUrl: './authors-create-page.component.html',
-  styleUrls: ['./authors-create-page.component.scss'],
+  templateUrl: './create-page.component.html',
+  styleUrls: ['./create-page.component.scss'],
 })
 export class AuthorsCreatePageComponent implements OnInit {
 

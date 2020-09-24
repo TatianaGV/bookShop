@@ -16,8 +16,8 @@ import { BooksServices } from '../../services/books.service';
 
 @Component({
   selector: 'app-books-table',
-  templateUrl: './books-table.component.html',
-  styleUrls: ['./books-table.component.scss'],
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss'],
 })
 export class BooksTableComponent implements OnDestroy {
 

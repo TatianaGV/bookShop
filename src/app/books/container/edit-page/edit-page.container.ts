@@ -13,8 +13,8 @@ import { dataBookToFormData } from '../../../core/helpers/toFormData.helper';
 
 @Component({
   selector: 'app-edit-page',
-  templateUrl: './edit-page.component.html',
-  styleUrls: ['./edit-page.component.scss'],
+  templateUrl: './edit-page.container.html',
+  styleUrls: ['./edit-page.container.scss'],
 })
 export class EditPageComponent implements OnInit, OnDestroy {
 
