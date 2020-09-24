@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  templateUrl: './books-edit-page.component.html',
+  templateUrl: './books-edit-page.view.html',
   styleUrls: [],
 })
 export class BooksEditPageComponent {

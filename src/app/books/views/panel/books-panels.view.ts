@@ -5,8 +5,8 @@ import { IBookFilter, IBookFilterUrlParams } from '../../../core/interfaces';
 import { parseDateFromUrl } from '../../../core/helpers/data.helpers';
 
 @Component({
-  templateUrl: './books-panels.component.html',
-  styleUrls: ['./books-panels.component.scss'],
+  templateUrl: './books-panels.view.html',
+  styleUrls: ['./books-panels.view.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooksPanelsComponent implements OnInit {

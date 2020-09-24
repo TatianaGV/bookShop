@@ -19,7 +19,7 @@ import { RegistrationContainer } from './containers/registration';
 import { RegistrationRoutingModule } from './registration.routing-module';
 import { RegistrationService } from './services/registration.service';
 import { RegistrationComponent } from './components/registration';
-import { StepperComponent } from './view/stepper/stepper.component';
+import { StepperComponent } from './view/stepper/stepper.view';
 import { AddressComponent } from './components/address';
 import { AddressContainer } from './containers/address/address.container';
 import { CountryService } from './services/country.service';

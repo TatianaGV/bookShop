@@ -5,8 +5,8 @@ import { RegistrationService } from '../../services/registration.service';
 import { IRegistrationUser } from '../../../core/interfaces';
 
 @Component({
-  templateUrl: './stepper.component.html',
-  styleUrls: ['./stepper.component.scss'],
+  templateUrl: './stepper.view.html',
+  styleUrls: ['./stepper.view.scss'],
 })
 export class StepperComponent implements OnInit {
 

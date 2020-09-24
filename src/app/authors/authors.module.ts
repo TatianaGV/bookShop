@@ -22,20 +22,23 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { SpinnerModule } from '../libs/spinner/spinner.module';
 
-import { AuthorsEditPageComponent } from './components/authors-edit-page/authors-edit-page.component';
+import { AuthorsEditPageComponent } from './components/edit-page/authors-edit-page.component';
 import { AuthorsFormComponent } from './components/authors-form/authors-form.component';
 import { AuthorsConfirmDialogComponent } from './components/authors-confirm-dialog/authors-confirm-dialog.component';
 import { AuthorsFilterComponent } from './components/authors-filter/authors-filter.component';
-import { AuthorsCreatePageComponent } from './components/authors-create-page/authors-create-page.component';
-import { AuthorsListComponent } from './components/authors-list/authors-list.component';
+import { AuthorsCreatePageComponent } from './components/create-page/authors-create-page.component';
 import { AuthorsRoutingModule } from './authors-routing.module';
-import { AuthorsPanelsComponent } from './components/authors-panels/authors-panels.component';
+import { AuthorsPanelsComponent } from './view/panel/authors-panels.view';
 import { AuthorsTableComponent } from './components/authors-table/authors-table.component';
+import { AuthorsServices } from './services/authors.service';
+import { EditPageView } from './view/edit-page/edit-page.view';
+import { CreatePageView } from './view/create-page/create-page.view';
+import { CreatePageContainer } from './container/create-page/create-page.container';
+import { EditPageContainer } from './container/edit-page/edit-page.container';
 
 
 @NgModule({
   declarations: [
-    AuthorsListComponent,
     AuthorsPanelsComponent,
     AuthorsTableComponent,
     AuthorsFilterComponent,
@@ -43,6 +46,10 @@ import { AuthorsTableComponent } from './components/authors-table/authors-table.
     AuthorsEditPageComponent,
     AuthorsFormComponent,
     AuthorsConfirmDialogComponent,
+    EditPageView,
+    CreatePageView,
+    CreatePageContainer,
+    EditPageContainer,
   ],
   imports: [
     CommonModule,
@@ -67,6 +74,9 @@ import { AuthorsTableComponent } from './components/authors-table/authors-table.
     MatDialogModule,
     MatProgressSpinnerModule,
     SpinnerModule,
+  ],
+  providers: [
+    AuthorsServices,
   ],
 })
 export class AuthorsModule { }

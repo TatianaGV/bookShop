@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { BooksCreatePageComponent } from './views/create-page/books-create-page.component';
-import { BooksPanelsComponent } from './views/panel/books-panels.component';
-import { BooksEditPageComponent } from './views/edit-page/books-edit-page.component';
+import { BooksCreatePageComponent } from './views/create-page/books-create-page.view';
+import { BooksPanelsComponent } from './views/panel/books-panels.view';
+import { BooksEditPageComponent } from './views/edit-page/books-edit-page.view';
 
 
 const routes: Routes = [

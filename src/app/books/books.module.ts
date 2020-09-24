@@ -24,11 +24,11 @@ import { SpinnerModule } from '../libs/spinner/spinner.module';
 import { GenresControlModule } from '../libs/genres-control/genres-control.module';
 
 import { BooksRoutingModule } from './books-routing.module';
-import { BooksPanelsComponent } from './views/panel/books-panels.component';
+import { BooksPanelsComponent } from './views/panel/books-panels.view';
 import { BooksTableComponent } from './components/table/books-table.component';
 import { BooksFilterComponent } from './components/filter/filter.component';
-import { BooksCreatePageComponent } from './views/create-page/books-create-page.component';
-import { BooksEditPageComponent } from './views/edit-page/books-edit-page.component';
+import { BooksCreatePageComponent } from './views/create-page/books-create-page.view';
+import { BooksEditPageComponent } from './views/edit-page/books-edit-page.view';
 import { BooksFormComponent } from './components/form/books-form.component';
 import { BooksConfirmDialogComponent } from './components/confirm-dialog/books-confirm-dialog.component';
 import { BooksServices } from './services/books.service';
