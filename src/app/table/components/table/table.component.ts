@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IConfig } from '../../../libs/my-list/interfaces/config.interface';
 
 import { IConfig } from '../../../libs/my-list/interfaces';
 
