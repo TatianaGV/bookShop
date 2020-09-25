@@ -16,7 +16,6 @@ import { LayoutModule } from './layout/layout.module';
 import { CoreModule } from './core/core.module';
 import { SpinnerComponent } from './libs/spinner/spinner/spinner.component';
 import { ErrorsDialogComponent } from './libs/errors-dialog/errors-dialog.component';
-import { MyListComponent } from './libs/my-list/components/my-list/my-list.component';
 
 
 @NgModule({
@@ -24,7 +23,6 @@ import { MyListComponent } from './libs/my-list/components/my-list/my-list.compo
     AppComponent,
     SpinnerComponent,
     ErrorsDialogComponent,
-    MyListComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +40,5 @@ import { MyListComponent } from './libs/my-list/components/my-list/my-list.compo
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [],
 })
 export class AppModule { }
