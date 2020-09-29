@@ -1,5 +1,10 @@
 <my-list [config]="config">
+  <my-list-column name="id" title="id">
+    <ng-template #tpl1 my-list-cell>
+    </ng-template>
+  </my-list-column>
+
   <my-list-column name="name" title="title">
-    <ng-template></ng-template>
+    <ng-template #tpl1 my-list-cell></ng-template>
   </my-list-column>
 </my-list>
